@@ -1,11 +1,15 @@
 <template>
   <div>
-    <h1 class=" text-center text-7xl">Привет!</h1>
+    <custom-header></custom-header>
+    <custom-breadcrumbs></custom-breadcrumbs>
   </div>
 </template>
-<script>
+<script >
+import customHeader  from "./components/customHeader.vue"
+import customBreadcrumbs  from "./components/customBreadcrumbs.vue"
 export default {
-  
+  components:{customHeader,customBreadcrumbs},
+
 }
 </script>
 <style scoped>
