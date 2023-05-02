@@ -7,13 +7,16 @@
           <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
         </a>
       </div>
+
       <div class="flex lg:hidden">
+        
         <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = true">
           <span class="sr-only">Open main menu</span>
           <Bars3Icon class="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
+      <div class="items-center hidden lg:gap-x-12 lg:flex ">
+        <custom-search-input></custom-search-input>
         <a href="#" class="text-sm font-semibold leading-6 text-gray-900">О нас</a>
         <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Карзина</a>
       </div>
@@ -44,33 +47,17 @@
   </header>
 </template>
 <script>
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-} from '@headlessui/vue'
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from '@heroicons/vue/24/outline'
+import {Dialog,DialogPanel} from '@headlessui/vue'
+import {Bars3Icon,XMarkIcon} from '@heroicons/vue/24/outline'
 
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
+import customSearchInput from "./customSearchInput.vue";
+
+
 
 export default {
   name: "custom-header",
   components: {
-    Dialog,DialogPanel,Bars3Icon,XMarkIcon},
+    Dialog,DialogPanel,Bars3Icon,XMarkIcon,customSearchInput},
   data() {
     return {
       mobileMenuOpen: false
