@@ -4,10 +4,10 @@ import { createRouter } from "vue-router"
 import { createWebHistory } from "vue-router"
 
 const routes = [
-  { path: '/', redirect: '/home' },
+  { path: '/', redirect: '/catalog' },
 
   {
-    path: '/home',
+    path: '/catalog',
     component: customShopComponent
   },
   {
