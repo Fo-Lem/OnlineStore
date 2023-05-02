@@ -17,7 +17,6 @@
 </template>
 <script>
 export default {
-  components:{},
   
   name: "custom-product-list",
   data() {
@@ -85,7 +84,7 @@ export default {
           price: '$35',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
           imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-        },
+        }
         // More products...
       ]
     }

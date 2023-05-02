@@ -17,8 +17,8 @@
       </div>
       <div class="items-center hidden lg:gap-x-12 lg:flex ">
         <custom-search-input></custom-search-input>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">О нас</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Карзина</a>
+        <router-link class="text-sm font-semibold leading-6 text-gray-900" to="/">О нас</router-link>
+        <router-link class="text-sm font-semibold leading-6 text-gray-900" to="/cart">Карзина</router-link>
       </div>
     </nav>
     <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
@@ -37,8 +37,8 @@
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
-              <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">О нас</a>
-              <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Карзина</a>
+              <router-link class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" to="/">О нас</router-link>
+              <router-link class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" to="/cart">Карзина</router-link>
             </div>
           </div>
         </div>
