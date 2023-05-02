@@ -16,7 +16,7 @@
 import customHeader from "./components/customHeader.vue"
 import customBreadcrumbs from "./components/customBreadcrumbs.vue"
 import CustomProductList from "./components/customProductList.vue";
-import customSearchInput from "./components/customSearchInput.vue";
+import customSearchInput from "./UI/customSearchInput.vue";
 
 
 export default {
