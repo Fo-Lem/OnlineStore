@@ -4,15 +4,15 @@
       <custom-breadcrumbs class="mt-2 md:mt-0"></custom-breadcrumbs>
       <custom-search-input class="lg:hidden"></custom-search-input>
     </div>
-    <custom-product-list></custom-product-list>
+    <router-view></router-view>
   </div>
 </template>
 <script>
 import customSearchInput from "../UI/customSearchInput.vue";
 import customBreadcrumbs from "./customBreadcrumbs.vue"
-import customProductList from "./customProductList.vue";
+import customCategoryList from "./customCategoryList.vue";
 export default {
-  components:{customSearchInput,customBreadcrumbs,customProductList},
+  components:{customSearchInput,customBreadcrumbs,customCategoryList},
   
   name: "custom-shop-component",
   data() {

@@ -3,11 +3,11 @@
     <div class="mx-auto max-w-2xl px-4 py-4 flex flex-col items-center gap-6 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
 
       <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-        <router-link v-for="product in products" :key="product.id" :to="{ name: 'productOverviews', params: { productName: product.name } }"  class="group">
+        <router-link v-for="type in types" :key="type.id" :to="{ name: 'productList', params: { typeName: type.name } }"  class="group">
           <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-            <img :src="product.imageSrc" :alt="product.imageAlt" class="h-full w-full object-cover object-center group-hover:opacity-75" />
+            <img :src="type.imageSrc" :alt="type.imageAlt" class="h-full w-full object-cover object-center group-hover:opacity-75" />
           </div>
-          <h3 class="mt-4 text-sm text-gray-700">{{ product.name }}</h3>
+          <h3 class="mt-4 text-sm text-gray-700">{{ type.name }}</h3>
         </router-link>
       </div>
       
@@ -17,10 +17,31 @@
 <script>
 export default {
   
-  name: "custom-product-list",
+  name: "custom-type-list",
   data() {
     return {
-      
+      types: [
+        {
+          id: 1,
+          name: 'Earthen Bottle',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+        },
+        {
+          id: 2,
+          name: 'Nomad Tumbler',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
+        },
+        {
+          id: 3,
+          name: 'Focus Paper Refill',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg'
+        },
+        {
+          id: 4,
+          name: 'Machined Mechanical Pencil',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg'
+        }
+      ],
       products: [
         {
           id: 1,
