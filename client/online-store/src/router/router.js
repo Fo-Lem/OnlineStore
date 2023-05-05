@@ -1,31 +1,34 @@
 import customShopComponent from "../components/customShopComponent.vue"
-import customCategoryList from "../components/customCategoryList.vue"
-import customTypeList from "../components/customTypeList.vue"
 import customProductList from "../components/customProductList.vue"
 import customProductOverviews from "../components/customProductOverviews.vue"
 import customCart from '../components/customCart.vue';
+import customAbout from '../components/customAbout.vue';
 import { createRouter } from "vue-router"
 import { createWebHistory } from "vue-router"
 
 const routes = [
-  { path: '/', redirect: '/catalog' },
+  { path: '/', redirect: '/catalog', },,
 
   {
     name: 'catalog',
     path: '/catalog',
     component: customShopComponent,
+    props: { type:"catalog" },
     children: [
-      { name: 'categoryList',path: '', component: customCategoryList },
-      { name: 'typeList',path: 'category=:categoryName', component: customTypeList },
-      { name: 'productList',path: 'category=:categoryName/type=:typeName', component: customProductList },
-      { name: 'productOverviews',path: 'category/:categoryName/type/:typeName/product/:productName/', component: customProductOverviews }
-
+      { name: 'categoryList',path: '',props: { type:"categoryList" }, component: customProductList },
+      { name: 'productList',path: 'category=:categoryId',props: { type:"productList" }, component: customProductList },
+      { name: 'productOverviews',path: 'category=:categoryId/product=:productId&hero=:heroId',props: { type:"productOverviews" }, component: customProductOverviews }
     ]
   },
   {
     path: '/cart',
-    component: customCart
+    component: customCart,
   },
+  ,
+  {
+    path: '/about',
+    component: customAbout,
+  }
   
 
 ]
