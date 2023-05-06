@@ -34,10 +34,8 @@
           <form class="mt-10">
             <!-- Variants -->
             <div>
-              <h3 class="text-sm font-medium text-gray-900">Варианты</h3>
-
+              <p class="text-sm font-medium text-gray-900">Варианты</p>
               <div  class="mt-4">
-                <h2 class="sr-only">Choose a color</h2>
                 <div class="flex flex-wrap gap-5 items-center ">
   
                   <router-link as="template" v-for="hero in categorys[$route.params.categoryId].products[$route.params.productId].heros" :key="hero.id" :v-html="hero" :value="hero" v-slot="{ active, checked }" :to="{ name: 'productOverviews', params: { productId: $route.params.productId, heroId: hero.id } }">
@@ -53,26 +51,11 @@
             <!-- Sizes -->
             <div class="mt-10">
               <div class="flex items-center justify-between">
-                <h3 class="text-sm font-medium text-gray-900">Size</h3>
+                <p class="text-sm font-medium text-gray-900">Характеристики</p>
                 <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>
               </div>
-
-              <!-- <RadioGroup v-model="selectedSize" class="mt-4">
-                <RadioGroupLabel class="sr-only">Choose a size</RadioGroupLabel>
-                <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                  <RadioGroupOption as="template" v-for="size in product.sizes" :key="size.name" :value="size" :disabled="!size.inStock" v-slot="{ active, checked }">
-                    <div :class="[size.inStock ? 'cursor-pointer bg-white text-gray-900 shadow-sm' : 'cursor-not-allowed bg-gray-50 text-gray-200', active ? 'ring-2 ring-indigo-500' : '', 'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6']">
-                      <RadioGroupLabel as="span">{{ size.name }}</RadioGroupLabel>
-                      <span v-if="size.inStock" :class="[active ? 'border' : 'border-2', checked ? 'border-indigo-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-md']" aria-hidden="true" />
-                      <span v-else aria-hidden="true" class="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200">
-                        <svg class="absolute inset-0 h-full w-full stroke-2 text-gray-200" viewBox="0 0 100 100" preserveAspectRatio="none" stroke="currentColor">
-                          <line x1="0" y1="100" x2="100" y2="0" vector-effect="non-scaling-stroke" />
-                        </svg>
-                      </span>
-                    </div>
-                  </RadioGroupOption>
-                </div>
-              </RadioGroup> -->
+            <!-- Характеристики -->
+              
             </div>
             <p class="text-3xl tracking-tight text-gray-900">Цена: {{categorys[$route.params.categoryId].products[$route.params.productId].price}}р</p>
             <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Добавить в корзину</button>
