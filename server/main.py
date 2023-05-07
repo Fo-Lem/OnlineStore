@@ -2,11 +2,13 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
+from fetch.json_data import fetch_with_full_items
+
 app = FastAPI()
 
-@app.get('/')
+@app.get('/catalog/')
 def home():
-    return {'message': "Антон - гей"}
+    return fetch_with_full_items()
 
 @app.get('/category_{category_id}/product_{prod_id}/hero_{hero_id}')
 def get_item(category_id:int, prod_id:int, hero_id:int):

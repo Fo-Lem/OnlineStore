@@ -3,6 +3,7 @@ from sqlalchemy import MetaData, Table, Column, Integer, Text, ForeignKey, Doubl
 
 engine = create_engine("postgresql+psycopg2://postgres:postgres@localhost:5432/woodhouse")
 data = MetaData()
+conn = engine.connect()
 
 heroes = Table('heroes', data,
     Column("id", Integer, primary_key=True, autoincrement=True),
@@ -40,10 +41,3 @@ items = Table('item', data,
     Column('size', Text, nullable=False),
     Column('price', Double, nullable=False)
 )
-
-sel = items.select()
-conn = engine.connect()
-res = conn.execute(sel)
-
-for row in res:
-    print(row)
