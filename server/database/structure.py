@@ -12,10 +12,11 @@ heroes = Table('heroes', data,
 
 categories = Table('categories', data,
     Column("id", Integer, primary_key=True, autoincrement=True),
-    Column('name', Text, nullable=False)
+    Column('name', Text, nullable=False),
+    Column('cover_img', Text, nullable=True)
 )
 
-product_type = Table('product_type', data,
+product_types = Table('product_types', data,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column('name', Text, nullable=False)
 )
@@ -26,16 +27,17 @@ clients = Table('clients', data,
     Column('description', Text, nullable=False)
 )
 
-identity = Table('identity', data,
+identities = Table('identities', data,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column('name', Text, nullable=False),
     Column('hero_id', ForeignKey('heroes.id')),
     Column('product_type_id', ForeignKey('product_type.id')),
     Column('category_id', ForeignKey('categories.id')),
-    Column('description', Text, nullable=False)
+    Column('description', Text, nullable=False),
+    Column('img_path', Text, nullable=False)
 )
 
-items = Table('item', data,
+items = Table('items', data,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column('identity_id', ForeignKey('identity.id')),
     Column('size', Text, nullable=False),
