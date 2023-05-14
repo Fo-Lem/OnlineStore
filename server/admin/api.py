@@ -1,15 +1,5 @@
-def get_categories():
-    pass
+from database.structure import conn
 
-def get_product_types():
-    pass
-
-def get_heroes():
-    pass
-
-def get_clients():
-    pass
-
-def get_products():
-    '''Returns union result of slq JOIN "identity" and "item"'''
-    pass
+def add_entity(table, **kwargs):
+    ins = table.insert().values(**kwargs)
+    conn.execute(ins)
