@@ -60,14 +60,12 @@
 import {Dialog,DialogPanel} from '@headlessui/vue'
 import {Bars3Icon,XMarkIcon} from '@heroicons/vue/24/outline'
 
-import customSearchInput from "../UI/customSearchInput.vue";
-
 
 
 export default {
   name: "custom-header",
   components: {
-    Dialog,DialogPanel,Bars3Icon,XMarkIcon,customSearchInput},
+    Dialog,DialogPanel,Bars3Icon,XMarkIcon},
   data() {
     return {
       mobileMenuOpen: false

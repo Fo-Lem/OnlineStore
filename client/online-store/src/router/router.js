@@ -1,8 +1,13 @@
-import customShopComponent from "../components/customShopComponent.vue"
-import customProductList from "../components/customProductList.vue"
-import customProductOverviews from "../components/customProductOverviews.vue"
-import customCart from '../components/customCart.vue';
-import customAbout from '../components/customAbout.vue';
+import customShopContainer from "../components/shopList/customShopContainer.vue"
+import customProductList from "../components/shopList/customProductList.vue"
+import customProductOverviews from "../components/shopList/customProductOverviews.vue"
+import customAdminPanel from "../components/adminPanel/customAdminPanel.vue"
+import customBasket from '../components/basketPage/customBasket.vue';
+import customAbout from '../components/aboutPage/customAbout.vue';
+import adminAnalytics from '../components/adminPanel/adminComponents/adminAnalytics.vue';
+import adminAddProductsForm from '../components/adminPanel/adminComponents/adminAddProductsForm.vue';
+import adminProducts from '../components/adminPanel/adminComponents/adminProducts.vue';
+import adminAdmins from '../components/adminPanel/adminComponents/adminAdmins.vue';
 import { createRouter } from "vue-router"
 import { createWebHistory } from "vue-router"
 
@@ -12,22 +17,33 @@ const routes = [
   {
     name: 'catalog',
     path: '/catalog',
-    component: customShopComponent,
-    props: { type:"catalog" },
+    component: customShopContainer,
     children: [
-      { name: 'categoryList',path: '',props: { type:"categoryList" }, component: customProductList },
-      { name: 'productList',path: 'category_:categoryId',props: { type:"productList" }, component: customProductList },
-      { name: 'productOverviews',path: 'category_:categoryId/product_:productId/hero_:heroId',props: { type:"productOverviews" }, component: customProductOverviews }
+      { name: 'categoryList',path: '', component: customProductList,props: { type: 'categoryList' }},
+      { name: 'productList',path: 'category_:categoryId', component: customProductList,props: { type: 'productList'} },
+      { name: 'productOverviews',path: 'category_:categoryId/product_:productId/hero_:heroId', component: customProductOverviews }
     ]
   },
   {
     path: '/cart',
-    component: customCart,
+    component: customBasket,
   },
-  ,
   {
     path: '/about',
     component: customAbout,
+  },
+  {
+     path: '/admin', redirect: '/admin/analytics', 
+  },
+  {
+    path: '/admin',
+    component: customAdminPanel,
+    children: [
+      { name: 'analutics',path: 'analytics', component: adminAnalytics },
+      { name: 'products',path: 'products', component: adminProducts },
+      { name: 'addProductsForm',path: 'add-products-form', component: adminAddProductsForm },
+      { name: 'admins',path: 'admins', component: adminAdmins }
+    ]
   }
   
 

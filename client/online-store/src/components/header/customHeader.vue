@@ -5,35 +5,35 @@
         
         <router-link to="/catalog" class="-m-1.5 p-1.5">
           <span class="sr-only">WoodHause</span>
-          <img class="h-20 w-auto" src="../assets/logo.svg" alt="" />
+          <img class="h-20 w-auto" src="../../assets/logo.svg" alt="" />
         </router-link>
         <h1 class="text-3xl font-semibold tracking-wider leading-6 text-gray-900">WoodHause</h1>
       </div>
 
       <div class="flex lg:hidden">
         
-        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = true">
+        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = !mobileMenuOpen">
           <span class="sr-only">Open main menu</span>
           <Bars3Icon class="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
       <div class="items-center hidden lg:gap-x-12 lg:flex ">
         
-        <router-link class="text-sm font-semibold leading-6 text-gray-900" to="/catalog">Каталог</router-link>
-        <router-link class="text-sm font-semibold leading-6 text-gray-900" to="/cart">Карзина</router-link>
-        <router-link class="text-sm font-semibold leading-6 text-gray-900" to="/about">О нас</router-link>
+        <router-link class="font-semibold leading-6 text-gray-900" to="/catalog">Каталог</router-link>
+        <router-link class="font-semibold leading-6 text-gray-900" to="/cart">Корзина</router-link>
+        <router-link class="font-semibold leading-6 text-gray-900" to="/about">О нас</router-link>
 
       </div>
     </nav>
-    <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
+    <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = !mobileMenuOpen" :open="mobileMenuOpen">
       <div class="fixed inset-0 z-10" />
       <DialogPanel class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6  sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
         <div class="flex items-center justify-between">
           <router-link to="/catalog" class="-m-1.5 p-1.5">
             <span class="sr-only">WoodHaus</span>
-            <img class="h-20 w-auto" src="../assets/logo.svg" alt="" />
+            <img class="h-20 w-auto" src="../../assets/logo.svg" alt="" />
           </router-link>
-          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
+          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = !mobileMenuOpen">
             <span class="sr-only">Close menu</span>
             <XMarkIcon class="h-6 w-6" aria-hidden="true" />
           </button>

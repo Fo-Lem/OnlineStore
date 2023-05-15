@@ -7,7 +7,7 @@
         </svg>
 
       </div>
-      <input :value="shopComponentSearchInput" @input="updateInput" type="text" name="price" id="price" class="block w-full rounded-md border-0 py-1.5 pl-10 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Поиск" />
+      <input :value="searchInput" @input="updateInput($event)" type="search" name="search" id="price" class="block w-full rounded-md border-0 py-1.5 pl-10 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6" placeholder="Поиск" />
     </div>
   </div>
 </template>
@@ -20,14 +20,13 @@ export default {
     }
   },
   props:{
-        modelValue:[String,Number],
-        shopComponentSearchInput:[String,Number]
+    searchInput:[String,Number]
           
     },
     methods:{
        updateInput(event){
         // передаем содержимое инпута
-        this.$emit('update:modelValue',event.target.value)
+        this.$emit('updateSearchInput',event.target.value)
 
        } 
     }
