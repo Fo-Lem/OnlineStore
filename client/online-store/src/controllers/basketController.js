@@ -41,5 +41,28 @@ export const summarizePriceProductBasket = (basket, categorys) => {
     }
     return sum
 }
+export const productInBasket = (basket,curentProduct)=>{
+    if (Object.keys(basket).length > 0) {
+        let flagIs = true
+        for (let basketKey in basket) {
+            let flag = true
+            for (let name of Object.keys(basket[basketKey])) {
+                if (basket[basketKey][name] != curentProduct[name]) {
+                    if (name != "count") {
+                        flag = false
+                        break
+                    }
+                }
+            };
+            if (flag === true) {
+                flagIs = true
+                break
+            } else (
+                flagIs = false
+            )
+        }
+        return flagIs
+    }
+}
 
 

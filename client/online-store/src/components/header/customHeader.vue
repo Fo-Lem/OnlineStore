@@ -4,10 +4,10 @@
       <div class="flex items-center gap-2 lg:flex-1">
         
         <router-link to="/catalog" class="-m-1.5 p-1.5">
-          <span class="sr-only">WoodHause</span>
+          <span class="sr-only">WoodHouse</span>
           <img class="h-20 w-auto" src="../../assets/logo.svg" alt="" />
         </router-link>
-        <h1 class="text-3xl font-semibold tracking-wider leading-6 text-gray-900">WoodHause</h1>
+        <h1 class="text-3xl font-semibold tracking-wider leading-6 text-gray-900">WoodHouse</h1>
       </div>
 
       <div class="flex lg:hidden">

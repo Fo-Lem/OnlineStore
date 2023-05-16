@@ -86,15 +86,14 @@
   </div>
 </template>
 <script>
-
+import { productInBasket } from "../../controllers/basketController";
 export default {
-
   name: "custom-cart",
   emits: ['addProductBasket'],
 
   data() {
     return {
-      inBasket:false,
+      inBasket: false,
       curentImage: 1,
       rebuilSize: '',
       curentProduct: {},
@@ -104,7 +103,6 @@ export default {
   },
   props: {
 
-    //Хранит данные о товарах
     categorys: {
       require: true,
       type: Object
@@ -126,47 +124,18 @@ export default {
         }, {}
       )
     },
-    productInBasket() {
-      if (Object.keys(this.basket).length > 0) {
-        console.log("Длинна "+Object.keys(this.basket).length)
-        let flagIs = true
-        for (let basketKey in this.basket) {
-          //console.log(basketKey)
-          let flag = true
-          for (let name of Object.keys(this.basket[basketKey])) {
-            
-            if (this.basket[basketKey][name] != this.curentProduct[name]) {
-              //console.log(name)
-              //console.log(this.basket[basketKey][name],this.curentProduct[name])
-              if (name != "count") {
-                flag = false
-                break
-              }
-            }
-          };
-          //console.log(flag)
-          if(flag === true){
-            flagIs = true
-            break
-          }else(
-            flagIs=false
-          )
-        }
-        return flagIs
-      }
-    },
     addProductBasket() {
       this.$emit('addProductBasket', this.curentProduct)
+      this.inBasket = productInBasket(this.basket, this.curentProduct)
     },
     updateCurentProduct(newHeroId) {
       this.curentProduct = {
-        category: this.$route.params.categoryId,
-        products_type: this.$route.params.productId,
+        category: this.categorys[this.$route.params.categoryId].id,
+        products_type: this.categorys[this.$route.params.categoryId].products_type[this.$route.params.productId].id,
         hero: this.categorys[this.$route.params.categoryId].products_type[this.$route.params.productId].heroes[newHeroId].id,
         count: 1
       }
-      console.log(this.curentProduct)
-      this.inBasket=this.productInBasket()
+      this.inBasket = productInBasket(this.basket, this.curentProduct)
     }
   },
   beforeMount() {
@@ -181,9 +150,4 @@ export default {
 }
 </script>
 <style scoped>
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 </style>
