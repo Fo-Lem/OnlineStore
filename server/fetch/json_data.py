@@ -30,3 +30,25 @@ def fetch_full_structure():
                 json_item
             ]})
     return json_res
+
+
+def fetch_products():
+    json_res = []
+    sel = select(identities, items.c.size, items.c.price).where(items.c.identity_id==identities.c.id)
+    for row in conn.execute(sel):
+        json_res.append(list(row.tuple()))
+    return json_res
+
+
+def fetch_from_table(tablename):
+    tables = {
+        'categories': categories,
+        'products_type': product_types,
+        'heroes': heroes
+    }
+    table = tables.get(tablename)
+    json_res = []
+    sel = table.select()
+    for row in conn.execute(sel):
+        json_res.append(list(row.tuple()))
+    return json_res
