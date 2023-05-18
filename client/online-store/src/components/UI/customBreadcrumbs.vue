@@ -5,7 +5,7 @@
           <li class="text-gray-500 select-none">/</li>
           <li v-if="$route.params.categoryId" class="px-2"><router-link :to="{ name: 'productList', params: { categoryId: $route.params.categoryId } }" :class="!$route.params.productId ? 'text-gray-500' : 'hover:underline'">{{categorys[$route.params.categoryId].name}}</router-link></li>
           <li v-if="$route.params.productId" class="text-gray-500 select-none">/</li>
-          <li v-if="$route.params.categoryId&&$route.params.productId" class="px-2 text-gray-500">{{categorys[$route.params.categoryId].products_type[$route.params.productId].name}}</li>
+          <li v-if="$route.params.categoryId&&$route.params.productId" class="px-2 text-gray-500">{{categorys[$route.params.categoryId].product_types[$route.params.productId].name}}</li>
         </ol>
       </div>
 </template>

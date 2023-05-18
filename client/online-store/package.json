@@ -13,7 +13,8 @@
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue3-dropzone": "^2.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",

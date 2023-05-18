@@ -36,7 +36,7 @@ export const summarizePriceProductBasket = (basket, categorys) => {
     if (Object.keys(basket).length > 0) {
         for (let basketKey in basket) {
             const item = basket[basketKey]
-            sum += categorys[item.category].products_type[item.products_type].heroes[item.hero].items[0].price * item.count
+            sum += categorys[item.category].product_types[item.product_type].heroes[item.hero].price * item.count
         }
     }
     return sum

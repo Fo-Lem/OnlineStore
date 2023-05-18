@@ -57,12 +57,7 @@ export default {
 
     async getCategorys() {
       await axios
-        .get('http://176.99.12.84/api/catalog/',
-          {
-            headers: {
-              'Access-Control-Allow-Origin': '*'
-            }
-          })
+        .get('http://176.99.12.84/api/catalog/')
         .then(response => {
           console.log(response.data)
           this.categorys = response.data;
@@ -89,7 +84,7 @@ export default {
         id: 1,
         name: 'Щиты',
         imageSrc: `https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg`,
-        products_type: {
+        product_types: {
           1: {
             id: 1,
             name: 'Щит круглый',
@@ -135,7 +130,7 @@ export default {
         id: 2,
         name: 'Мечи',
         imageSrc: `https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg`,
-        products_type: {
+        product_types: {
           1: {
             id: 1,
             name: 'Меч длинный',
@@ -171,6 +166,12 @@ export default {
                   price: 3000,
                   discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
                   size: '650x480x200',
+                },{
+                  id: 2,
+                  name: 'Меч длинный \"Алеша Попович\"',
+                  price: 3000,
+                  discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
+                  size: '650x480x200',
                 }]
               }
             }
@@ -178,8 +179,8 @@ export default {
         }
       }
     }
-    this.getCategorys()
-
+     //this.getCategorys()
+    this.loading = true;
 
   }
 
