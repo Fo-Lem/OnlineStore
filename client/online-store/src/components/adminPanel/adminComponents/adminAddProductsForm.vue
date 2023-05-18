@@ -1,11 +1,11 @@
 <template lang="">
     <form class="py-5 flex flex-col gap-5">
-              <div class="flex gap-2 flex-col">
-                <label for="name" class="block text-md font-medium leading-6 text-gray-900">Название продукта</label>
-                  <div class="flex rounded shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md">
-                    <input type="text" name="name" id="name"  class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder='Меч длинный "Алеша Попович"' />
-                  </div>
-              </div>
+      <admin-input 
+      v-bind:inputName="'Название продукта'"
+      v-bind:inputIn="'productName'"
+      v-bind:value="productName"
+      @updateproductName="(value)=>productName=value">
+      </admin-input>
               
               <admin-select 
               v-bind:options="getElementSelected(categorys)"
@@ -39,7 +39,7 @@
     
               <div class="flex flex-col gap-2">
                 <div>
-                  <h2 class=" text-md leading-6 font-medium">Размеры</h2>
+                  <h2 class=" text-md leading-6">Размеры</h2>
                   <p class=" text-xs leading-6 text-gray-400">(Размеры в милиметрах)</p>
                 </div>
                 
@@ -53,7 +53,7 @@
               </div>
 
               <div class="flex flex-col gap-2">
-                  <label for="message" class="block text-md font-medium text-gray-900">Описание</label>
+                  <label for="message" class="block text-md text-gray-900">Описание</label>
                   <textarea id="message" v-model="discription" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Write your thoughts here..."></textarea>
               </div>
     
