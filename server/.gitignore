@@ -2,3 +2,5 @@ onlst/*
 __pycache__/*
 database/__pycache__/*
 fetch/__pycache__/*
+admin/__pycache__/
+conf/

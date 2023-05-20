@@ -3,9 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
+from config import Config
+
 from fetch.json_data import fetch_full_structure
 
 app = FastAPI()
+conf = Config('conf/auth.conf')
 
 origins = [
     "*"

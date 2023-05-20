@@ -1,10 +1,8 @@
-from sqlalchemy.exc import NoSuchColumnError
-
 from fetch.__req_db_struct import *
 
 table_set = [categories, product_types, heroes]
 
-def fetch_short_structure(table_ind, *fields):
+def fetch_short_structure(table_ind:int, *fields):
     json_res = {}
     table = table_set[table_ind]
     sel = table.select()

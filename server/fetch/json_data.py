@@ -40,7 +40,7 @@ def fetch_products():
     return json_res
 
 
-def fetch_from_table(tablename):
+def fetch_from_table(tablename: str):
     tables = {
         'categories': categories,
         'products_type': product_types,
