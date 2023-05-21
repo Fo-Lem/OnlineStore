@@ -43,3 +43,9 @@ items = Table('items', data,
     Column('size', Text, nullable=False),
     Column('price', Double, nullable=False)
 )
+
+categories_to_types = Table('categories_to_types', data,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column('category_id', ForeignKey('categories.id')),
+    Column('product_type_id', ForeignKey('product_types.id'))
+)
