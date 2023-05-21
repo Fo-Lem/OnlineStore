@@ -8,7 +8,7 @@
     <custom-error-page v-if="error" v-bind:error="error"></custom-error-page>
     <custom-loading-spiner v-if="!loading"></custom-loading-spiner>
 
-    <router-view v-if="loading" v-bind:basket="basket" v-bind:categorys="categorys" v-bind:searchInput="searchInput"
+    <router-view v-if="loading" v-bind:basket="basket" v-bind:catalog="catalog" v-bind:searchInput="searchInput"
       @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"
       @update-count-product-basket="(newCount, id) => { updateCountProductBasket(newCount, id) }"
       @add-product-basket="(curentProduct) => { addProductBasket(basket, curentProduct) }">
@@ -33,7 +33,7 @@ export default {
   components: { customHeader, customFooter, customErrorPage },
   data() {
     return {
-      categorys: {},
+      catalog: {},
       basket: {},
       isAdmin: false,
       searchInput: '',
@@ -57,10 +57,9 @@ export default {
 
     async getCategorys() {
       await axios
-        .get('http://176.99.12.84/api/catalog/')
+        .get('http://176.99.12.84/api/catalog')
         .then(response => {
-          console.log(response.data)
-          this.categorys = response.data;
+          this.catalog = response.data;
         })
         .catch(error => {
           console.log(error)
@@ -68,6 +67,7 @@ export default {
         })
         .finally(() => {
           this.loading = true;
+          console.log(this.catalog)
         });
 
     }
@@ -79,112 +79,157 @@ export default {
       this.basket = JSON.parse(localStorage.basket)
       console.log(this.basket)
     }
-    this.categorys = {
-      1: {
-        id: 1,
-        name: 'Щиты',
-        imageSrc: `https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg`,
-        product_types: {
-          1: {
-            id: 1,
-            name: 'Щит круглый',
-            heroes: {
-              1: {
-                id: 1,
-                name: 'Илья',
-                items: [{
-                  id: 1,
-                  name: 'Щит миндаль \"Илья Муромец\"',
-                  price: 4000,
-                  discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
-                  size: '650x480x200',
-                }]
-              },
-              2: {
-                id: 2,
-                name: 'Добрыня',
-                items: [{
-                  id: 1,
-                  name: 'Щит миндаль \"Добрыня Никитич\"',
-                  price: 4000,
-                  discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
-                  size: '650x480x200',
-                }]
-              },
-              3: {
-                id: 3,
-                name: 'Алеша',
-                items: [{
-                  id: 1,
-                  name: 'Щит миндаль \"Алеша Попович\"',
-                  price: 4000,
-                  discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
-                  size: '650x480x200',
-                }]
-              }
+    this.catalog = {
+      categories: {
+        1: {
+          id: 1,
+          name: "Щит",
+          cover_path: null,
+          product_types: {
+            1: {
+              id: 1,
+              name: "Миндаль"
+            },
+            2: {
+              id: 2,
+              name: "Круглый"
+            }
+          }
+        },
+        2: {
+          id: 2,
+          name: "Меч",
+          cover_path: null,
+          product_types: {
+            3: {
+              id: 3,
+              name: "Художественный"
+            },
+            4: {
+              id: 4,
+              name: "Обыкновенный"
+            }
+          }
+        },
+        3: {
+          id: 3,
+          name: "Топор",
+          cover_path: null,
+          product_types: {
+            3: {
+              id: 3,
+              name: "Художественный"
+            },
+            4: {
+              id: 4,
+              name: "Обыкновенный"
+            }
+          }
+        },
+        4: {
+          id: 4,
+          name: "Шашка",
+          cover_path: null,
+          product_types: {
+            3: {
+              id: 3,
+              name: "Художественный"
+            },
+            4: {
+              id: 4,
+              name: "Обыкновенный"
+            }
+          }
+        },
+        5: {
+          id: 5,
+          name: "Катана",
+          cover_path: null,
+          product_types: {
+            4: {
+              id: 4,
+              name: "Обыкновенный"
             }
           }
         }
       },
-      2: {
-        id: 2,
-        name: 'Мечи',
-        imageSrc: `https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg`,
-        product_types: {
-          1: {
-            id: 1,
-            name: 'Меч длинный',
-            heroes: {
-              1: {
-                id: 1,
-                name: 'Илья',
-                items: [{
-                  id: 1,
-                  name: 'Меч длинный \"Илья Муромец\"',
-                  price: 3000,
-                  discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
-                  size: '650x480x200',
-                }]
-              },
-              2: {
-                id: 2,
-                name: 'Добрыня',
-                items: [{
-                  id: 1,
-                  name: 'Меч длинный \"Добрыня Никитич\"',
-                  price: 3000,
-                  discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
-                  size: '650x480x200',
-                }]
-              },
-              3: {
-                id: 3,
-                name: 'Алеша',
-                items: [{
-                  id: 1,
-                  name: 'Меч длинный \"Алеша Попович\"',
-                  price: 3000,
-                  discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
-                  size: '650x480x200',
-                },{
-                  id: 2,
-                  name: 'Меч длинный \"Алеша Попович\"',
-                  price: 3000,
-                  discriptions: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi quae reprehenderit eveniet quo numquam minus dolore? Vitae aspernatur, illo exercitationem neque earum atque culpa possimus facilis rem perspiciatis molestiae.',
-                  size: '650x480x200',
-                }]
-              }
-            }
-          }
+      heroes: {
+        1: {
+          id: 1,
+          name: "Добрыня Никитич"
+        },
+        2: {
+          id: 2,
+          name: "Алеша Попович"
+        },
+        3: {
+          id: 3,
+          name: "Илья Муромец"
+        },
+        4: {
+          id: 4,
+          name: "Александр Невский"
+        },
+        5: {
+          id: 5,
+          name: "Иван Сусанин"
+        }
+      },
+      items: {
+        1: {
+          id: 1,
+          name: "ЩИТ МИНДАЛЬ \"ПЕРУН\"",
+          hero_id: 1,
+          product_type_id: 1,
+          category_id: 1,
+          description: "Вес 150",
+          img_path: "/imgs/test",
+          size: "650x480",
+          price: 400.0
+        },
+        3: {
+          id: 3,
+          name: "Меч Илья Муромец",
+          hero_id: 3,
+          product_type_id: 4,
+          category_id: 2,
+          description: "Вес 200г. \\n Габариты 600х80х20",
+          img_path: "imgs/test",
+          size: "600x80x20",
+          price: 150.0
+        },
+        4: {
+          id: 4,
+          name: "Меч Александр Невский",
+          hero_id: 4,
+          product_type_id: 4,
+          category_id: 2,
+          description: "Вес 200г. \\n Габариты 600х80х20",
+          img_path: "imgs/test",
+          size: "600x80x20",
+          price: 150.0
+        },
+        5: {
+          id: 5,
+          name: "Меч Алеша Попович",
+          hero_id: 2,
+          product_type_id: 4,
+          category_id: 2,
+          description: "Вес 200г. \\n Габариты 600х80х20",
+          img_path: "imgs/test",
+          size: "600x80x20",
+          price: 150.0
         }
       }
     }
-     //this.getCategorys()
+    //this.getCategorys()
     this.loading = true;
-
   }
 
 
 }
+
+
+
 </script>
 <style scoped></style>

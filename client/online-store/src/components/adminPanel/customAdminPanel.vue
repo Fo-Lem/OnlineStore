@@ -84,7 +84,7 @@
      
      <div class="p-4 sm:ml-64">
       <admin-header></admin-header>
-      <router-view v-bind:categorys="categorys"></router-view>
+      <router-view v-bind:catalog="catalog"></router-view>
      </div>
     </div> 
   </div>
@@ -95,7 +95,7 @@ export default {
    components: { adminHeader },
    name: "custom-admin-panel",
    props: {
-      categorys: {
+      catalog: {
          type: Object,
          require: true
       }

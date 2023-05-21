@@ -31,18 +31,19 @@ export const updateCountProductBasket = (newCount, id) => {
     saveDataBasket(basket)
     return basket
 }
-export const summarizePriceProductBasket = (basket, categorys) => {
+export const summarizePriceProductBasket = (basket, catalog) => {
     let sum = 0
     if (Object.keys(basket).length > 0) {
         for (let basketKey in basket) {
             const item = basket[basketKey]
-            sum += categorys[item.category].product_types[item.product_type].heroes[item.hero].price * item.count
+            sum += catalog.items[item.item].price * item.count
         }
     }
     return sum
 }
 export const productInBasket = (basket,curentProduct)=>{
     if (Object.keys(basket).length > 0) {
+        console.log(curentProduct)
         let flagIs = true
         for (let basketKey in basket) {
             let flag = true
