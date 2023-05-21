@@ -1,1 +1,1 @@
-from database.structure import categories, product_types, heroes, identities, items, conn
+from database.structure import categories, product_types, heroes, identities, items, conn, categories_to_types

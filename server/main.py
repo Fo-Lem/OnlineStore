@@ -26,5 +26,11 @@ app.add_middleware(
 def home():
     return fetch_full_structure()
 
+@app.get('/api/data/{table}')
+def show_products(table:str):
+    if table == 'products':
+        return JSONResponse(fetch_products())
+    return JSONResponse(fetch_from_table(table))
+
 #include admin panel
 from admin_panel import *

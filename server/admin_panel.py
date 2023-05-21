@@ -49,12 +49,6 @@ def home_admin(
         return JSONResponse({'message': payload})
     return JSONResponse({'message': 'token is not valid'})
 
-@app.get('/admin/data/{table}')
-def show_products(table:str):
-    if table == 'products':
-        return JSONResponse(fetch_products())
-    return JSONResponse(fetch_from_table(table))
-
 @app.post('/admin/category')
 def add_category(name=Body(embed=True),file=File()):
     # add_entity(categories, name=name, cover_img=cover_img)
