@@ -34,7 +34,8 @@ identities = Table('identities', data,
     Column('product_type_id', ForeignKey('product_type.id')),
     Column('category_id', ForeignKey('categories.id')),
     Column('description', Text, nullable=False),
-    Column('img_path', Text, nullable=False)
+    Column('img_path', Text, nullable=False),
+    Column('art', Text, nullable=False, unique=True),
 )
 
 items = Table('items', data,

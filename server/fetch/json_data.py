@@ -42,14 +42,16 @@ def fetch_full_structure():
     json_res = {
         'categories': json_categories,
         'heroes': heroes,
-        'items': json_items
+        'items': json_items,
     }
     return json_res
 
 
 def fetch_products():
     json_res = {}
-    sel = select(identities, items.c.size, items.c.price).where(items.c.identity_id==identities.c.id)
+    sel = select(
+        identities, items.c.size, items.c.price, items.c.id
+        ).where(items.c.identity_id==identities.c.id)
     for row in conn.execute(sel):
         json_row = {}
         for field in row._fields:
@@ -62,9 +64,13 @@ def fetch_from_table(tablename: str):
     tables = {
         'categories': categories,
         'product_types': product_types,
-        'heroes': heroes
+        'heroes': heroes,
+        'categories_to_types': categories_to_types,
+        'items': items,
     }
-    table = tables.get(tablename)
+    table = tables.get(tablename, None)
+    if table == None:
+        return {'msg': 'Table not exist!'}
     json_res = {}
     sel = table.select()
     for row in conn.execute(sel):
