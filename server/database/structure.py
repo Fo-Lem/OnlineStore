@@ -1,7 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy import MetaData, Table, Column, Integer, Text, ForeignKey, Double
+from .conn_settings import psqlstr
 
-engine = create_engine("postgresql+psycopg2://postgres:postgres@176.99.12.84:5432/woodhouse")
+
+engine = create_engine(psqlstr)
 data = MetaData()
 conn = engine.connect()
 
