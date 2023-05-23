@@ -1,6 +1,6 @@
 from fastapi import File, Body, Form, UploadFile
 from hashlib import md5
-from sqlalchemy import Row
+from sqlalchemy import Row, delete
 from typing import Union
 
 import jwt
@@ -9,7 +9,7 @@ import shutil
 import os
 
 from main import app, JSONResponse, conf
-from admin.api import add_entity, update_entity, delete_entity, conn, session
+from admin.api import add_entity, update_entity, delete_entity, reference_delete, conn
 from fetch.json_data import fetch_products, fetch_from_table, heroes, categories,product_types, \
     categories_to_types, identities, items
 
@@ -125,12 +125,11 @@ def update_category(
 @app.delete('/admin/category')
 def delete_category(id=Body(embed=True)):
     status = 201
-    msg = ''
+    msg = 'Deleted'
     try:
-        session.query(categories_to_types).where(categories_to_types.c.id==id).delete()
-        session.commit()
-        session.query(categories).where(categories.c.id==id).delete()
-        session.commit()
+        upd = identities.update().where(identities.c.category_id==id).values(category_id=10)
+        conn.execute(upd)
+        reference_delete(categories, categories_to_types, id, 'category_id')
     except Exception as e:
         msg = str(e)
         status = 213
@@ -159,6 +158,13 @@ def update_hero(id=Body(embed=True), name=Body(embed=True)):
             'err': 'Inncorrect data',
         }, status_code=213)
     
+@app.delete('/admin/hero')
+def delete_hero(id=Body(embed=True)):
+    delete_entity(heroes, id=id)
+    return JSONResponse({
+        'msg': 'Deleted'
+        },status_code=201)
+    
 
 @app.post('/admin/product_type')
 def add_product_type(category_id:str=Body(embed=True),name=Body(embed=True)):
@@ -186,6 +192,19 @@ def update_product_type(id=Body(embed=True), name=Body(embed=True)):
         return JSONResponse({
             'err': 'Inncorrect data',
         }, status_code=213)
+    
+
+@app.delete('/admin/product_type')
+def delete_product_type(id=Body(embed=True)):
+    try:
+        reference_delete(product_types, categories_to_types, id, 'product_type_id')
+    except Exception as e:
+        msg = str(e)
+        status = 213
+
+    return JSONResponse({
+            'msg': msg,
+        }, status_code=status)
 
 
 @app.post('/admin/product')
@@ -209,14 +228,12 @@ def add_product(
     }
     id_ = add_entity(items, **item)
     identity.update(item)
-    conn.commit()
     identity['id'] = id_
     return JSONResponse(identity, status_code=201)
 
 @app.post('/admin/product_type_to_category')
 def set_product_type_to_category(category_id=Body(embed=True),product_type_id=Body(embed=True)):
     res = add_entity(categories_to_types, category_id=category_id, product_type_id=product_type_id)
-    conn.commit()
     return JSONResponse({'id': res}, status_code=201)
 
 @app.put('/admin/product')
@@ -243,8 +260,22 @@ def update_product(
         update_entity(items, item_id, **item_params)
     identity_id = params.pop('id')
     update_entity(identities, identity_id, **params)
-    conn.commit()
     return JSONResponse({
             'item_params': item_params,
             'params': params
         }, status_code=201) 
+
+
+@app.delete('/admin/product')
+def delete_product(id=Body(embed=True)):
+    status = 201
+    msg = 'Deleted'
+    try:
+        reference_delete(identities, items, id, 'identity_id')
+    except Exception as e:
+        msg = str(e)
+        status = 213
+
+    return JSONResponse({
+            'msg': msg,
+        }, status_code=status)
