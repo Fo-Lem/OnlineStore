@@ -1,6 +1,9 @@
 <template lang="">
     
-  <admin-popup v-if="openPopup" @closePopup="openPopup=!openPopup"></admin-popup>
+  <admin-popup v-if="openPopup" @closePopup="openPopup=!openPopup" v-bind:categorys="getElementSelected(catalog.categories)"></admin-popup>
+
+
+
     <form @submit.prevent="AddProduct" class="py-5 flex flex-col gap-5">
       <admin-input 
       v-bind:inputName="'Название продукта'"

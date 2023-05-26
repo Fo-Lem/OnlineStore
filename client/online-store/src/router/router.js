@@ -33,10 +33,10 @@ const routes = [
     component: customAbout,
   },
   {
-     path: '/admin', redirect: '/admin/analytics', 
+     path: '/adminPanel', redirect: '/adminPanel/analytics', 
   },
   {
-    path: '/admin',
+    path: '/adminPanel',
     component: customAdminPanel,
     children: [
       { name: 'analutics',path: 'analytics', component: adminAnalytics },

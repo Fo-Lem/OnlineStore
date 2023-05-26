@@ -2,7 +2,7 @@
     <div class="flex gap-2 flex-col ">
         <label :for="selectIn" class="block text-md text-gray-900">{{selectName}}</label>
         <div class="flex items-center gap-5">
-            <select :id="selectIn" @:change="changeOption" class="sm:max-w-md sm:leading-6 bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg flex w-full p-2 ">
+            <select :id="selectIn" :name="selectIn" @:change="changeOption" class="sm:max-w-md sm:leading-6 bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg flex w-full p-2 ">
                 <option disabled default value="" selected>Выберите из списка</option>
                 <option v-for="(option, index) in options" :key="index" :value="index">{{option}}</option>
             </select>
