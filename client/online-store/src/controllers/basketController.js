@@ -36,19 +36,20 @@ export const summarizePriceProductBasket = (basket, catalog) => {
     if (Object.keys(basket).length > 0) {
         for (let basketKey in basket) {
             const item = basket[basketKey]
-            sum += catalog.items[item.item].price * item.count
+            sum += catalog.items[item.item[item.version]].price * item.count
         }
     }
     return sum
 }
 export const productInBasket = (basket,curentProduct)=>{
     if (Object.keys(basket).length > 0) {
-        console.log(curentProduct)
         let flagIs = true
         for (let basketKey in basket) {
             let flag = true
             for (let name of Object.keys(basket[basketKey])) {
-                if (basket[basketKey][name] != curentProduct[name]) {
+
+                if (JSON.stringify(basket[basketKey][name]) !== JSON.stringify(curentProduct[name])) {
+                    
                     if (name != "count") {
                         flag = false
                         break

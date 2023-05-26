@@ -1,4 +1,6 @@
 <template lang="">
+    
+  <admin-popup v-if="openPopup" @closePopup="openPopup=!openPopup"></admin-popup>
     <form @submit.prevent="AddProduct" class="py-5 flex flex-col gap-5">
       <admin-input 
       v-bind:inputName="'Название продукта'"
@@ -7,15 +9,17 @@
       v-bind:value="newProduct.productName"
       @updateInput="(value)=>newProduct.productName=value">
       </admin-input>
+
               <admin-select 
               :key="newProduct.productName"
               v-bind:options="getElementSelected(catalog.categories)"
               v-bind:selectIn="'Category'"
               v-bind:selectName="'Категория'"
               @changeOptionCategory="(select)=>updateSelectedCategory(select)"
+              @openPopup="openPopup=true"
               >
               </admin-select>
-              
+             
               <admin-select 
               
               v-if="newProduct.selected['category']"
@@ -53,7 +57,6 @@
                 </admin-input>
                 
               </div>
-              
 
               <div class="flex flex-col gap-2">
                   <label for="message" class="block text-md text-gray-900">Описание</label>
@@ -76,27 +79,29 @@
       </form>
 </template>
 <script>
-
+import adminPopup from './adminPopup.vue'
 export default {
+  components:{adminPopup},
   name: 'admin-add-products',
   data() {
     return {
+      openPopup:false,
       size: {
-          height: 'Высота',
-          width: 'Ширина',
-          depth: 'Глубина'
-        },
+        height: 'Высота',
+        width: 'Ширина',
+        depth: 'Глубина'
+      },
       newProduct: {
         productName: '',
         selected: {
-          category:'',
+          category: '',
           type: '',
           hero: ''
         },
         size: {
-          height: '' ,
-          width: '' ,
-          depth: '' 
+          height: '',
+          width: '',
+          depth: ''
         },
         discription: '',
         price: '',
@@ -141,14 +146,14 @@ export default {
       this.newProduct = {
         productName: '',
         selected: {
-          category:'',
+          category: '',
           type: '',
           hero: ''
         },
         size: {
-          height: '' ,
-          width: '' ,
-          depth: '' 
+          height: '',
+          width: '',
+          depth: ''
         },
         discription: '',
         price: '',

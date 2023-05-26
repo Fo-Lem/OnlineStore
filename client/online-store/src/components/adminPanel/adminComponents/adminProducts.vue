@@ -60,33 +60,33 @@
             </thead>
             <tbody >
                 
-                <tr v-for="(allProducts, index) in getAllProducts(categorys)" :key="index" class="bg-white border-b  hover:bg-gray-50 ">
+                <tr v-for="(product, index) in catalog.items" :key="index" class="bg-white border-b  hover:bg-gray-50 ">
                     <td scope="row" class="px-6 py-4 font-medium text-gray-900 gap-5 whitespace-nowrap ">
-                        {{allProducts.name}}
+                        {{product.name}}
                     </td>
                     <td class="px-6 py-4">
-                        {{categorys[allProducts.product_category_id].name}}
+                        {{catalog.categories[product.category_id].name}}
                     </td>
                     <td class="px-6 py-4">
-                        {{categorys[allProducts.product_category_id].product_types[allProducts.product_type_id].name}}
+                        {{catalog.categories[product.category_id].product_types[product.product_type_id].name}}
                     </td>
                     <td class="px-6 py-4">
-                        {{categorys[allProducts.product_category_id].product_types[allProducts.product_type_id].heroes[allProducts.product_hero_id].name}}
+                        {{catalog.heroes[product.hero_id].name}}
                     </td>
                     <td class="px-6 py-4 relative w-96 ">
                         <p class="text-ellipsis  w-96 overflow-hidden whitespace-nowrap hover:p-4 hover:z-50  hover:block hover:bg-white hover:border-2 hover:rounded-md hover:whitespace-normal hover:absolute hover:top-0 hover:text-clip hover:overflow-visible">
-                            {{allProducts.discriptions}}
+                        {{product.descriptions}}
                         </p>
                     </td>
                     <td class="px-6 py-4">
-                        {{allProducts.size}}
+                        {{product.size}}
                     </td>
                     <td class="px-6 py-4">
-                        {{allProducts.price}}р
+                        {{product.price}}р
                     </td>
                     <td class="px-6 py-4 flex justify-end gap-5 text-right">
-                        <a href="#" class="font-medium text-blue-600  hover:underline">Edit</a>
-                        <a href="#" class="font-medium text-red-600  hover:underline">Delete</a>
+                        <a href="#" class="font-medium text-blue-600  hover:underline">Изменить</a>
+                        <a href="#" class="font-medium text-red-600  hover:underline">Удалить</a>
                     </td>
                 </tr>
             </tbody>
@@ -98,7 +98,7 @@
 export default {
     name: 'admin-analytics',
     props: {
-        categorys: {
+        catalog: {
             type: Object,
             require: true
         }

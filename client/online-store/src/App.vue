@@ -146,10 +146,7 @@ export default {
           name: "Катана",
           cover_path: null,
           product_types: {
-            4: {
-              id: 4,
-              name: "Обыкновенный"
-            }
+            
           }
         }
       },
@@ -187,9 +184,20 @@ export default {
           size: "650x480",
           price: 400.0
         },
+        2: {
+          id: 2,
+          name: "Меч Илья Муромец",
+          hero_id: 3,
+          product_type_id: 4,
+          category_id: 2,
+          description: "Вес 200г. \\n Габариты 600х80х20",
+          img_path: "imgs/test",
+          size: "600x80x20",
+          price: 150.0
+        },
         3: {
           id: 3,
-          name: "Меч Илья Муромец",
+          name: "Меч Илья Муромец 2",
           hero_id: 3,
           product_type_id: 4,
           category_id: 2,

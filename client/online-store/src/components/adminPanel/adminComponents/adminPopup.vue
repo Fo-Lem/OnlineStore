@@ -1,0 +1,50 @@
+<template lang="">
+    <div class="relative  z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:ml-64 sm:items-center sm:p-0">
+            <div class="relative overflow-hidden rounded-lg bg-white text-left p-5 shadow-xl ">
+              
+              <div class="bg-white flex flex-col w-74 sm:w-96 gap-5 mb-5">
+                <admin-select 
+                v-bind:options="selected"
+                v-bind:selectIn="'Item'"
+                v-bind:selectName="'Что создаем?'"
+                @changeOptionItem="(select)=>updateSelectedItem(select)"
+                ></admin-select>
+                <admin-input v-if="selectedItem==1"
+                v-bind:inputName="'Название'"
+                v-bind:value="newItem"
+                @updateInput="(value)=>newItem=value"
+                ></admin-input>
+              </div>
+              <div class="bg-gray-50  flex flex-row-reverse">
+                <button @click="$emit('closePopup')" type="button" class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Создать</button>
+                <button @click="$emit('closePopup')" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Отмена</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+</template>
+<script>
+export default {
+  name: 'admin-popup',
+  data() {
+    return {
+      newItem: '',
+      selectedItem: '',
+      selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя' }
+    }
+  },
+  methods: {
+    updateSelectedItem(select) {
+      this.selectedItem = select
+    }
+  },
+  emits: ['closePopup']
+
+}
+</script>
