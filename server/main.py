@@ -34,4 +34,4 @@ def show_products(table:str):
 
 #include admin panel
 from admin_panel import *
-from mail import *
+# from mail import *
