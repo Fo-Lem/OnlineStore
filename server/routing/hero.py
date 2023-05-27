@@ -7,8 +7,9 @@ from fetch.json_data import heroes
 
 @app.post('/admin/hero')
 def add_hero(name=Body(embed=True)):
-    add_entity(heroes, name=name)
+    hero_id = add_entity(heroes, name=name)
     return JSONResponse({
+        'id': hero_id,
         'name': name
         },status_code=201)
 

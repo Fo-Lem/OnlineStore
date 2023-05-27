@@ -17,11 +17,12 @@ class Category(BaseModel):
 @app.post('/admin/category')
 def add_category(name=Body(embed=True),cover_img=Body(embed=True)):
     category_id = add_entity(categories, name=name, cover_img=cover_img)
-    add_entity(categories_to_types, category_id=category_id, product_type_id=-1)
+    categ_to_type_id = add_entity(categories_to_types, category_id=category_id, product_type_id=-1)
     return JSONResponse({
         'id': category_id,
         'name': name,
-        'cover_img': cover_img
+        'cover_img': cover_img,
+        'categories_to_types_id':categ_to_type_id
         },status_code=201)
 
 @app.put('/admin/category')
