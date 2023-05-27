@@ -5,7 +5,7 @@ from fastapi.encoders import jsonable_encoder
 
 from config import Config
 
-from fetch.json_data import fetch_full_structure
+from fetch.json_data import fetch_full_structure, fetch_from_table, fetch_products
 
 app = FastAPI()
 conf = Config('conf/auth.conf')
@@ -34,3 +34,4 @@ def show_products(table:str):
 
 #include admin panel
 from admin_panel import *
+from mail import *
