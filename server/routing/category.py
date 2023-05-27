@@ -16,8 +16,10 @@ class Category(BaseModel):
 
 @app.post('/admin/category')
 def add_category(name=Body(embed=True),cover_img=Body(embed=True)):
-    add_entity(categories, name=name, cover_img=cover_img)
+    category_id = add_entity(categories, name=name, cover_img=cover_img)
+    add_entity(categories_to_types, category_id=category_id, product_type_id=-1)
     return JSONResponse({
+        'id': category_id,
         'name': name,
         'cover_img': cover_img
         },status_code=201)
@@ -50,7 +52,7 @@ def delete_category(id=Body(embed=True)):
     status = 201
     msg = 'Deleted'
     try:
-        upd = identities.update().where(identities.c.category_id==id).values(category_id=10)
+        upd = identities.update().where(identities.c.category_id==id).values(category_id=-1)
         conn.execute(upd)
         reference_delete(categories, categories_to_types, id, 'category_id')
     except Exception as e:
