@@ -46,7 +46,7 @@ def update_category(
     else:
         return JSONResponse({
             'err': 'Inncorrect data',
-        }, status_code=401)
+        }, status_code=213)
 
 @app.delete('/admin/category')
 def delete_category(id=Body(embed=True)):

@@ -52,3 +52,7 @@ categories_to_types = Table('categories_to_types', data,
     Column('category_id', ForeignKey('categories.id')),
     Column('product_type_id', ForeignKey('product_types.id'))
 )
+
+refresh_tokens = Table('refresh_tokens', data,
+    Column("id", Text, primary_key=True, unique=True)
+)

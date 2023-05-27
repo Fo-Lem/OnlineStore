@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
 
 from config import Config
 
@@ -33,5 +32,5 @@ def show_products(table:str):
     return JSONResponse(fetch_from_table(table))
 
 #include admin panel
-from admin_panel import *
+from admin.panel import *
 # from mail import *

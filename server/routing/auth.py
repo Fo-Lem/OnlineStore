@@ -2,14 +2,10 @@ from fastapi import Body, Header
 from fastapi.responses import JSONResponse
 from hashlib import md5
 
-import jwt
-import time
-
+from admin.login import create_jwt_token, check_token
 from main import conf, app
 
 ADMIN = conf['admin']
-SECRET_KEY = conf['secret']
-ALGORITHM = conf['algorithm']
 
 @app.post('/admin/login')
 def home_admin(
@@ -23,28 +19,18 @@ def home_admin(
 
     if admin_login==login:
         if admin_pass == password:
-            payload = {
-                'login': login,
-                'password': password,
-                'expires': time.time()+60*30
-            }
-            token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+            token = create_jwt_token(login, password)
             return JSONResponse({'token': token})
         else:
             msg = 'Password is inncorect'
     return JSONResponse({'message': msg})
 
 @app.post('/admin/auth')
-def home_admin(
-        authorization = Header(),
+def test_token(
+        authorization=Header(),
     ):
     token = authorization.split(' ')[1]
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        if payload['expires'] <= time.time():
-            payload=None
-    except Exception as e:
-        payload = str(e)
-    if payload:
-        return JSONResponse({'message': payload})
-    return JSONResponse({'message': 'token is not valid'})
+    is_valid = check_token(token)
+    if is_valid:
+        return JSONResponse({'message': 'Token is valid'})
+    return JSONResponse({'err': 'Invalid token'})
