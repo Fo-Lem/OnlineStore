@@ -1,12 +1,12 @@
 import jwt
 import time
 
-from main import conf
+from main import auth_conf
 
-SECRET_KEY = conf['secret']
-ALGORITHM = conf['algorithm']
-JWT_EXPIRES_MINUTES = conf['jwt_expires_minutes']
-REFRESH_EXPIRES_DAYS = conf['refresh_expires_days']
+SECRET_KEY = auth_conf['secret']
+ALGORITHM = auth_conf['algorithm']
+JWT_EXPIRES_MINUTES = auth_conf['jwt_expires_minutes']
+REFRESH_EXPIRES_DAYS = auth_conf['refresh_expires_days']
 
 def check_token(token):
     try:

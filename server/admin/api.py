@@ -1,9 +1,7 @@
 from sqlalchemy import Row
 from sqlalchemy import delete, Table
-from sqlalchemy.orm import Session
 
 from database.structure import conn
-
 
 def add_entity(table, **kwargs):
     ins = table.insert().values(**kwargs)

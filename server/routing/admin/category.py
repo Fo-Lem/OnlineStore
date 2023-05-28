@@ -6,7 +6,7 @@ from typing import Union
 from main import app
 
 from admin.api import add_entity, update_entity, reference_delete, conn
-from fetch.json_data import categories, categories_to_types, identities
+from database.structure import categories, categories_to_types, identities
 
 
 class Category(BaseModel):

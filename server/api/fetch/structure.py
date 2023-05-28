@@ -1,7 +1,9 @@
 from sqlalchemy import select
 
-from fetch.__req_db_struct import *
-from ._partial_struct import fetch_short_structure
+from api.fetch.tabels import fetch_from_table, fetch_products
+from database.structure import categories_to_types, categories, product_types, heroes, conn
+
+table_set = [categories, product_types, heroes]
 
 def fetch_full_structure():
     
@@ -36,46 +38,35 @@ def fetch_full_structure():
                 row.product_type_id: product_type
             }
     
-    heroes = fetch_from_table('heroes')
+    json_heroes = fetch_from_table('heroes')
     json_items = fetch_products()
 
     json_res = {
         'categories': json_categories,
-        'heroes': heroes,
+        'heroes': json_heroes,
         'items': json_items,
     }
     return json_res
 
 
-def fetch_products():
-    json_res = {}
-    sel = select(
-        identities, items.c.size, items.c.price, items.c.id
-        ).where(items.c.identity_id==identities.c.id)
-    for row in conn.execute(sel):
-        json_row = {}
-        for field in row._fields:
-            json_row[field] = row.__getattr__(field)
-        json_res[row.id] = json_row
-    return json_res
 
 
-def fetch_from_table(tablename: str):
-    tables = {
-        'categories': categories,
-        'product_types': product_types,
-        'heroes': heroes,
-        'categories_to_types': categories_to_types,
-        'items': items,
-    }
-    table = tables.get(tablename, None)
-    if table == None:
-        return {'msg': 'Table not exist!'}
+def fetch_short_structure(table_ind:int, *fields):
     json_res = {}
+    table = table_set[table_ind]
     sel = table.select()
-    for row in conn.execute(sel):
-        json_row = {}
-        for field in row._fields:
-            json_row[field] = row.__getattr__(field)
-        json_res[row.id] = json_row
+    res = conn.execute(sel)
+
+    for row in res:
+        json_res[row.id] = {}
+        for field in fields:
+            json_text = None 
+            try:
+                json_text = row.__getattr__(field)
+            except AttributeError:
+                pass
+            json_res[row.id][field] = json_text
+        if table_ind < len(table_set)-1:
+            next_table = table_set[table_ind+1]
+            json_res[row.id][next_table.fullname] =  fetch_short_structure(table_ind+1, *next_table.c.keys())
     return json_res

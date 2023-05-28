@@ -1,8 +1,9 @@
 from fastapi import Body
+from fastapi.responses import JSONResponse
 
-from main import app, JSONResponse
+from main import app
 from admin.api import add_entity, update_entity, reference_delete
-from fetch.json_data import product_types, categories_to_types
+from database.structure import categories_to_types, product_types
 
 @app.post('/admin/product_type')
 def add_product_type(category_id:str=Body(embed=True),name=Body(embed=True)):

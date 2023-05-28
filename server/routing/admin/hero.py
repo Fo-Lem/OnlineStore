@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 
 from main import app
 from admin.api import add_entity, update_entity, delete_entity
-from fetch.json_data import heroes
+from database.structure import heroes
 
 @app.post('/admin/hero')
 def add_hero(name=Body(embed=True)):

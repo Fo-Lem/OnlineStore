@@ -1,9 +1,10 @@
 from fastapi import File, Body, UploadFile
+from fastapi.responses import JSONResponse
 
 import shutil
 import os
 
-from main import app, JSONResponse
+from main import app
 
 @app.post('/admin/image')
 def put_image(file:UploadFile=File(), path=Body(embed=True), name=Body(embed=True)):

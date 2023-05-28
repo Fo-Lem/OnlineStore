@@ -1,13 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
 from config import Config
 
-from fetch.json_data import fetch_full_structure, fetch_from_table, fetch_products
-
 app = FastAPI()
-conf = Config('conf/auth.conf')
+auth_conf = Config('conf/auth.conf')
+mail_conf = Config('conf/mail.conf')
 
 origins = [
     "*"
@@ -21,16 +19,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get('/api/catalog/')
-def home():
-    return fetch_full_structure()
-
-@app.get('/api/data/{table}')
-def show_products(table:str):
-    if table == 'products':
-        return JSONResponse(fetch_products())
-    return JSONResponse(fetch_from_table(table))
+import routing.clients.catalog 
+import routing.clients.tables 
 
 #include admin panel
 from admin.panel import *
-# from mail import *
+# from routing.mail import *

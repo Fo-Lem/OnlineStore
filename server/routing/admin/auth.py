@@ -3,9 +3,9 @@ from fastapi.responses import JSONResponse
 from hashlib import md5
 
 from admin.login import create_jwt_token, check_token
-from main import conf, app
+from main import auth_conf, app
 
-ADMIN = conf['admin']
+ADMIN = auth_conf['admin']
 
 @app.post('/admin/login')
 def home_admin(

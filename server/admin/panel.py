@@ -1,7 +1,7 @@
-from routing.auth import *
-from routing.category import *
-from routing.hero import *
-from routing.product_type import *
-from routing.product import *
+from routing.admin.auth import *
+from routing.admin.category import *
+from routing.admin.hero import *
+from routing.admin.product_type import *
+from routing.admin.product import *
 
-from routing.image import *
+from routing.admin.image import *
