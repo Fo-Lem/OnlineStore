@@ -6,3 +6,6 @@ admin/__pycache__/
 conf/
 database/conn_settings.py
 ../imgs/*
+api/fetch/__pycache__/
+routing/admin/__pycache__/
+routing/clients/__pycache__/

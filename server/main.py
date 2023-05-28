@@ -23,5 +23,5 @@ import routing.clients.catalog
 import routing.clients.tables 
 
 #include admin panel
-from admin.panel import *
-# from routing.mail import *
+import admin.panel
+# import routing.mail
