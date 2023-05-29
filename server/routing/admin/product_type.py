@@ -35,6 +35,8 @@ def update_product_type(id=Body(embed=True), name=Body(embed=True)):
 
 @app.delete('/admin/product_type')
 def delete_product_type(id=Body(embed=True)):
+    msg = 'Deleted'
+    status=201
     try:
         reference_delete(product_types, categories_to_types, id, 'product_type_id')
     except Exception as e:
