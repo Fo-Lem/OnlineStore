@@ -5,7 +5,7 @@ import customAdminPanel from "../components/adminPanel/customAdminPanel.vue"
 import customBasket from '../components/basketPage/customBasket.vue';
 import customAbout from '../components/aboutPage/customAbout.vue';
 import adminAnalytics from '../components/adminPanel/adminComponents/adminAnalytics.vue';
-import adminAddProductsForm from '../components/adminPanel/adminComponents/adminAddProductsForm.vue';
+import adminPanelCreations from '../components/adminPanel/adminComponents/adminPanelCreations.vue';
 import adminProducts from '../components/adminPanel/adminComponents/adminProducts.vue';
 import adminAdmins from '../components/adminPanel/adminComponents/adminAdmins.vue';
 import { createRouter } from "vue-router"
@@ -41,7 +41,7 @@ const routes = [
     children: [
       { name: 'analutics',path: 'analytics', component: adminAnalytics },
       { name: 'products',path: 'products', component: adminProducts },
-      { name: 'addProductsForm',path: 'add-products-form', component: adminAddProductsForm },
+      { name: 'panelCreations',path: 'admin-panel-creations', component: adminPanelCreations },
       { name: 'admins',path: 'admins', component: adminAdmins }
     ]
   }

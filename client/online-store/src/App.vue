@@ -8,7 +8,7 @@
     <custom-error-page v-if="error" v-bind:error="error"></custom-error-page>
     <custom-loading-spiner v-if="!loading"></custom-loading-spiner>
 
-    <router-view v-if="loading" v-bind:basket="basket" v-bind:catalog="catalog" v-bind:searchInput="searchInput"
+    <router-view v-if="loading&&!error" v-bind:basket="basket" v-bind:catalog="catalog" v-bind:searchInput="searchInput"
       @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"
       @update-count-product-basket="(newCount, id) => { updateCountProductBasket(newCount, id) }"
       @add-product-basket="(curentProduct) => { addProductBasket(basket, curentProduct) }">
@@ -63,7 +63,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          //this.error = error;
+          this.error = error;
         })
         .finally(() => {
           this.loading = true;
@@ -230,8 +230,8 @@ export default {
         }
       }
     }
-    //this.getCategorys()
-    this.loading = true;
+    this.getCategorys()
+    //this.loading = true;
   }
 
 
