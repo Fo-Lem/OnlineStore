@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-if="$router.currentRoute.value.path.split('/')[1] != 'adminPanel'">
+    <div v-if="$router.currentRoute.value.path.split('/')[1] != '_adminPanel'">
       <custom-header></custom-header>
       <hr class="mx-auto max-w-7xl">
     </div>
@@ -14,7 +14,7 @@
       @add-product-basket="(curentProduct) => { addProductBasket(basket, curentProduct) }">
     </router-view>
 
-    <div v-if="$router.currentRoute.value.path.split('/')[1] != 'adminPanel'">
+    <div v-if="$router.currentRoute.value.path.split('/')[1] != '_adminPanel'">
       <hr class="mx-auto max-w-7xl">
       <custom-footer></custom-footer>
     </div>
