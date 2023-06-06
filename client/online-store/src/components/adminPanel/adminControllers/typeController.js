@@ -15,9 +15,12 @@ import axios from "axios";
         })
       
     }
-    async updateType(data) {
+    async updateType(typeId,newValue) {
       await axios
-        .put('http://176.99.12.84/admin/product_type',data)
+        .put('http://176.99.12.84/admin/product_type',{data: {
+          id: typeId,
+          name:newValue
+        }})
         .then(response => {
           console.log(response.data)
           return response.data;

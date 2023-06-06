@@ -4,7 +4,9 @@
   <admin-delete-popup v-if="openDeletePopup" @closeDeletePopup="openDeletePopup = !openDeletePopup"
     v-bind:AdminController="AdminController" v-bind:catalog="catalog"
     v-bind:categorys="getElementSelected(catalog.categories)"></admin-delete-popup>
-
+  <admin-update-popup v-if="openUpdatePopup" @closeUpdatePopup="openUpdatePopup = !openUpdatePopup"
+    v-bind:catalog="catalog" v-bind:categorys="getElementSelected(catalog.categories)"
+    v-bind:AdminController="AdminController"></admin-update-popup>
 
   <form @submit.prevent="AddProduct" class="py-5 flex flex-col gap-5">
     <admin-input v-bind:inputName="'Название продукта'" v-bind:inputIn="'productName'"
@@ -15,7 +17,7 @@
     <admin-select :key="newProduct.productName" v-bind:options="getElementSelected(catalog.categories)"
       v-bind:selectIn="'Category'" v-bind:selectName="'Категория'"
       @changeOptionCategory="(select) => updateSelectedCategory(select)" @openAddPopup="openAddPopup = true"
-      @openDeletePopup="openDeletePopup = true">
+      @openDeletePopup="openDeletePopup = true" @openUpdatePopup="openUpdatePopup = true">
     </admin-select>
 
     <admin-select v-if="newProduct.selected['category']" :key="newProduct.selected['category']"
@@ -25,8 +27,7 @@
     <admin-select v-if="newProduct.selected['type']" :key="newProduct.selected['type']"
       v-bind:options="getElementSelected(catalog.heroes)" v-bind:selectIn="'Hero'" v-bind:selectName="'Герой'"
       @changeOptionHero="(select) => newProduct.selected['hero'] = select">
-    </admin-select>
-
+  </admin-select>
 
     <div class="flex flex-col gap-2">
       <div>
@@ -62,16 +63,18 @@
   </form>
 </template>
 <script>
-import adminAddPopup from './adminAddPopup.vue'
-import adminDeletePopup from './adminDeletePopup.vue'
+import adminAddPopup from './popup/adminAddPopup.vue'
+import adminDeletePopup from './popup/adminDeletePopup.vue'
+import adminUpdatePopup from './popup/adminUpdatePopup.vue'
 // import { createProduct } from "../../../controllers/productController"
 export default {
-  components: { adminAddPopup, adminDeletePopup },
+  components: { adminAddPopup, adminDeletePopup, adminUpdatePopup },
   name: 'admin-panel-creations',
   data() {
     return {
       openAddPopup: false,
       openDeletePopup: false,
+      openUpdatePopup: false,
       size: {
         height: 'Высота',
         width: 'Ширина',
@@ -145,19 +148,19 @@ export default {
         product_type_id: this.newProduct.selected.type,
         hero_id: this.newProduct.selected.hero,
         description: this.newProduct.description,
-        art: `C${this.newProduct.selected.category}T${this.newProduct.selected.type}H${this.newProduct.selected.hero}V${count + 1}`,
-        img_path: `../imgs/${this.catalog.categories[this.newProduct.selected.category].name}`,
+        art: `D${Date.now()}C${this.newProduct.selected.category}T${this.newProduct.selected.type}H${this.newProduct.selected.hero}V${count + 1}`,
+        img_path: `/imgs/items/${this.catalog.categories[this.newProduct.selected.category].name}`,
         size: `${this.newProduct.size.height}x${this.newProduct.size.width}x${this.newProduct.size.depth}`,
         price: this.newProduct.price
       }
-      this.newProduct.photos.forEach(async(photo,index) => {
+      this.newProduct.photos.forEach(async (photo, index) => {
         let fd = new FormData()
         fd.append('file', photo)
-        fd.append('path', this.catalog.categories[obj.category_id].name)
-        fd.append('name', `${obj.art+'.'+index}.jpg`)
+        fd.append('path', `items/${this.catalog.categories[obj.category_id].name}`)
+        fd.append('name', `${obj.art + '_' + index}.jpg`)
         await this.AdminController.imageController.createImage(fd)
       });
-       await this.AdminController.productController.createProduct(obj)
+      await this.AdminController.productController.createProduct(obj)
     },
     remoteNewProduct() {
       this.newProduct = {

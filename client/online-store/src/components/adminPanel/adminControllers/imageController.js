@@ -19,19 +19,6 @@ export default class ImageController {
     })
     
   }
-  async updateImage(data) {
-    await axios
-      .put('http://176.99.12.84/admin/hero',data)
-      .then(response => {
-        console.log(response.data)
-        return response.data;
-      })
-      .catch(error => {
-        console.log(error)
-        return error;
-      })
-    
-  }
   async deleteImage(cover_path){
     await axios
       .delete('http://176.99.12.84/admin/image',{data: {

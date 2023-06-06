@@ -231,7 +231,7 @@ export default {
       }
     }
     this.getCategorys()
-    //this.loading = true;
+    // this.loading = true;
   }
 
 
@@ -240,4 +240,3 @@ export default {
 
 
 </script>
-<style scoped></style>

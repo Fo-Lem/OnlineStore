@@ -13,9 +13,14 @@ export default class CategoruController {
       })
     
   }
-  async updateCategory(data) {
-    await axios
-      .put('http://176.99.12.84/admin/category',data)
+  async updateCategory(categoryId,newValue,cover_path) {
+    if(cover_path){
+      await axios
+      .put('http://176.99.12.84/admin/category',{data: {
+        id: categoryId,
+        name:newValue,
+        cover_img:cover_path
+      }})
       .then(response => {
         console.log(response.data)
         return response.data;
@@ -24,6 +29,23 @@ export default class CategoruController {
         console.log(error)
         return error;
       })
+    }else{
+      await axios
+      .put('http://176.99.12.84/admin/category',{data: {
+        id: categoryId,
+        name:newValue
+
+      }})
+      .then(response => {
+        console.log(response.data)
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error)
+        return error;
+      })
+    }
+    
     
   }
   async deleteCategory(categoryId){

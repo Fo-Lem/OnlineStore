@@ -5,7 +5,7 @@
         <div class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:ml-64 sm:items-center sm:p-0">
             <div class="relative overflow-hidden rounded-lg bg-white text-left p-5 shadow-xl ">
-              <form id="createItem" @submit.prevent="deleteItem" action="#">
+              <form id="deleteItem" @submit.prevent="deleteItem" action="#">
               <div class="bg-white flex flex-col w-74 sm:w-96 gap-5 mb-5">
                 <admin-select 
                 v-bind:options="selected"
@@ -94,9 +94,12 @@ export default {
       this.selectedHero = select
 
     },
+    uploadPhoto(photos) {
+      this.photos = photos
+
+    },
     async deleteItem() {
       if (this.selectedItem == 1) {
-        
         await this.AdminController.imageController.deleteImage(this.catalog.categories[this.selectedCategory].cover_path)
         await this.AdminController.categoryController.deleteCategory(this.selectedCategory)
       }

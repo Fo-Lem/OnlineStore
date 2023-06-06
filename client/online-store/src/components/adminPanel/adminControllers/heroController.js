@@ -14,9 +14,13 @@ import axios from "axios";
         })
       
     }
-    async updateHero(data) {
+    async updateHero(heroId,newValue) {
       await axios
-        .put('http://176.99.12.84/admin/hero',data)
+        .put('http://176.99.12.84/admin/hero',{
+          id: heroId,
+          name:newValue
+  
+        })
         .then(response => {
           console.log(response.data)
           return response.data;
