@@ -16,11 +16,11 @@ export default class CategoruController {
   async updateCategory(categoryId,newValue,cover_path) {
     if(cover_path){
       await axios
-      .put('http://176.99.12.84/admin/category',{data: {
+      .put('http://176.99.12.84/admin/category',{
         id: categoryId,
         name:newValue,
         cover_img:cover_path
-      }})
+      })
       .then(response => {
         console.log(response.data)
         return response.data;
@@ -31,11 +31,11 @@ export default class CategoruController {
       })
     }else{
       await axios
-      .put('http://176.99.12.84/admin/category',{data: {
+      .put('http://176.99.12.84/admin/category',{
         id: categoryId,
         name:newValue
 
-      }})
+      })
       .then(response => {
         console.log(response.data)
         return response.data;

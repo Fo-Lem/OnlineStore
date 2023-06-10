@@ -94,7 +94,7 @@
                         {{product.price}}р
                     </td>
                     <td class="px-6 py-4 flex flex-col gap-2">
-                        <router-link class="font-medium text-blue-700  hover:underline" :to="{ name: 'panelUpdate', params: { itemId: product.id } }">
+                        <router-link class="font-medium text-blue-700 text-center hover:underline" :to="{ name: 'panelUpdate', params: { itemId: product.id } }">
                             Изменить
                           </router-link>
                         <button @click="deleteItem(product)" class="font-medium text-red-700  hover:underline">Удалить</button>
@@ -124,6 +124,9 @@ export default {
             this.AdminController.imageController.deleteImage(`${product.img_path}/${product.art}_${i}.jpg`)
             }
             this.AdminController.productController.deleteProduct(product.id)
+
+            this.$emit('updateData')
+            
         }
 
     }

@@ -52,6 +52,9 @@
 <script>
 export default {
   name: 'admin-delete-popup',
+
+  emits: ['closeDeletePopup', 'updateData'],
+
   data() {
     return {
       selectedItem: '',
@@ -76,7 +79,7 @@ export default {
     }
   },
   methods: {
-    
+
     updateSelectedItem(select) {
       this.selectedItem = select
       this.selectedCategory = ''
@@ -115,11 +118,10 @@ export default {
       this.selectedCategory = ''
       this.selectedType = ''
       this.selectedHero = ''
-
+      this.$emit('updateData')
       this.$emit('closeDeletePopup')
     }
-  },
-  emits: ['closeDeletePopup']
+  }
 
 }
 </script>

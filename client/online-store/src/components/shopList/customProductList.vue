@@ -3,13 +3,13 @@
     <div class="mx-auto max-w-2xl px-4 pt-3 pb-6 flex flex-col items-center gap-6 sm:px-6  lg:max-w-7xl lg:px-8">
       <div v-if="type=='categoryList'" class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         <router-link  v-for="category in catalog['categories']" :key="category.id" :to="{ name: 'productList', params: { categoryId: category.id } }">
-          <custom-list v-if="Object.keys(category.product_types).length>0" v-bind:list="category"></custom-list>
+          <custom-list v-if="Object.keys(category.product_types).length>1&&category.name!='Без категории'" v-bind:list="category"></custom-list>
         </router-link>
       </div>
 
       <div v-if="type=='productList'" class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         <router-link v-for="type in catalog['categories'][$route.params.categoryId].product_types" v-bind:basket="basket" :key="type.id" :to="{ name: 'productOverviews', params: { productId: type.id,heroId: searchFirstHero($route.params.categoryId,type.id) } }">
-          <custom-list v-bind:list="type"></custom-list>
+          <custom-list v-bind:list="type" v-if="type.name!='-'"></custom-list>
         </router-link>
       </div>
 

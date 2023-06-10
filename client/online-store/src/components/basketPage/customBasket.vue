@@ -75,15 +75,12 @@ export default {
     },
     updateCount(count,index){
       if(count>0){
-        console.log(count,index)
         this.$emit('updateCountProductBasket',count,index)
       }
-      
     }
   },
   mounted(){
     console.log(this.basket)
-    console.log(this.catalog)
     this.sumPrice=summarizePriceProductBasket(this.basket,this.catalog)
   },
   watch:{

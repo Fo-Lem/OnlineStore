@@ -130,10 +130,12 @@ export default {
         console.log(this.selectedHero, this.newValue)
         await this.AdminController.heroController.updateHero(this.selectedHero, this.newValue)
       }
+      this.$emit('updateData')
       this.$emit('closeUpdatePopup')
+      
     }
   },
-  emits: ['closeUpdatePopup']
+  emits: ['closeUpdatePopup','updateData']
 
 }
 </script>

@@ -82,17 +82,17 @@
      
      <div class="p-4 sm:ml-64">
       <admin-header></admin-header>
-      <router-view v-bind:AdminController="AdminController"  v-bind:catalog="catalog"></router-view>
+      <router-view v-bind:AdminController="AdminController" v-bind:catalog="catalog" @updateData="$emit('updateData')"></router-view>
      </div>
     </div> 
   </div>
 </template>
 <script>
-import  CategoruController  from "./adminControllers/categoryController"
-import  ProductController  from "./adminControllers/productController"
-import  TypeController  from "./adminControllers/typeController"
-import  HeroController  from "./adminControllers/heroController"
-import  ImageController  from "./adminControllers/imageController"
+import CategoruController from "./adminControllers/categoryController"
+import ProductController from "./adminControllers/productController"
+import TypeController from "./adminControllers/typeController"
+import HeroController from "./adminControllers/heroController"
+import ImageController from "./adminControllers/imageController"
 import adminHeader from './adminComponents/adminHeader.vue';
 export default {
    components: { adminHeader },
@@ -102,31 +102,32 @@ export default {
          type: Object,
          require: true
       },
-      
+
    },
 
    data() {
       return {
          mobileMenuOpen: false,
-         adminController:{}
+         adminController: {}
 
       }
    },
 
    methods: {
-      
+
    },
 
+   emits: ['updateData'],
+
    beforeMount() {
-      class AdminController{
-         categoryController=new CategoruController
-         productController=new ProductController
-         typeController=new TypeController
-         heroController=new HeroController
-         imageController=new ImageController
+      class AdminController {
+         categoryController = new CategoruController
+         productController = new ProductController
+         typeController = new TypeController
+         heroController = new HeroController
+         imageController = new ImageController
       }
-      this.AdminController=new AdminController
-      console.log(this.AdminController)
+      this.AdminController = new AdminController
    }
 
 }

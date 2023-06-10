@@ -104,11 +104,11 @@ export default {
       }
 
 
-
+      this.$emit('updateData')
       this.$emit('closeAddPopup')
     }
   },
-  emits: ['closeAddPopup']
+  emits: ['closeAddPopup','updateData']
 
 }
 </script>

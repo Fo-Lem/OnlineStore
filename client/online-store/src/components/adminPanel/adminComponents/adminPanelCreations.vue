@@ -1,11 +1,12 @@
 <template>
-  <admin-add-popup v-if="openAddPopup" @closeAddPopup="openAddPopup = !openAddPopup"
+  <admin-add-popup v-if="openAddPopup" @updateData="$emit('updateData')" @closeAddPopup="openAddPopup = !openAddPopup"
     v-bind:AdminController="AdminController" v-bind:categorys="getElementSelected(catalog.categories)"></admin-add-popup>
-  <admin-delete-popup v-if="openDeletePopup" @closeDeletePopup="openDeletePopup = !openDeletePopup"
-    v-bind:AdminController="AdminController" v-bind:catalog="catalog"
-    v-bind:categorys="getElementSelected(catalog.categories)"></admin-delete-popup>
-  <admin-update-popup v-if="openUpdatePopup" @closeUpdatePopup="openUpdatePopup = !openUpdatePopup"
-    v-bind:catalog="catalog" v-bind:categorys="getElementSelected(catalog.categories)"
+  <admin-delete-popup v-if="openDeletePopup" @updateData="$emit('updateData')"
+    @closeDeletePopup="openDeletePopup = !openDeletePopup" v-bind:AdminController="AdminController"
+    v-bind:catalog="catalog" v-bind:categorys="getElementSelected(catalog.categories)"></admin-delete-popup>
+  <admin-update-popup v-if="openUpdatePopup" @updateData="$emit('updateData')"
+    @closeUpdatePopup="openUpdatePopup = !openUpdatePopup" v-bind:catalog="catalog"
+    v-bind:categorys="getElementSelected(catalog.categories)"
     v-bind:AdminController="AdminController"></admin-update-popup>
 
   <form @submit.prevent="AddProduct" class="py-5 flex flex-col gap-5">
@@ -27,7 +28,7 @@
     <admin-select v-if="newProduct.selected['type']" :key="newProduct.selected['type']"
       v-bind:options="getElementSelected(catalog.heroes)" v-bind:selectIn="'Hero'" v-bind:selectName="'Герой'"
       @changeOptionHero="(select) => newProduct.selected['hero'] = select">
-  </admin-select>
+    </admin-select>
 
     <div class="flex flex-col gap-2">
       <div>
@@ -70,6 +71,7 @@ import adminUpdatePopup from './popup/adminUpdatePopup.vue'
 export default {
   components: { adminAddPopup, adminDeletePopup, adminUpdatePopup },
   name: 'admin-panel-creations',
+  emits: ['updateData'],
   data() {
     return {
       openAddPopup: false,
@@ -161,6 +163,8 @@ export default {
         await this.AdminController.imageController.createImage(fd)
       });
       await this.AdminController.productController.createProduct(obj)
+      this.$emit('updateData')
+      this.remoteNewProduct()
     },
     remoteNewProduct() {
       this.newProduct = {
@@ -175,7 +179,7 @@ export default {
           width: '',
           depth: ''
         },
-        discription: '',
+        description: '',
         price: '',
         photos: []
       }

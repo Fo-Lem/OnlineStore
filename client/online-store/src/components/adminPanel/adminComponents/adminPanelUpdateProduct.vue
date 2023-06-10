@@ -1,13 +1,4 @@
 <template>
-  <!-- <admin-add-popup v-if="openAddPopup" @closeAddPopup="openAddPopup = !openAddPopup"
-    v-bind:AdminController="AdminController" v-bind:categorys="getElementSelected(catalog.categories)"></admin-add-popup>
-  <admin-delete-popup v-if="openDeletePopup" @closeDeletePopup="openDeletePopup = !openDeletePopup"
-    v-bind:AdminController="AdminController" v-bind:catalog="catalog"
-    v-bind:categorys="getElementSelected(catalog.categories)"></admin-delete-popup>
-  <admin-update-popup v-if="openUpdatePopup" @closeUpdatePopup="openUpdatePopup = !openUpdatePopup"
-    v-bind:catalog="catalog" v-bind:categorys="getElementSelected(catalog.categories)"
-    v-bind:AdminController="AdminController"></admin-update-popup> -->
-
   <form @submit.prevent="UpdateProduct" class="py-5 flex flex-col gap-5">
     <admin-input v-bind:inputName="'Название продукта'" v-bind:inputIn="'productName'"
       v-bind:placeholder="`Меч длинный &laquoАлеша Попович&raquo`" v-bind:value="curentProduct.name"
@@ -70,18 +61,10 @@
   </form>
 </template>
 <script>
-import adminAddPopup from './popup/adminAddPopup.vue'
-import adminDeletePopup from './popup/adminDeletePopup.vue'
-import adminUpdatePopup from './popup/adminUpdatePopup.vue'
-// import { createProduct } from "../../../controllers/productController"
 export default {
-  components: { adminAddPopup, adminDeletePopup, adminUpdatePopup },
   name: 'admin-panel-update-product',
   data() {
     return {
-      // openAddPopup: false,
-      // openDeletePopup: false,
-      // openUpdatePopup: false,
       size: {
         height: 'Высота',
         width: 'Ширина',
@@ -100,6 +83,7 @@ export default {
       require: true
     }
   },
+  emits: ['updateData'],
 
   methods: {
     sizeParser(size){
@@ -107,10 +91,8 @@ export default {
       this.curentProduct.size={height: arr[0],
         width: arr[1],
         depth: arr[2]}
-        return this.curentProduct.size
     },
       
-
     getElementSelected(items) {
       console.log()
       console.log(items)
@@ -140,17 +122,19 @@ export default {
         price: this.curentProduct.price
       }
       await this.AdminController.productController.updateProduct(obj)
+      this.$emit('updateData')
+      this.$router.push({ name: 'products'})
     },
 
 
 
   },
   beforeMount() {
-    this.curentProduct = this.catalog.items[this.$route.params.itemId]
+    Object.assign(this.curentProduct,this.catalog.items[this.$route.params.itemId])
     this.curentProduct.newCategory_id=this.curentProduct.category_id
     this.curentProduct.newProduct_type_id=this.curentProduct.product_type_id
     this.curentProduct.newHero_id=this.curentProduct.hero_id
-    this.sizeParser( this.curentProduct.size)
+    this.sizeParser(this.curentProduct.size)
       this.curentProduct.newDescription=this.curentProduct.description
       this.curentProduct.photos=[]
     console.log(this.curentProduct)
