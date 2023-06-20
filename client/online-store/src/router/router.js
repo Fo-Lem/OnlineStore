@@ -34,7 +34,7 @@ const routes = [
     component: customAbout,
   },
   {
-     path: '/_adminPanel', redirect: '/_adminPanel/analytics', 
+     path: '/_adminPanel', redirect: '/_adminPanel/products', 
   },
   {
     path: '/_adminPanel',

@@ -3,7 +3,7 @@
     <div  class=" max-w-7xl mx-auto pt-3 px-6">
       
       
-      <div v-if="$route.params.heroId!=0" class=" flex flex-col justify-between gap-5 lg:flex-row">
+      <div v-if="$route.params.heroId>0&&catalog.items[curentProduct.item[curentProduct.version]]" class=" flex flex-col justify-between gap-5 lg:flex-row">
         <!-- Галлерея -->
         <div class="max-w-5xl ">
           <div>
@@ -107,7 +107,7 @@
 <script>
 import { productInBasket } from "../../controllers/basketController";
 export default {
-  name: "custom-cart",
+  name: "custom-product-overviews",
   emits: ['addProductBasket'],
 
   data() {
@@ -158,7 +158,7 @@ export default {
         }, {});
       };
     },
-    updateCurentProduct(newHeroId,newVersion=0) {
+    updateCurentProduct(newHeroId, newVersion = 0) {
       this.curentProduct = {
         item: [],
         version: newVersion,
@@ -173,13 +173,12 @@ export default {
         }
         const groupByHeroId = this.groupBy("hero_id");
         this.variants = groupByHeroId(this.variants)
+
       }
       for (const item in this.variants[newHeroId]) {
         this.curentProduct.item.push(this.variants[newHeroId][item].id)
       }
       this.inBasket = productInBasket(this.basket, this.curentProduct)
-      // console.log(this.variants[newHeroId])
-      // console.log(this.curentProduct)
     }
   },
   beforeMount() {

@@ -24,6 +24,19 @@ export const deleteProductBasket = (id) => {
     saveDataBasket(basket)
     return basket
 }
+export const correctBasket = (basket, catalog) => {
+    for (const [key, obj] of Object.entries(basket)) {
+        if(!catalog.items[obj.item[obj.version]]){
+            console.log(basket[key])
+             delete basket[key] 
+        } ;
+        
+      }
+
+
+    saveDataBasket(basket)
+    return basket
+}
 
 export const updateCountProductBasket = (newCount, id) => {
     let basket = getDataBasket()

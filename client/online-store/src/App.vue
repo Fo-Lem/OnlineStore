@@ -27,7 +27,7 @@
 import customHeader from "./components/header/customHeader.vue"
 import customFooter from "./components/footer/customFooter.vue"
 import customErrorPage from './components/errorPage/customErrorPage.vue'
-import { addProductBasket, deleteProductBasket, updateCountProductBasket, getDataBasket } from "./controllers/basketController";
+import { addProductBasket, deleteProductBasket, updateCountProductBasket, getDataBasket,correctBasket } from "./controllers/basketController";
 import { getCategorys } from "./controllers/productController";
 
 
@@ -59,6 +59,8 @@ export default {
     async initCatalog() {
       await getCategorys().then(response => {
         this.catalog = response.data;
+        correctBasket(this.basket,this.catalog)
+
       })
         .catch(error => {
           console.log(error)

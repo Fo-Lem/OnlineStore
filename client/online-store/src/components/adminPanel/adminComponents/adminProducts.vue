@@ -1,6 +1,6 @@
 <template lang="">
     <div class="relative flex flex-col gap-5 ">
-        <custom-search-input></custom-search-input>
+        <custom-search-input @updateSearchInput="(value)=>{searchQuery=value}"></custom-search-input>
         <table class="w-full text-sm text-left text-gray-500 ">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                 <tr>
@@ -66,7 +66,7 @@
             </thead>
             <tbody >
                 
-                <tr v-for="(product, index) in catalog.items" :key="index" class="bg-white border-b  hover:bg-gray-50 ">
+                <tr v-for="(product, index) in sortedandsearchedItems" :key="index" class="bg-white border-b  hover:bg-gray-50 ">
                     <td scope="row" class="px-6 py-4 font-medium text-gray-900 gap-5 whitespace-nowrap ">
                         {{product.id}}
                     </td>
@@ -108,6 +108,11 @@
 
 export default {
     name: 'admin-analytics',
+    data() {
+        return {
+            searchQuery:''
+        }
+    },
     props: {
         catalog: {
             type: Object,
@@ -119,16 +124,28 @@ export default {
         },
     },
     methods: {
-        deleteItem(product){
+        deleteItem(product) {
             for (let i = 0; i < 3; i++) {
-            this.AdminController.imageController.deleteImage(`${product.img_path}/${product.art}_${i}.jpg`)
+                this.AdminController.imageController.deleteImage(`${product.img_path}/${product.art}_${i}.jpg`)
             }
             this.AdminController.productController.deleteProduct(product.id)
 
             this.$emit('updateData')
-            
+
         }
 
+    },
+    computed: {
+        sortedandsearchedItems() {
+            
+            const searchObj={}
+            for (const [key, obj] of Object.entries(this.catalog.items)) {
+                if(obj.name.toLowerCase().includes(this.searchQuery.toLowerCase())){
+                    searchObj[key]=obj
+                }
+            }
+            return searchObj
+        },
     }
 }
 </script>

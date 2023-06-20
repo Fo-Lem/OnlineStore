@@ -88,11 +88,7 @@
   </div>
 </template>
 <script>
-import CategoruController from "./adminControllers/categoryController"
-import ProductController from "./adminControllers/productController"
-import TypeController from "./adminControllers/typeController"
-import HeroController from "./adminControllers/heroController"
-import ImageController from "./adminControllers/imageController"
+import AdminControllers from "./adminControllers/adminControllers"
 import adminHeader from './adminComponents/adminHeader.vue';
 export default {
    components: { adminHeader },
@@ -113,21 +109,10 @@ export default {
       }
    },
 
-   methods: {
-
-   },
-
    emits: ['updateData'],
 
    beforeMount() {
-      class AdminController {
-         categoryController = new CategoruController
-         productController = new ProductController
-         typeController = new TypeController
-         heroController = new HeroController
-         imageController = new ImageController
-      }
-      this.AdminController = new AdminController
+      this.AdminController = new AdminControllers
    }
 
 }

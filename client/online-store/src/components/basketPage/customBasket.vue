@@ -1,6 +1,6 @@
 <template lang="">
   <div class="bg-white p-10">
-    <div class="mx-auto max-w-7xl justify-center px-6 lg:flex lg:space-x-6 xl:px-0">
+    <div v-if="Object.keys(basket).length>0" class="mx-auto max-w-7xl justify-center px-6 lg:flex lg:space-x-6 xl:px-0">
       <div class="rounded-lg lg:w-2/3">
 
         <div v-for="(item, index) in basket" :key="index" class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
@@ -46,6 +46,9 @@
         </div>
         <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
       </div>
+    </div>
+    <div v-else class="mx-auto max-w-7xl justify-center px-6 lg:flex lg:space-x-6 xl:px-0">
+      <p>Карзина пуста</p>
     </div>
   </div>
 </template>

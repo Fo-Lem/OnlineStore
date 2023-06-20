@@ -119,7 +119,7 @@ export default {
         hero_id: this.curentProduct.newHero_id,
         description: this.curentProduct.newDescription,
         size: `${this.curentProduct.size.height}x${this.curentProduct.size.width}x${this.curentProduct.size.depth}`,
-        price: this.curentProduct.price
+        price: this.curentProduct.newPrice
       }
       await this.AdminController.productController.updateProduct(obj)
       this.$emit('updateData')
@@ -134,9 +134,10 @@ export default {
     this.curentProduct.newCategory_id=this.curentProduct.category_id
     this.curentProduct.newProduct_type_id=this.curentProduct.product_type_id
     this.curentProduct.newHero_id=this.curentProduct.hero_id
+    this.curentProduct.newPrice=this.curentProduct.price
     this.sizeParser(this.curentProduct.size)
-      this.curentProduct.newDescription=this.curentProduct.description
-      this.curentProduct.photos=[]
+    this.curentProduct.newDescription=this.curentProduct.description
+    this.curentProduct.photos=[]
     console.log(this.curentProduct)
   }
 }

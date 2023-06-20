@@ -9,8 +9,8 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
           </svg>
-          <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click to upload</span> or drag and drop</p>
-          <p class="text-xs text-gray-500 ">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+          <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Нажмите, чтобы добавить</span> или перетащите</p>
+          <p class="text-xs text-gray-500 ">JPG(MAX. 1000x1000px)</p>
         </div>
         <input @change="uploadPhoto" @dragenter="isDrag = true" @dragleave="isDrag = false" id="fileUpload" name="fileUpload"
           multiple type="file" class="absolute cursor-pointer top-0 bottom-0 right-0 left-0 opacity-0" />
