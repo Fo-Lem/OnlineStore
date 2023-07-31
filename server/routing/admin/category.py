@@ -34,6 +34,10 @@ def update_category(
         params['name'] = category.name
     if category.cover_img:
         params['cover_img'] = category.cover_img
+    if params == {}:
+        return JSONResponse({
+            'err': "You don't provide any parametrs",
+        }, status_code=213)
     try:
         res = update_entity(categories, id=category.id, **params)
     except:

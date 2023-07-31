@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
 from database.structure import categories_to_types, categories, product_types, identities, items,\
-      heroes, conn
+      heroes, refresh_tokens, conn
 
 def fetch_products():
     json_res = {}
@@ -23,6 +23,7 @@ def fetch_from_table(tablename: str):
         'heroes': heroes,
         'categories_to_types': categories_to_types,
         'items': items,
+        'refresh_tokens': refresh_tokens
     }
     table = tables.get(tablename, None)
     if table == None:
