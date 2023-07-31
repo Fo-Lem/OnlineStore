@@ -30,7 +30,7 @@ import customErrorPage from './components/errorPage/customErrorPage.vue'
 import { addProductBasket, deleteProductBasket, updateCountProductBasket, getDataBasket,correctBasket } from "./controllers/basketController";
 import { getCategorys } from "./controllers/productController";
 
-
+//lol
 export default {
   components: { customHeader, customFooter, customErrorPage },
   data() {
