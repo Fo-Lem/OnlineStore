@@ -1,22 +1,21 @@
-import axios from "axios";
+import { $admin } from "../../../axiosInstance/instance";
 
   export default class HeroController {
-    async createHero(data){
-      await axios
-        .post('http://176.99.12.84/admin/hero',data)
+    async create(data){
+      await $admin
+        .post('/hero',data)
         .then(response => {
           console.log(response.data)
           return response.data;
         })
         .catch(error => {
           console.log(error)
-          return error;
         })
       
     }
-    async updateHero(heroId,newValue) {
-      await axios
-        .put('http://176.99.12.84/admin/hero',{
+    async update(heroId,newValue) {
+      await $admin
+        .put('/hero',{
           id: heroId,
           name:newValue
   
@@ -27,13 +26,12 @@ import axios from "axios";
         })
         .catch(error => {
           console.log(error)
-          return error;
         })
       
     }
-    async deleteHero(heroId){
-      await axios
-        .delete('http://176.99.12.84/admin/hero',{data: {
+    async delete(heroId){
+      await $admin
+        .delete('/hero',{data: {
           id: heroId
         }})
         .then(response => {
@@ -42,7 +40,6 @@ import axios from "axios";
         })
         .catch(error => {
           console.log(error)
-          return error;
         })
       
     }

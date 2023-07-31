@@ -1,10 +1,10 @@
-import axios from "axios";
+import { $admin } from "../../../axiosInstance/instance";
 
 
   export default class ProductController {
-    async createProduct (data){
-      await axios
-        .post('http://176.99.12.84/admin/product',data)
+    async create (data){
+      await $admin
+        .post('/product',data)
         .then(response => {
           console.log(response.data)
           return response.data;
@@ -15,9 +15,9 @@ import axios from "axios";
         })
       
     }
-    async updateProduct(data) {
-      await axios
-        .put('http://176.99.12.84/admin/product',data)
+    async update(data) {
+      await $admin
+        .put('/product',data)
         .then(response => {
           console.log(response.data)
           return response.data;
@@ -28,9 +28,9 @@ import axios from "axios";
         })
       
     }
-    async deleteProduct(productId){
-      await axios
-        .delete('http://176.99.12.84/admin/product',{data: {
+    async delete(productId){
+      await $admin
+        .delete('/product',{data: {
           id: productId
         }})
         .then(response => {

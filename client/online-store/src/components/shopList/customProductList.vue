@@ -9,7 +9,7 @@
 
       <div v-if="type=='productList'" class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         <router-link v-for="type in catalog['categories'][$route.params.categoryId].product_types" v-bind:basket="basket" :key="type.id" :to="{ name: 'productOverviews', params: { productId: type.id,heroId: searchFirstHero($route.params.categoryId,type.id) } }">
-          <custom-list v-bind:list="type" v-if="type.name!='-'"></custom-list>
+          <custom-list :list="type" v-if="type.name!='-'&& type.items "></custom-list>
         </router-link>
       </div>
 
@@ -58,10 +58,10 @@ export default {
       }
       if (!firstHeroId) {
         return 0
-          }
-            return firstHeroId
-          
-      
+      }
+      return firstHeroId
+
+
     }
   }
 

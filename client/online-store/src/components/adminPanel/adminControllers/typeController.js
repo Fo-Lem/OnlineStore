@@ -1,10 +1,10 @@
-import axios from "axios";
+import { $admin } from "../../../axiosInstance/instance";
 
 
   export default class TypeController {
-    async createType(data){
-      await axios
-        .post('http://176.99.12.84/admin/product_type',data)
+    async create(data){
+      await $admin
+        .post('/product_type',data)
         .then(response => {
           console.log(response.data)
           return response.data;
@@ -15,9 +15,9 @@ import axios from "axios";
         })
       
     }
-    async updateType(typeId,newValue) {
-      await axios
-        .put('http://176.99.12.84/admin/product_type',{
+    async update(typeId,newValue) {
+      await $admin
+        .put('/product_type',{
           id: typeId,
           name:newValue
         })
@@ -31,9 +31,9 @@ import axios from "axios";
         })
       
     }
-    async deleteType(typeId){
-      await axios
-        .delete('http://176.99.12.84/admin/product_type',{data: {
+    async delete(typeId){
+      await $admin
+        .delete('/product_type',{data: {
           id: typeId
         }})
         .then(response => {

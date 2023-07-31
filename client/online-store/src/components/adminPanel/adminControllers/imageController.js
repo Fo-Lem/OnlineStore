@@ -1,11 +1,11 @@
-import axios from "axios";
+import { $admin } from "../../../axiosInstance/instance";
 
 
 export default class ImageController {
-  async createImage(formData){
-    await axios({
+  async create(formData){
+    await $admin({
       method: 'post',
-      url: 'http://176.99.12.84/admin/image',
+      url: '/image',
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     })
@@ -19,9 +19,9 @@ export default class ImageController {
     })
     
   }
-  async deleteImage(cover_path){
-    await axios
-      .delete('http://176.99.12.84/admin/image',{data: {
+  async delete(cover_path){
+    await $admin
+      .delete('/image',{data: {
         full_path: cover_path
       }})
       .then(response => {

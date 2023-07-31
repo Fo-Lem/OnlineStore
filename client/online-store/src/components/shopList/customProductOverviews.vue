@@ -7,17 +7,17 @@
         <!-- Галлерея -->
         <div class="max-w-5xl ">
           <div>
-            <img :src="`https://tailwindui.com/img/ecommerce-images/category-page-0${$route.params.heroId}-image-card-0${curentImage}.jpg`"  class="h-full w-full object-cover rounded-lg object-center" />
+            <img :src="`${imgUrl}${curentImage}.jpg`"  class="h-full w-full object-cover rounded-lg object-center" />
           </div>
           <div class=" mt-6 grid max-w-7xl grid-cols-3 gap-x-5 ">
+            <div :class="[curentImage==0 ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
+              <img :src="`${imgUrl}0.jpg`" @click="curentImage=0" class="h-full w-full object-cover rounded-lg object-center" />
+            </div>
             <div :class="[curentImage==1 ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
-              <img :src="`https://tailwindui.com/img/ecommerce-images/category-page-0${$route.params.heroId}-image-card-01.jpg`" @click="curentImage=1" class="h-full w-full object-cover rounded-lg object-center" />
+              <img :src="`${imgUrl}1.jpg`" @click="curentImage=1"  class="h-full w-full object-cover rounded-lg object-center" />
             </div>
             <div :class="[curentImage==2 ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
-              <img :src="`https://tailwindui.com/img/ecommerce-images/category-page-0${$route.params.heroId}-image-card-02.jpg`" @click="curentImage=2"  class="h-full w-full object-cover rounded-lg object-center" />
-            </div>
-            <div :class="[curentImage==3 ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
-              <img  :src="`https://tailwindui.com/img/ecommerce-images/category-page-0${$route.params.heroId}-image-card-03.jpg`" @click="curentImage=3"  class="h-full w-full object-cover rounded-lg object-center" />
+              <img  :src="`${imgUrl}2.jpg`" @click="curentImage=2"  class="h-full w-full object-cover rounded-lg object-center" />
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default {
   data() {
     return {
       inBasket: false,
-      curentImage: 1,
+      curentImage: 0,
       rebuilSize: '',
       curentProduct: {},
       heroId: '',
@@ -132,6 +132,12 @@ export default {
       type: Object
     }
 
+
+  },
+  computed: {
+    imgUrl() {
+        return `${import.meta.env.VITE_BASE_URL}${this.catalog.items[this.curentProduct.item[this.curentProduct.version]].img_path}/${this.catalog.items[this.curentProduct.item[this.curentProduct.version]].art}_`
+    }
 
   },
   methods: {

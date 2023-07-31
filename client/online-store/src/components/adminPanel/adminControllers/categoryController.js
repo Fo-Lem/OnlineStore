@@ -1,8 +1,9 @@
-import axios from "axios";
+import { $admin } from "../../../axiosInstance/instance";
+
 export default class CategoruController {
-  async createCategory(data){
-    await axios
-      .post('http://176.99.12.84/admin/category',data)
+  async create(data){
+    await $admin
+      .post('/category',data)
       .then(response => {
         console.log(response.data)
         return response.data;
@@ -13,10 +14,10 @@ export default class CategoruController {
       })
     
   }
-  async updateCategory(categoryId,newValue,cover_path) {
+  async update(categoryId,newValue,cover_path) {
     if(cover_path){
-      await axios
-      .put('http://176.99.12.84/admin/category',{
+      await $admin
+      .put('/category',{
         id: categoryId,
         name:newValue,
         cover_img:cover_path
@@ -27,11 +28,10 @@ export default class CategoruController {
       })
       .catch(error => {
         console.log(error)
-        return error;
       })
     }else{
-      await axios
-      .put('http://176.99.12.84/admin/category',{
+      await $admin
+      .put('/category',{
         id: categoryId,
         name:newValue
 
@@ -42,15 +42,14 @@ export default class CategoruController {
       })
       .catch(error => {
         console.log(error)
-        return error;
       })
     }
     
     
   }
-  async deleteCategory(categoryId){
-    await axios
-      .delete('http://176.99.12.84/admin/category',{data: {
+  async delete(categoryId){
+    await $admin
+      .delete('/category',{data: {
         id: categoryId
       }})
       .then(response => {
@@ -59,7 +58,6 @@ export default class CategoruController {
       })
       .catch(error => {
         console.log(error)
-        return error;
       })
     
   }

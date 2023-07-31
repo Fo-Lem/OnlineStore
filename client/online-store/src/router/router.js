@@ -53,7 +53,7 @@ const routes = [
 const router= createRouter(
     {
         routes,
-        history:createWebHistory(import.meta.env.BASE_URL)
+        history:createWebHistory()
     }
 )
 export default router

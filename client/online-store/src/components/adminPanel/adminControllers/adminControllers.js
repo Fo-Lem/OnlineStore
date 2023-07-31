@@ -4,7 +4,7 @@ import TypeController from "./typeController"
 import HeroController from "./heroController"
 import ImageController from "./imageController"
 
-export default class AdminController {
+export class Admin {
     categoryController = new CategoruController
     productController = new ProductController
     typeController = new TypeController
