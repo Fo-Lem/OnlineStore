@@ -7,16 +7,16 @@
         <!-- Галлерея -->
         <div class="max-w-5xl ">
           <div>
-            <img :src="`${imgUrl}${curentImage}.jpg`"  class="h-full w-full object-cover rounded-lg object-center" />
+            <img :src="`${imgUrl}${curentImage}.jpg`"  class=" w-full object-cover rounded-lg object-center" />
           </div>
           <div class=" mt-6 grid max-w-7xl grid-cols-3 gap-x-5 ">
-            <div :class="[curentImage==0 ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
+            <div :class="[curentImage==0 ? 'ring-2' : '', 'relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
               <img :src="`${imgUrl}0.jpg`" @click="curentImage=0" class="h-full w-full object-cover rounded-lg object-center" />
             </div>
-            <div :class="[curentImage==1 ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
+            <div :class="[curentImage==1 ? 'ring-2' : '', 'relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
               <img :src="`${imgUrl}1.jpg`" @click="curentImage=1"  class="h-full w-full object-cover rounded-lg object-center" />
             </div>
-            <div :class="[curentImage==2 ? 'ring-2' : '', 'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
+            <div :class="[curentImage==2 ? 'ring-2' : '', 'relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none']">
               <img  :src="`${imgUrl}2.jpg`" @click="curentImage=2"  class="h-full w-full object-cover rounded-lg object-center" />
             </div>
           </div>
@@ -24,7 +24,7 @@
 
 
         <!-- Информация -->
-        <div class=" min-w-[calc(28rem-20px)]">
+        <div class="min-w-[calc(28rem-20px)]  ">
           <h2 class="sr-only">Информация</h2>
           <h2 class="text-3xl tracking-tight text-gray-900">{{catalog.items[curentProduct.item[curentProduct.version]].name}}</h2>
           <hr>
@@ -78,7 +78,7 @@
                 </div>
               </div>
               <!-- Описание -->
-              <div class="mt-5">
+              <div class="mt-5 w-full lg:w-96">
                 <h3 class="font-medium text-xl text-gray-900">Описание</h3>
                 <div class="mt-5">
                   <p>{{catalog.items[curentProduct.item[curentProduct.version]].description}}</p>

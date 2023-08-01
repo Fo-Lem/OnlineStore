@@ -8,7 +8,6 @@ import adminAnalytics from '../components/adminPanel/adminComponents/adminAnalyt
 import adminPanelCreations from '../components/adminPanel/adminComponents/adminPanelCreations.vue';
 import adminPanelUpdateProduct from '../components/adminPanel/adminComponents/adminPanelUpdateProduct.vue';
 import adminProducts from '../components/adminPanel/adminComponents/adminProducts.vue';
-import adminAdmins from '../components/adminPanel/adminComponents/adminAdmins.vue';
 import { createRouter } from "vue-router"
 import { createWebHistory } from "vue-router"
 
@@ -44,7 +43,6 @@ const routes = [
       { name: 'products',path: 'products', component: adminProducts },
       { name: 'panelCreations',path: 'admin-panel-creations', component: adminPanelCreations },
       { name: 'panelUpdate',path: 'admin-panel-update-product_:itemId', component: adminPanelUpdateProduct },
-      { name: 'admins',path: 'admins', component: adminAdmins }
     ]
   }
   
