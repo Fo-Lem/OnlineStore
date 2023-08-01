@@ -9,7 +9,7 @@
     v-bind:categorys="getElementSelected(catalog.categories)"
     v-bind:AdminController="AdminController"></admin-update-popup>
 
-  <form @submit.prevent="AddProduct" class="py-5 flex flex-col gap-5">
+  <form @submit.prevent="AddProduct" class="flex flex-col gap-5">
     <admin-input v-bind:inputName="'Название продукта'" v-bind:inputIn="'productName'"
       v-bind:placeholder="`Меч длинный &laquoАлеша Попович&raquo`" v-bind:value="newProduct.productName"
       @updateInput="(value) => newProduct.productName = value">
@@ -67,7 +67,6 @@
 import adminAddPopup from './popup/adminAddPopup.vue'
 import adminDeletePopup from './popup/adminDeletePopup.vue'
 import adminUpdatePopup from './popup/adminUpdatePopup.vue'
-// import { createProduct } from "../../../controllers/productController"
 export default {
   components: { adminAddPopup, adminDeletePopup, adminUpdatePopup },
   name: 'admin-panel-creations',
@@ -105,7 +104,7 @@ export default {
       type: Object,
       require: true
     },
-    AdminController: {
+    Admin: {
       type: Object,
       require: true
     }
@@ -160,9 +159,9 @@ export default {
         fd.append('file', photo)
         fd.append('path', `items/${this.catalog.categories[obj.category_id].name}`)
         fd.append('name', `${obj.art + '_' + index}.jpg`)
-        await this.AdminController.imageController.createImage(fd)
+        await this.Admin.imageController.create(fd)
       });
-      await this.AdminController.productController.createProduct(obj)
+      await this.Admin.productController.create(obj)
       this.$emit('updateData')
       this.remoteNewProduct()
     },

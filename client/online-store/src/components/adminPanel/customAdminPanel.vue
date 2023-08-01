@@ -75,7 +75,7 @@
      </aside>
      
      <div class="p-4 sm:ml-64">
-      <admin-header></admin-header>
+
       <router-view v-bind:Admin="Admin" v-bind:catalog="catalog" @updateData="$emit('updateData')"></router-view>
      </div>
     </div> 
@@ -83,9 +83,7 @@
 </template>
 <script>
 import {Admin} from "./adminControllers/adminControllers"
-import adminHeader from './adminComponents/adminHeader.vue';
 export default {
-   components: { adminHeader },
    name: "custom-admin-panel",
    props: {
       catalog: {
@@ -111,4 +109,8 @@ export default {
 
 }
 </script>
-<style scoped></style>
+<style scoped>
+.router-link-active{
+   border: 1px solid gray;
+}
+</style>

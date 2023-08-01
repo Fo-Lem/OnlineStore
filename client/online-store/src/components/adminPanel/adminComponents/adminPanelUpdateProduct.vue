@@ -78,7 +78,7 @@ export default {
       type: Object,
       require: true
     },
-    AdminController: {
+    Admin: {
       type: Object,
       require: true
     }
@@ -121,7 +121,7 @@ export default {
         size: `${this.curentProduct.size.height}x${this.curentProduct.size.width}x${this.curentProduct.size.depth}`,
         price: this.curentProduct.newPrice
       }
-      await this.AdminController.productController.updateProduct(obj)
+      await this.Admin.productController.update(obj)
       this.$emit('updateData')
       this.$router.push({ name: 'products'})
     },

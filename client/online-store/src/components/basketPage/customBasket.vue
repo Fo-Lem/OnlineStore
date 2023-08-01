@@ -4,7 +4,7 @@
       <div class="rounded-lg lg:w-2/3">
 
         <div v-for="(item, index) in basket" :key="index" class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-          <img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="product-image" class="w-full rounded-lg sm:w-40" />
+          <img :src="imgUrl(item.item[0])" alt="product-image" class="w-full rounded-lg sm:w-40" />
           <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
             <div class="mt-5 sm:mt-0">
               <h2 class="text-lg font-bold text-gray-900">{{catalog.items[item.item[item.version]].name}}</h2>
@@ -80,9 +80,12 @@ export default {
       if(count>0){
         this.$emit('updateCountProductBasket',count,index)
       }
+    },
+    imgUrl(id) {
+        return `${import.meta.env.VITE_BASE_URL}${this.catalog.items[id].img_path}/${this.catalog.items[id].art}_0.jpg`
     }
   },
-  mounted(){
+  beforeMount(){
     console.log(this.basket)
     this.sumPrice=summarizePriceProductBasket(this.basket,this.catalog)
   },

@@ -66,7 +66,7 @@
             </thead>
             <tbody >
                 
-                <tr v-for="(product, index) in sortedandsearchedItems" :key="index" class="bg-white border-b  hover:bg-gray-50 ">
+                <tr v-for="(product, index) in searchedItems" :key="index" class="bg-white border-b  hover:bg-gray-50 ">
                     <td scope="row" class="px-6 py-4 font-medium text-gray-900 gap-5 whitespace-nowrap ">
                         {{product.id}}
                     </td>
@@ -118,7 +118,7 @@ export default {
             type: Object,
             require: true
         },
-        AdminController: {
+        Admin: {
             type: Object,
             require: true
         },
@@ -126,9 +126,9 @@ export default {
     methods: {
         deleteItem(product) {
             for (let i = 0; i < 3; i++) {
-                this.AdminController.imageController.deleteImage(`${product.img_path}/${product.art}_${i}.jpg`)
+                this.Admin.imageController.delete(`${product.img_path}/${product.art}_${i}.jpg`)
             }
-            this.AdminController.productController.deleteProduct(product.id)
+            this.Admin.productController.delete(product.id)
 
             this.$emit('updateData')
 
@@ -136,7 +136,7 @@ export default {
 
     },
     computed: {
-        sortedandsearchedItems() {
+        searchedItems() {
             
             const searchObj={}
             for (const [key, obj] of Object.entries(this.catalog.items)) {
