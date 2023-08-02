@@ -1,28 +1,34 @@
-<template lang="">
-  
-      <input @input="updateInput($event)" :value="item.count" name="count" id="count" class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number"  min="1" />
-  
-</template>
 <script>
-
 export default {
-  name: "custom-input",
-  data() {
-    return {
-    }
+  name: 'CustomInput',
+  props: {
+    item: [Object],
+
   },
-  props:{
-    item:[Object]
-          
+  data() {
+    return {};
+  },
+  methods: {
+    updateInput(event) {
+      // передаем содержимое инпута
+      this.$emit('updateInput', event.target.value);
+
     },
-    methods:{
-       updateInput(event){
-        // передаем содержимое инпута
-        this.$emit('updateInput',event.target.value)
+  },
 
-       } 
-    }
-
-}
+};
 </script>
+
+<template lang="">
+  <input
+    id="count"
+    :value="item.count"
+    name="count"
+    class="h-8 w-8 border bg-white text-center text-xs outline-none"
+    type="number"
+    min="1"
+    @input="updateInput($event)"
+  >
+</template>
+
 <style scoped></style>
