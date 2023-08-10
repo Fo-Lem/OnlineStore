@@ -18,25 +18,25 @@ export default {
       default: '',
     },
   },
+  emits: ['changeOption1', 'changeOption2', 'changeOption3', 'openAddPopup', 'openDeletePopup', 'openUpdatePopup'],
   methods: {
     changeOption(option) {
-      console.log(option.target.value);
-      this.$emit(`changeOption${ this.selectIn }`, option.target.value);
+      // console.log(option.target.value)
+      this.$emit(`changeOption${this.selectIn}`, option.target.value)
     },
     nameParser(item) {
-      if (item != undefined) {
-        if (item.name) {
-          return item.name;
-        }
-        return item;
+      if (item !== undefined) {
+        if (item.name)
+          return item.name
+
+        return item
       }
 
-      return 'Выберите из списка';
-
+      return 'Выберите из списка'
     },
   },
 
-};
+}
 </script>
 
 <template lang="">
@@ -74,7 +74,7 @@ export default {
         class="flex gap-2"
       >
         <svg
-          v-if="selectName == 'Категория'"
+          v-if="selectName === 'Категория'"
           class="h-10 w-10 bg-gray-50 border border-gray-300 text-green-700 rounded-lg cursor-pointer hover:text-green-500"
           fill="currentColor"
           viewBox="0 0 24 24"
@@ -89,7 +89,7 @@ export default {
           />
         </svg>
         <svg
-          v-if="selectName == 'Категория'"
+          v-if="selectName === 'Категория'"
           class="h-10 w-10 bg-gray-50 border border-gray-300 text-red-700 rounded-lg cursor-pointer hover:text-red-500"
           fill="currentColor"
           viewBox="0 0 24 24"
@@ -104,7 +104,7 @@ export default {
           />
         </svg>
         <svg
-          v-if="selectName == 'Категория'"
+          v-if="selectName === 'Категория'"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"

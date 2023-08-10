@@ -7,31 +7,32 @@ export default {
       type: Array,
     },
   },
+  emits: ['uploadPhoto'],
   data() {
     return {
       isDrag: false,
-    };
+    }
   },
   methods: {
     uploadPhoto(currentTarget) {
-      if (currentTarget.target.files) {
-        this.$emit('uploadPhoto', [...this.photos, ...currentTarget.target.files]);
-      }
-      if (fileUpload.value) {
-        fileUpload.value = '';
-      }
-      this.isDrag = false;
+      if (currentTarget.target.files)
+        this.$emit('uploadPhoto', [...this.photos, ...currentTarget.target.files])
+
+      if (fileUpload.value)
+        fileUpload.value = ''
+
+      this.isDrag = false
     },
     getSrc(photo) {
-      return URL.createObjectURL(photo);
+      return URL.createObjectURL(photo)
     },
     removePhoto(index) {
-      this.$emit('uploadPhoto', this.photos.filter((p, i) => i !== index));
+      this.$emit('uploadPhoto', this.photos.filter((p, i) => i !== index))
     },
 
   },
 
-};
+}
 </script>
 
 <template>

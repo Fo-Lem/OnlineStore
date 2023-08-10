@@ -1,18 +1,17 @@
-import { $admin } from '../../../axiosInstance/instance';
+import { $admin } from '../../../axiosInstance/instance'
 
 export default class TypeController {
   async create(data) {
     await $admin
       .post('/product_type', data)
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
       })
-      .catch(error => {
-        console.log(error);
-        return error;
-      });
-
+      .catch((error) => {
+        // console.log(error)
+        return error
+      })
   }
 
   async update(typeId, newValue) {
@@ -21,15 +20,14 @@ export default class TypeController {
         id: typeId,
         name: newValue,
       })
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
       })
-      .catch(error => {
-        console.log(error);
-        return error;
-      });
-
+      .catch((error) => {
+        // console.log(error)
+        return error
+      })
   }
 
   async delete(typeId) {
@@ -39,14 +37,13 @@ export default class TypeController {
           id: typeId,
         },
       })
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
       })
-      .catch(error => {
-        console.log(error);
-        return error;
-      });
-
+      .catch((error) => {
+        // console.log(error)
+        return error
+      })
   }
 }

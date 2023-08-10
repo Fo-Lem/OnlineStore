@@ -7,7 +7,7 @@ export default {
       type: Object,
     },
   },
-};
+}
 </script>
 
 <template lang="">

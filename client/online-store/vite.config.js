@@ -1,18 +1,10 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue({
-    // template: {
-    //   compilerOptions: {
-    //     isCustomElement: (tag) => {
-    //       return tag.startsWith('custom-') // (return true)
-    //     }
-    //   }
-    // }
-    })
+    vue(),
   ],
   build: {
     rollupOptions: {
@@ -24,4 +16,4 @@ export default defineConfig({
     },
   },
 
-});
+})

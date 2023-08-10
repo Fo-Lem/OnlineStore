@@ -1,17 +1,17 @@
-import CategoruController from './categoryController';
-import ProductController from './productController';
-import TypeController from './typeController';
-import HeroController from './heroController';
-import ImageController from './imageController';
+import CategoruController from './categoryController'
+import ProductController from './productController'
+import TypeController from './typeController'
+import HeroController from './heroController'
+import ImageController from './imageController'
 
 export class Admin {
-  categoryController = new CategoruController();
+  categoryController = new CategoruController()
 
-  productController = new ProductController();
+  productController = new ProductController()
 
-  typeController = new TypeController();
+  typeController = new TypeController()
 
-  heroController = new HeroController();
+  heroController = new HeroController()
 
-  imageController = new ImageController();
+  imageController = new ImageController()
 }

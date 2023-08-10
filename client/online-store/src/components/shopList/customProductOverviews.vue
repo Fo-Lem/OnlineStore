@@ -1,5 +1,5 @@
 <script>
-import { productInBasket } from '../../controllers/basketController';
+import { productInBasket } from '../../controllers/basketController'
 
 export default {
   name: 'CustomProductOverviews',
@@ -26,73 +26,71 @@ export default {
       heroId: '',
       variants: [],
 
-    };
+    }
   },
   computed: {
     imgUrl() {
-      return `${ import.meta.env.VITE_BASE_URL }${ this.catalog.items[this.curentProduct.item[this.curentProduct.version]].img_path }/${ this.catalog.items[this.curentProduct.item[this.curentProduct.version]].art }_`;
+      return `${import.meta.env.VITE_BASE_URL}${this.catalog.items[this.curentProduct.item[this.curentProduct.version]].img_path}/${this.catalog.items[this.curentProduct.item[this.curentProduct.version]].art}_`
     },
 
   },
   watch: {
     heroId(newHeroId) {
-      this.updateCurentProduct(newHeroId);
+      this.updateCurentProduct(newHeroId)
     },
 
   },
   beforeMount() {
-    this.updateCurentProduct(this.$route.params.heroId);
+    this.updateCurentProduct(this.$route.params.heroId)
   },
   methods: {
     sizeConvertor(size) {
       return size.split('x').reduce(
-        function (obj, currentSize, index) {
-          let Arr = [
-            'Ширинa: ', 'Высота: ', 'Глубина: '
-          ];
-          obj[index] = `${ Arr[index] } ${ currentSize } мм`;
-          return obj;
-        }, {}
-      );
+        (obj, currentSize, index) => {
+          const Arr = [
+            'Ширинa: ', 'Высота: ', 'Глубина: ',
+          ]
+          obj[index] = `${Arr[index]} ${currentSize} мм`
+          return obj
+        }, {},
+      )
     },
     addProductBasket() {
-      this.$emit('addProductBasket', this.curentProduct);
-      this.inBasket = productInBasket(this.basket, this.curentProduct);
+      this.$emit('addProductBasket', this.curentProduct)
+      this.inBasket = productInBasket(this.basket, this.curentProduct)
     },
     groupBy(key) {
       return function group(array) {
         return array.reduce((acc, obj) => {
-          const property = obj[key];
-          acc[property] = acc[property] || [];
-          acc[property].push(obj);
-          return acc;
-        }, {});
-      };
+          const property = obj[key]
+          acc[property] = acc[property] || []
+          acc[property].push(obj)
+          return acc
+        }, {})
+      }
     },
     updateCurentProduct(newHeroId, newVersion = 0) {
       this.curentProduct = {
         item: [],
         version: newVersion,
         count: 1,
-      };
+      }
       if (this.variants.length === 0) {
         for (const item in this.catalog.items) {
-          const cItem = this.catalog.items[item];
-          if (cItem.category_id == this.$route.params.categoryId && cItem.product_type_id == this.$route.params.productId) {
-            this.variants.push(cItem);
-          }
+          const cItem = this.catalog.items[item]
+          if (cItem.category_id === this.$route.params.categoryId && cItem.product_type_id === this.$route.params.productId)
+            this.variants.push(cItem)
         }
-        const groupByHeroId = this.groupBy('hero_id');
-        this.variants = groupByHeroId(this.variants);
+        const groupByHeroId = this.groupBy('hero_id')
+        this.variants = groupByHeroId(this.variants)
+      }
+      for (const item in this.variants[newHeroId])
+        this.curentProduct.item.push(this.variants[newHeroId][item].id)
 
-      }
-      for (const item in this.variants[newHeroId]) {
-        this.curentProduct.item.push(this.variants[newHeroId][item].id);
-      }
-      this.inBasket = productInBasket(this.basket, this.curentProduct);
+      this.inBasket = productInBasket(this.basket, this.curentProduct)
     },
   },
-};
+}
 </script>
 
 <template lang="">
@@ -113,7 +111,7 @@ export default {
           <div class=" mt-6 grid max-w-7xl grid-cols-3 gap-x-5 ">
             <div
               class="relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none"
-              :class="[curentImage == 0 ? 'ring-2' : '']"
+              :class="[curentImage === 0 ? 'ring-2' : '']"
             >
               <img
                 :src="`${imgUrl}0.jpg`"
@@ -123,7 +121,7 @@ export default {
             </div>
             <div
               class="relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none"
-              :class="[curentImage == 1 ? 'ring-2' : '']"
+              :class="[curentImage === 1 ? 'ring-2' : '']"
             >
               <img
                 :src="`${imgUrl}1.jpg`"
@@ -133,7 +131,7 @@ export default {
             </div>
             <div
               class="relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none"
-              :class="[curentImage == 2 ? 'ring-2' : '']"
+              :class="[curentImage === 2 ? 'ring-2' : '']"
             >
               <img
                 :src="`${imgUrl}2.jpg`"
@@ -168,16 +166,14 @@ export default {
                   <router-link
                     v-for="hero in variants"
                     :key="hero[0].id"
-                    v-slot="{ active, checked }"
                     as="template"
-                    :v-html="hero"
                     :value="hero"
                     :to="{ name: 'productOverviews', params: { productId: $route.params.productId, heroId: hero[0].hero_id } }"
                     @click="heroId = hero[0].hero_id"
                   >
                     <div
                       class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none"
-                      :class="[$route.params.heroId == hero[0].hero_id ? 'ring-2' : '']"
+                      :class="[$route.params.heroId === hero[0].hero_id ? 'ring-2' : '']"
                     >
                       <span
                         aria-hidden="true"
@@ -198,7 +194,7 @@ export default {
                     v-for="(itemId, index) in curentProduct.item"
                     :key="index"
                     class="rounded-lg text-sm px-4 py-2 border border-black border-opacity-10"
-                    :class="[curentProduct.version == index ? 'ring-2' : '']"
+                    :class="[curentProduct.version === index ? 'ring-2' : '']"
                     type="button"
                     @click="updateCurentProduct($route.params.heroId, index)"
                   >
@@ -225,7 +221,7 @@ export default {
                 </div>
 
                 <div class="mt-4  ">
-                  <p v-for="size in sizeConvertor(catalog.items[curentProduct.item[curentProduct.version]].size)">
+                  <p v-for="(size, index) in sizeConvertor(catalog.items[curentProduct.item[curentProduct.version]].size)" :key="index">
                     {{ size }}
                   </p>
                 </div>

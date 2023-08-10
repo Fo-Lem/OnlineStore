@@ -6,7 +6,7 @@ export default {
       type: Object,
       require: true,
     },
-    AdminController: {
+    adminController: {
       type: Object,
       require: true,
     },
@@ -17,57 +17,55 @@ export default {
       newItem: '',
       selectedItem: '',
       selectedCategory: '',
-      selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя', },
+      selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя' },
       photos: [],
-    };
+    }
   },
   methods: {
     updateSelectedItem(select) {
-      this.selectedItem = select;
+      this.selectedItem = select
     },
     updateSelectedCategory(select) {
-      this.selectedCategory = select;
+      this.selectedCategory = select
     },
     uploadPhoto(photos) {
-      this.photos = photos;
-
+      this.photos = photos
     },
     async createItem() {
-      let formData = new FormData(createItem);
-      let select = formData.get('Item');
-      if (select == 1) {
-        let fd = new FormData();
-        fd.append('file', formData.get('fileUpload'));
-        fd.append('path', formData.get('name'));
-        fd.append('name', `${ formData.get('name') }.jpg`);
-        await this.AdminController.imageController.createImage(fd);
+      const formData = new FormData(createItem)
+      const select = formData.get('Item')
+      if (select === 1) {
+        const fd = new FormData()
+        fd.append('file', formData.get('fileUpload'))
+        fd.append('path', formData.get('name'))
+        fd.append('name', `${formData.get('name')}.jpg`)
+        await this.AdminController.imageController.createImage(fd)
         const obj = {
           name: formData.get('name'),
-          cover_img: `../imgs/${ formData.get('name') }/${ formData.get('name') }.jpg`,
-        };
-        this.AdminController.categoryController.createCategory(obj);
+          cover_img: `../imgs/${formData.get('name')}/${formData.get('name')}.jpg`,
+        }
+        this.AdminController.categoryController.createCategory(obj)
+      }
+      if (select === 2) {
+        const obj = {
+          name: formData.get('name'),
+          category_id: `${formData.get('Category')}`,
+        }
+        await this.AdminController.typeController.createType(obj)
+      }
+      if (select === 3) {
+        const obj = {
+          name: formData.get('name'),
+        }
+        await this.AdminController.heroController.createHero(obj)
+      }
 
-      }
-      if (select == 2) {
-        const obj = {
-          name: formData.get('name'),
-          category_id: `${ formData.get('Category') }`,
-        };
-        await this.AdminController.typeController.createType(obj);
-      }
-      if (select == 3) {
-        const obj = {
-          name: formData.get('name'),
-        };
-        await this.AdminController.heroController.createHero(obj);
-      }
-
-      this.$emit('updateData');
-      this.$emit('closeAddPopup');
+      this.$emit('updateData')
+      this.$emit('closeAddPopup')
     },
   },
 
-};
+}
 </script>
 
 <template lang="">
@@ -92,26 +90,26 @@ export default {
                 :options="selected"
                 select-in="Item"
                 select-name="Что создаем?"
-                @changeOptionItem="(select) => updateSelectedItem(select)"
+                @change-option-item="(select) => updateSelectedItem(select)"
               />
               <admin-select
-                v-if="selectedItem == 2"
+                v-if="selectedItem === 2"
                 :options="categorys"
                 select-in="Category"
                 select-name="Выберите категорию"
-                @changeOptionCategory="(select) => updateSelectedCategory(select)"
+                @change-option-category="(select) => updateSelectedCategory(select)"
               />
               <admin-input
                 v-if="selectedItem"
                 input-name="Название"
                 :value="newItem"
                 input-in="name"
-                @updateInput="(value) => newItem = value"
+                @update-input="(value) => newItem = value"
               />
               <admin-drop-zone
-                v-if="selectedItem == 1"
+                v-if="selectedItem === 1"
                 :photos="photos"
-                @uploadPhoto="uploadPhoto"
+                @upload-photo="uploadPhoto"
               />
             </div>
             <div class="bg-gray-50  flex flex-row-reverse">

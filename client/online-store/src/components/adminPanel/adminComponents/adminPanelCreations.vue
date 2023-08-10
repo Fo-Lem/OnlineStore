@@ -1,17 +1,17 @@
 <script>
-import adminAddPopup from './popup/adminAddPopup.vue';
-import adminDeletePopup from './popup/adminDeletePopup.vue';
-import adminUpdatePopup from './popup/adminUpdatePopup.vue';
+import adminAddPopup from './popup/adminAddPopup.vue'
+import adminDeletePopup from './popup/adminDeletePopup.vue'
+import adminUpdatePopup from './popup/adminUpdatePopup.vue'
 
 export default {
   name: 'AdminPanelCreations',
-  components: { AdminAddPopup: adminAddPopup, AdminDeletePopup: adminDeletePopup, AdminUpdatePopup: adminUpdatePopup, },
+  components: { AdminAddPopup: adminAddPopup, AdminDeletePopup: adminDeletePopup, AdminUpdatePopup: adminUpdatePopup },
   props: {
     catalog: {
       type: Object,
       require: true,
     },
-    Admin: {
+    admin: {
       type: Object,
       require: true,
     },
@@ -43,41 +43,39 @@ export default {
         price: '',
         photos: [],
       },
-    };
+    }
   },
 
   methods: {
 
     getElementSelected(items) {
-      console.log();
-      console.log(items);
-      const res = {};
-      for (let key in items) {
-        res[key] = items[key].name;
-      }
-      return res;
+      // console.log()
+      // console.log(items)
+      const res = {}
+      for (const key in items)
+        res[key] = items[key].name
+
+      return res
     },
     updateSelectedCategory(select) {
-      this.newProduct.selected.category = select;
-      this.newProduct.selected.type = '';
-      this.newProduct.selected.hero = '';
+      this.newProduct.selected.category = select
+      this.newProduct.selected.type = ''
+      this.newProduct.selected.hero = ''
     },
     updateSelectedType(select) {
-      this.newProduct.selected.type = select;
-      this.newProduct.selected.hero = '';
+      this.newProduct.selected.type = select
+      this.newProduct.selected.hero = ''
     },
     uploadPhoto(photos) {
-      this.newProduct.photos = photos;
-
+      this.newProduct.photos = photos
     },
     async AddProduct() {
-      console.log(this.newProduct);
-      let count = 0;
+      // console.log(this.newProduct)
+      let count = 0
       for (const item in this.catalog.items) {
-        const cItem = this.catalog.items[item];
-        if (cItem.category_id == this.newProduct.selected.category && cItem.product_type_id == this.newProduct.selected.type && cItem.hero_id == this.newProduct.selected.hero) {
-          count++;
-        }
+        const cItem = this.catalog.items[item]
+        if (cItem.category_id === this.newProduct.selected.category && cItem.product_type_id === this.newProduct.selected.type && cItem.hero_id === this.newProduct.selected.hero)
+          count++
       }
       const obj = {
         name: this.newProduct.productName,
@@ -85,21 +83,21 @@ export default {
         product_type_id: this.newProduct.selected.type,
         hero_id: this.newProduct.selected.hero,
         description: this.newProduct.description,
-        art: `D${ Date.now() }C${ this.newProduct.selected.category }T${ this.newProduct.selected.type }H${ this.newProduct.selected.hero }V${ count + 1 }`,
-        img_path: `/imgs/items/${ this.catalog.categories[this.newProduct.selected.category].name }`,
-        size: `${ this.newProduct.size.height }x${ this.newProduct.size.width }x${ this.newProduct.size.depth }`,
+        art: `D${Date.now()}C${this.newProduct.selected.category}T${this.newProduct.selected.type}H${this.newProduct.selected.hero}V${count + 1}`,
+        img_path: `/imgs/items/${this.catalog.categories[this.newProduct.selected.category].name}`,
+        size: `${this.newProduct.size.height}x${this.newProduct.size.width}x${this.newProduct.size.depth}`,
         price: this.newProduct.price,
-      };
+      }
       this.newProduct.photos.forEach(async (photo, index) => {
-        let fd = new FormData();
-        fd.append('file', photo);
-        fd.append('path', `items/${ this.catalog.categories[obj.category_id].name }`);
-        fd.append('name', `${ obj.art + '_' + index }.jpg`);
-        await this.Admin.imageController.create(fd);
-      });
-      await this.Admin.productController.create(obj);
-      this.$emit('updateData');
-      this.remoteNewProduct();
+        const fd = new FormData()
+        fd.append('file', photo)
+        fd.append('path', `items/${this.catalog.categories[obj.category_id].name}`)
+        fd.append('name', `${`${obj.art}_${index}`}.jpg`)
+        await this.Admin.imageController.create(fd)
+      })
+      await this.Admin.productController.create(obj)
+      this.$emit('updateData')
+      this.remoteNewProduct()
     },
     remoteNewProduct() {
       this.newProduct = {
@@ -117,36 +115,36 @@ export default {
         description: '',
         price: '',
         photos: [],
-      };
+      }
     },
 
   },
-};
+}
 </script>
 
 <template>
   <AdminAddPopup
     v-if="openAddPopup"
-    :AdminController="AdminController"
+    :admin-controller="AdminController"
     :categorys="getElementSelected(catalog.categories)"
-    @updateData="$emit('updateData')"
-    @closeAddPopup="openAddPopup = !openAddPopup"
+    @update-data="$emit('updateData')"
+    @close-add-popup="openAddPopup = !openAddPopup"
   />
   <AdminDeletePopup
     v-if="openDeletePopup"
-    :AdminController="AdminController"
+    :admin-controller="AdminController"
     :catalog="catalog"
     :categorys="getElementSelected(catalog.categories)"
-    @updateData="$emit('updateData')"
-    @closeDeletePopup="openDeletePopup = !openDeletePopup"
+    @update-data="$emit('updateData')"
+    @close-delete-popup="openDeletePopup = !openDeletePopup"
   />
   <AdminUpdatePopup
     v-if="openUpdatePopup"
     :catalog="catalog"
     :categorys="getElementSelected(catalog.categories)"
-    :AdminController="AdminController"
-    @updateData="$emit('updateData')"
-    @closeUpdatePopup="openUpdatePopup = !openUpdatePopup"
+    :admin-controller="AdminController"
+    @update-data="$emit('updateData')"
+    @close-update-popup="openUpdatePopup = !openUpdatePopup"
   />
 
   <form
@@ -158,7 +156,7 @@ export default {
       input-in="productName"
       placeholder="Меч длинный &laquoАлеша Попович&raquo"
       :value="newProduct.productName"
-      @updateInput="(value) => newProduct.productName = value"
+      @update-input="(value) => newProduct.productName = value"
     />
 
     <admin-select
@@ -166,10 +164,10 @@ export default {
       :options="getElementSelected(catalog.categories)"
       select-in="Category"
       select-name="Категория"
-      @changeOptionCategory="(select) => updateSelectedCategory(select)"
-      @openAddPopup="openAddPopup = true"
-      @openDeletePopup="openDeletePopup = true"
-      @openUpdatePopup="openUpdatePopup = true"
+      @change-option-category="(select) => updateSelectedCategory(select)"
+      @open-add-popup="openAddPopup = true"
+      @open-delete-popup="openDeletePopup = true"
+      @open-update-popup="openUpdatePopup = true"
     />
 
     <admin-select
@@ -178,7 +176,7 @@ export default {
       :options="getElementSelected(catalog.categories[newProduct.selected.category].product_types)"
       select-in="Type"
       select-name="Тип"
-      @changeOptionType="(select) => updateSelectedType(select)"
+      @change-option-type="(select) => updateSelectedType(select)"
     />
     <admin-select
       v-if="newProduct.selected.type"
@@ -186,7 +184,7 @@ export default {
       :options="getElementSelected(catalog.heroes)"
       select-in="Hero"
       select-name="Герой"
-      @changeOptionHero="(select) => newProduct.selected.hero = select"
+      @change-option-hero="(select) => newProduct.selected.hero = select"
     />
 
     <div class="flex flex-col gap-2">
@@ -206,7 +204,7 @@ export default {
         :input-in="index"
         placeholder="300"
         :value="newProduct.size[index]"
-        @updateInput="(value) => newProduct.size[index] = value"
+        @update-input="(value) => newProduct.size[index] = value"
       />
     </div>
 
@@ -228,12 +226,12 @@ export default {
       input-in="price"
       placeholder="3000"
       :value="newProduct.price"
-      @updateInput="(value) => newProduct.price = value"
+      @update-input="(value) => newProduct.price = value"
     />
 
     <admin-drop-zone
       :photos="newProduct.photos"
-      @uploadPhoto="uploadPhoto"
+      @upload-photo="uploadPhoto"
     />
 
     <div class="mt-6 flex items-center justify-end gap-x-6">

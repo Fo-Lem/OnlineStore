@@ -1,7 +1,7 @@
 <script>
 export default {
   name: 'CustomLoadingSpiner',
-};
+}
 </script>
 
 <template lang="">

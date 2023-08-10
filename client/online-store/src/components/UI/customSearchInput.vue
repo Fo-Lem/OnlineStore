@@ -5,18 +5,18 @@ export default {
     searchInput: [String, Number],
 
   },
+  emits: ['updateSearchInput'],
   data() {
-    return {};
+    return {}
   },
   methods: {
     updateInput(event) {
       // передаем содержимое инпута
-      this.$emit('updateSearchInput', event.target.value);
-
+      this.$emit('updateSearchInput', event.target.value)
     },
   },
 
-};
+}
 </script>
 
 <template lang="">

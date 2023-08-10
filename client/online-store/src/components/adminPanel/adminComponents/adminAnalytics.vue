@@ -1,7 +1,7 @@
 <script>
 export default {
   name: 'AdminAnalytics',
-};
+}
 </script>
 
 <template lang="">

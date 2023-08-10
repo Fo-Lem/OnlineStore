@@ -10,7 +10,7 @@ export default {
       type: Object,
       require: true,
     },
-    AdminController: {
+    adminController: {
       type: Object,
       require: true,
     },
@@ -24,54 +24,51 @@ export default {
       selectedHero: '',
       selectedType: '',
       selectedCategory: '',
-      selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя', },
-    };
+      selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя' },
+    }
   },
   methods: {
 
     updateSelectedItem(select) {
-      this.selectedItem = select;
-      this.selectedCategory = '';
-      this.selectedType = '';
-      this.selectedHero = '';
+      this.selectedItem = select
+      this.selectedCategory = ''
+      this.selectedType = ''
+      this.selectedHero = ''
     },
     updateSelectedCategory(select) {
-      this.selectedCategory = select;
-      this.selectedType = '';
+      this.selectedCategory = select
+      this.selectedType = ''
     },
     updateSelectedType(select) {
-      this.selectedType = select;
+      this.selectedType = select
     },
     updateSelectedHero(select) {
-      this.selectedHero = select;
-
+      this.selectedHero = select
     },
     uploadPhoto(photos) {
-      this.photos = photos;
-
+      this.photos = photos
     },
     async deleteItem() {
-      if (this.selectedItem == 1) {
-        await this.AdminController.imageController.deleteImage(this.catalog.categories[this.selectedCategory].cover_path);
-        await this.AdminController.categoryController.deleteCategory(this.selectedCategory);
+      if (this.selectedItem === 1) {
+        await this.AdminController.imageController.deleteImage(this.catalog.categories[this.selectedCategory].cover_path)
+        await this.AdminController.categoryController.deleteCategory(this.selectedCategory)
       }
-      if (this.selectedItem == 2) {
-        await this.AdminController.typeController.deleteType(this.selectedType);
-      }
-      if (this.selectedItem == 3) {
-        await this.AdminController.heroController.deleteHero(this.selectedHero);
-      }
+      if (this.selectedItem === 2)
+        await this.AdminController.typeController.deleteType(this.selectedType)
 
-      this.selectedItem = '';
-      this.selectedCategory = '';
-      this.selectedType = '';
-      this.selectedHero = '';
-      this.$emit('updateData');
-      this.$emit('closeDeletePopup');
+      if (this.selectedItem === 3)
+        await this.AdminController.heroController.deleteHero(this.selectedHero)
+
+      this.selectedItem = ''
+      this.selectedCategory = ''
+      this.selectedType = ''
+      this.selectedHero = ''
+      this.$emit('updateData')
+      this.$emit('closeDeletePopup')
     },
   },
 
-};
+}
 </script>
 
 <template lang="">
@@ -96,31 +93,31 @@ export default {
                 :options="selected"
                 select-in="Item"
                 select-name="Что удаляем?"
-                @changeOptionItem="(select) => updateSelectedItem(select)"
+                @change-option-item="(select) => updateSelectedItem(select)"
               />
               <admin-select
-                v-if="selectedItem == 1 || selectedItem == 2"
+                v-if="selectedItem === 1 || selectedItem === 2"
                 :key="selectedItem"
                 :options="categorys"
                 select-in="Category"
                 select-name="Выберите категорию"
-                @changeOptionCategory="(select) => updateSelectedCategory(select)"
+                @change-option-category="(select) => updateSelectedCategory(select)"
               />
               <admin-select
-                v-if="selectedItem == 2 && selectedCategory"
+                v-if="selectedItem === 2 && selectedCategory"
                 :key="selectedCategory"
                 :options="catalog.categories[selectedCategory].product_types"
                 select-in="Type"
                 select-name="Выберите тип"
-                @changeOptionType="(select) => updateSelectedType(select)"
+                @change-option-type="(select) => updateSelectedType(select)"
               />
               <admin-select
-                v-if="selectedItem == 3"
+                v-if="selectedItem === 3"
                 :key="selectedItem"
                 :options="catalog.heroes"
                 select-in="Hero"
                 select-name="Выберите героя"
-                @changeOptionHero="(select) => updateSelectedHero(select)"
+                @change-option-hero="(select) => updateSelectedHero(select)"
               />
             </div>
             <div class="bg-gray-50  flex flex-row-reverse">

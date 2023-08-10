@@ -5,18 +5,18 @@ export default {
     item: [Object],
 
   },
+  emits: ['updateInput'],
   data() {
-    return {};
+    return {}
   },
   methods: {
     updateInput(event) {
       // передаем содержимое инпута
-      this.$emit('updateInput', event.target.value);
-
+      this.$emit('updateInput', event.target.value)
     },
   },
 
-};
+}
 </script>
 
 <template lang="">

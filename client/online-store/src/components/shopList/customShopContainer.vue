@@ -15,7 +15,7 @@ export default {
     },
   },
   emits: ['addProductBasket', 'updateSearchInput'],
-};
+}
 </script>
 
 <template lang="">

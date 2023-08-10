@@ -1,18 +1,17 @@
-import { $admin } from '../../../axiosInstance/instance';
+import { $admin } from '../../../axiosInstance/instance'
 
 export default class CategoruController {
   async create(data) {
     await $admin
       .post('/category', data)
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
       })
-      .catch(error => {
-        console.log(error);
-        return error;
-      });
-
+      .catch((error) => {
+        // console.log(error)
+        return error
+      })
   }
 
   async update(categoryId, newValue, cover_path) {
@@ -23,12 +22,13 @@ export default class CategoruController {
           name: newValue,
           cover_img: cover_path,
         })
-        .then(response => {
-          console.log(response.data);
-          return response.data;
+        .then((response) => {
+          // console.log(response.data)
+          return response.data
         })
-        .catch(error => {
-          console.log(error);
+        .catch((error) => {
+          // console.log(error)
+          return error
         })
       : $admin
         .put('/category', {
@@ -36,14 +36,14 @@ export default class CategoruController {
           name: newValue,
 
         })
-        .then(response => {
-          console.log(response.data);
-          return response.data;
+        .then((response) => {
+          // console.log(response.data)
+          return response.data
         })
-        .catch(error => {
-          console.log(error);
-        }));
-
+        .catch((error) => {
+          // console.log(error)
+          return error
+        }))
   }
 
   async delete(categoryId) {
@@ -53,13 +53,13 @@ export default class CategoruController {
           id: categoryId,
         },
       })
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
       })
-      .catch(error => {
-        console.log(error);
-      });
-
+      .catch((error) => {
+        // console.log(error)
+        return error
+      })
   }
 }

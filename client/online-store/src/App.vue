@@ -1,14 +1,14 @@
 <script>
-import customHeader from './components/header/customHeader.vue';
-import customFooter from './components/footer/customFooter.vue';
-import customErrorPage from './components/errorPage/customErrorPage.vue';
+import customHeader from './components/header/customHeader.vue'
+import customFooter from './components/footer/customFooter.vue'
+import customErrorPage from './components/errorPage/customErrorPage.vue'
 import {
-  addProductBasket, deleteProductBasket, updateCountProductBasket, getDataBasket, correctBasket
-} from './controllers/basketController';
-import { getCategorys, sortItems } from './controllers/productController';
+  addProductBasket, correctBasket, deleteProductBasket, getDataBasket, updateCountProductBasket,
+} from './controllers/basketController'
+import { getCategorys, sortItems } from './controllers/productController'
 
 export default {
-  components: { CustomHeader: customHeader, CustomFooter: customFooter, CustomErrorPage: customErrorPage, },
+  components: { CustomHeader: customHeader, CustomFooter: customFooter, CustomErrorPage: customErrorPage },
   data() {
     return {
       catalog: {},
@@ -17,53 +17,52 @@ export default {
       searchInput: '',
       error: false,
       loading: false,
-    };
+    }
   },
   beforeMount() {
+    if (localStorage.basket !== undefined && localStorage.basket !== '')
+      this.basket = getDataBasket()
+      // console.log('basket')
+      // console.log(this.basket)
 
-    if (localStorage.basket != undefined && localStorage.basket != '') {
-      this.basket = getDataBasket();
-      console.log('basket');
-      console.log(this.basket);
-    }
-    this.initCatalog();
+    this.initCatalog()
   },
   methods: {
     addProductBasket(basket, curentProduct) {
-      this.basket = addProductBasket(basket, curentProduct);
+      this.basket = addProductBasket(basket, curentProduct)
     },
     deleteProductBasket(curentProduct) {
-      this.basket = deleteProductBasket(curentProduct);
+      this.basket = deleteProductBasket(curentProduct)
     },
     updateCountProductBasket(newCount, id) {
-      this.basket = updateCountProductBasket(newCount, id);
+      this.basket = updateCountProductBasket(newCount, id)
     },
     updateSearchInput(value) {
-      this.searchInput = value;
+      this.searchInput = value
     },
     async initCatalog() {
-      await getCategorys().then(response => {
-        this.catalog = sortItems(response.data);
-        correctBasket(this.basket, this.catalog);
+      await getCategorys().then((response) => {
+        this.catalog = sortItems(response.data)
+        correctBasket(this.basket, this.catalog)
       })
-        .catch(error => {
-          console.log(error);
-          this.error = error;
+        .catch((error) => {
+          // console.log(error)
+          this.error = error
         })
         .finally(() => {
-          this.loading = true;
-          console.log('catalog');
-          console.log(this.catalog);
-        });
+          this.loading = true
+          // console.log('catalog')
+          // console.log(this.catalog)
+        })
     },
   },
 
-};
+}
 </script>
 
 <template>
   <div>
-    <div v-if="$router.currentRoute.value.path.split('/')[1] != '_adminPanel'">
+    <div v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel'">
       <CustomHeader />
       <hr class="mx-auto max-w-7xl">
     </div>

@@ -6,7 +6,7 @@ export default {
       type: Object,
       require: true,
     },
-    Admin: {
+    admin: {
       type: Object,
       require: true,
     },
@@ -20,47 +20,47 @@ export default {
         depth: 'Глубина',
       },
       curentProduct: {},
-    };
+    }
   },
   beforeMount() {
-    Object.assign(this.curentProduct, this.catalog.items[this.$route.params.itemId]);
-    this.curentProduct.newCategory_id = this.curentProduct.category_id;
-    this.curentProduct.newProduct_type_id = this.curentProduct.product_type_id;
-    this.curentProduct.newHero_id = this.curentProduct.hero_id;
-    this.curentProduct.newPrice = this.curentProduct.price;
-    this.sizeParser(this.curentProduct.size);
-    this.curentProduct.newDescription = this.curentProduct.description;
-    this.curentProduct.photos = [];
-    console.log(this.curentProduct);
+    Object.assign(this.curentProduct, this.catalog.items[this.$route.params.itemId])
+    this.curentProduct.newCategory_id = this.curentProduct.category_id
+    this.curentProduct.newProduct_type_id = this.curentProduct.product_type_id
+    this.curentProduct.newHero_id = this.curentProduct.hero_id
+    this.curentProduct.newPrice = this.curentProduct.price
+    this.sizeParser(this.curentProduct.size)
+    this.curentProduct.newDescription = this.curentProduct.description
+    this.curentProduct.photos = []
+    // console.log(this.curentProduct)
   },
 
   methods: {
     sizeParser(size) {
-      const arr = size.split('x');
+      const arr = size.split('x')
       this.curentProduct.size = {
         height: arr[0],
         width: arr[1],
         depth: arr[2],
-      };
+      }
     },
 
     getElementSelected(items) {
-      console.log();
-      console.log(items);
-      const res = {};
-      for (let key in items) {
-        res[key] = items[key].name;
-      }
-      return res;
+      // console.log()
+      // console.log(items)
+      const res = {}
+      for (const key in items)
+        res[key] = items[key].name
+
+      return res
     },
     updateSelectedCategory(select) {
-      this.curentProduct.newCategory_id = select;
+      this.curentProduct.newCategory_id = select
     },
     updateSelectedType(select) {
-      this.curentProduct.newProduct_type_id = select;
+      this.curentProduct.newProduct_type_id = select
     },
     async UpdateProduct() {
-      console.log(this.curentProduct);
+      // console.log(this.curentProduct)
       const obj = {
         id: this.curentProduct.id,
         id_1: this.curentProduct.id_1,
@@ -69,16 +69,16 @@ export default {
         product_type_id: this.curentProduct.newProduct_type_id,
         hero_id: this.curentProduct.newHero_id,
         description: this.curentProduct.newDescription,
-        size: `${ this.curentProduct.size.height }x${ this.curentProduct.size.width }x${ this.curentProduct.size.depth }`,
+        size: `${this.curentProduct.size.height}x${this.curentProduct.size.width}x${this.curentProduct.size.depth}`,
         price: this.curentProduct.newPrice,
-      };
-      await this.Admin.productController.update(obj);
-      this.$emit('updateData');
-      this.$router.push({ name: 'products', });
+      }
+      await this.Admin.productController.update(obj)
+      this.$emit('updateData')
+      this.$router.push({ name: 'products' })
     },
 
   },
-};
+}
 </script>
 
 <template>
@@ -91,7 +91,7 @@ export default {
       input-in="productName"
       placeholder="Меч длинный &laquoАлеша Попович&raquo"
       :value="curentProduct.name"
-      @updateInput="(value) => curentProduct.name = value"
+      @update-input="(value) => curentProduct.name = value"
     />
 
     <admin-select
@@ -100,10 +100,10 @@ export default {
       select-in="Category"
       select-name="Категория"
       :curent-option="{ index: curentProduct.category_id, option: catalog.categories[curentProduct.category_id].name }"
-      @changeOptionCategory="(select) => updateSelectedCategory(select)"
-      @openAddPopup="openAddPopup = true"
-      @openDeletePopup="openDeletePopup = true"
-      @openUpdatePopup="openUpdatePopup = true"
+      @change-option-category="(select) => updateSelectedCategory(select)"
+      @open-add-popup="openAddPopup = true"
+      @open-delete-popup="openDeletePopup = true"
+      @open-update-popup="openUpdatePopup = true"
     />
 
     <admin-select
@@ -112,7 +112,7 @@ export default {
       :curent-option="{ index: curentProduct.product_type_id, option: catalog.categories[curentProduct.category_id].product_types[curentProduct.product_type_id].name }"
       select-in="Type"
       select-name="Тип"
-      @changeOptionType="(select) => updateSelectedType(select)"
+      @change-option-type="(select) => updateSelectedType(select)"
     />
 
     <admin-select
@@ -121,7 +121,7 @@ export default {
       select-in="Hero"
       select-name="Герой"
       :curent-option="{ index: curentProduct.hero_id, option: catalog.heroes[curentProduct.hero_id].name }"
-      @changeOptionHero="(select) => curentProduct.newHero_id = select"
+      @change-option-hero="(select) => curentProduct.newHero_id = select"
     />
 
     <div class="flex flex-col gap-2">
@@ -141,7 +141,7 @@ export default {
         :input-in="index"
         placeholder="300"
         :value="item"
-        @updateInput="(value) => curentProduct.size[index] = value"
+        @update-input="(value) => curentProduct.size[index] = value"
       />
     </div>
 
@@ -163,7 +163,7 @@ export default {
       input-in="price"
       placeholder="3000"
       :value="String(curentProduct.price)"
-      @updateInput="(value) => curentProduct.newPrice = value"
+      @update-input="(value) => curentProduct.newPrice = value"
     />
 
     <div class="mt-6 flex items-center justify-end gap-x-6">

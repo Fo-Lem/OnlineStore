@@ -1,19 +1,13 @@
 <script>
-import { Dialog, DialogPanel } from '@headlessui/vue';
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
-
 export default {
   name: 'CustomHeader',
-  components: {
-    Dialog, DialogPanel, Bars3Icon, XMarkIcon,
-  },
   data() {
     return {
       mobileMenuOpen: false,
-    };
+    }
   },
 
-};
+}
 </script>
 
 <template lang="">

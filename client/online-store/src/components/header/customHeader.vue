@@ -1,20 +1,16 @@
 <script>
-import { Dialog, DialogPanel } from '@headlessui/vue';
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 export default {
   name: 'CustomHeader',
-  components: {
-    Dialog, DialogPanel, Bars3Icon, XMarkIcon,
-  },
+  components: { Bars3Icon, XMarkIcon },
   data() {
     return {
       mobileMenuOpen: false,
-    };
-
+    }
   },
 
-};
+}
 </script>
 
 <template lang="">
@@ -74,14 +70,14 @@ export default {
         </router-link>
       </div>
     </nav>
-    <Dialog
+    <div
       as="div"
       class="lg:hidden"
       :open="mobileMenuOpen"
       @close="mobileMenuOpen = !mobileMenuOpen"
     >
       <div class="fixed inset-0 z-10" />
-      <DialogPanel class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6  sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+      <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6  sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
         <div class="flex items-center justify-between">
           <router-link
             to="/catalog"
@@ -130,8 +126,8 @@ export default {
             </div>
           </div>
         </div>
-      </DialogPanel>
-    </Dialog>
+      </div>
+    </div>
   </header>
 </template>
 

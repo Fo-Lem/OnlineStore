@@ -19,13 +19,14 @@ export default {
       type: String,
     },
   },
+  emits: ['updateInput'],
   methods: {
     updateInput(event) {
-      this.$emit('updateInput', event.target.value);
+      this.$emit('updateInput', event.target.value)
     },
   },
 
-};
+}
 </script>
 
 <template lang="">

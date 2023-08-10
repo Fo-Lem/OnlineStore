@@ -1,5 +1,5 @@
 <script>
-import { Admin } from './adminControllers/adminControllers';
+import { Admin } from './adminControllers/adminControllers'
 
 export default {
   name: 'CustomAdminPanel',
@@ -16,16 +16,16 @@ export default {
   data() {
     return {
       mobileMenuOpen: false,
-      Admin: {},
+      admin: {},
 
-    };
+    }
   },
 
   beforeMount() {
-    this.Admin = new Admin();
+    this.Admin = new Admin()
   },
 
-};
+}
 </script>
 
 <template lang="">
@@ -218,9 +218,9 @@ export default {
 
       <div class="p-4 sm:ml-64">
         <router-view
-          :Admin="Admin"
+          :_admin="_admin"
           :catalog="catalog"
-          @updateData="$emit('updateData')"
+          @update-data="$emit('updateData')"
         />
       </div>
     </div>

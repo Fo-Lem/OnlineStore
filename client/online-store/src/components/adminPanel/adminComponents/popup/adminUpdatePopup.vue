@@ -10,7 +10,7 @@ export default {
       type: Object,
       require: true,
     },
-    AdminController: {
+    adminController: {
       type: Object,
       require: true,
     },
@@ -23,62 +23,60 @@ export default {
       selectedHero: '',
       selectedType: '',
       selectedCategory: '',
-      selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя', },
+      selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя' },
       photos: [],
       uploadPhoto: '',
-    };
+    }
   },
   methods: {
     updateSelectedItem(select) {
-      this.selectedItem = select;
-      this.selectedCategory = '';
-      this.selectedType = '';
-      this.selectedHero = '';
-      this.newValue = '';
+      this.selectedItem = select
+      this.selectedCategory = ''
+      this.selectedType = ''
+      this.selectedHero = ''
+      this.newValue = ''
     },
     updateSelectedCategory(select) {
-      this.selectedCategory = select;
-      this.selectedType = '';
-      this.newValue = '';
+      this.selectedCategory = select
+      this.selectedType = ''
+      this.newValue = ''
     },
     updateSelectedType(select) {
-      this.selectedType = select;
+      this.selectedType = select
     },
     updateSelectedHero(select) {
-      this.selectedHero = select;
-
+      this.selectedHero = select
     },
     async updateItem() {
-
-      if (this.selectedItem == 1) {
+      if (this.selectedItem === 1) {
         if (this.photos.length > 0) {
-          let formData = new FormData(updateItem);
-          let fd = new FormData();
-          fd.append('file', formData.get('fileUpload'));
-          fd.append('path', formData.get('name'));
-          fd.append('name', `${ formData.get('name') }.jpg`);
-          await this.AdminController.imageController.deleteImage(this.catalog.categories[this.selectedCategory].cover_path);
-          await this.AdminController.imageController.createImage(fd);
-          const cover_img = `../imgs/${ formData.get('name') }/${ formData.get('name') }.jpg`;
-          await this.AdminController.categoryController.updateCategory(this.selectedCategory, this.newValue, cover_img);
-        } else {
-          await this.AdminController.categoryController.updateCategory(this.selectedCategory, this.newValue);
+          const formData = new FormData(updateItem)
+          const fd = new FormData()
+          fd.append('file', formData.get('fileUpload'))
+          fd.append('path', formData.get('name'))
+          fd.append('name', `${formData.get('name')}.jpg`)
+          await this.AdminController.imageController.deleteImage(this.catalog.categories[this.selectedCategory].cover_path)
+          await this.AdminController.imageController.createImage(fd)
+          const cover_img = `../imgs/${formData.get('name')}/${formData.get('name')}.jpg`
+          await this.AdminController.categoryController.updateCategory(this.selectedCategory, this.newValue, cover_img)
+        }
+        else {
+          await this.AdminController.categoryController.updateCategory(this.selectedCategory, this.newValue)
         }
       }
-      if (this.selectedItem == 2) {
-        await this.AdminController.typeController.updateType(this.selectedType, this.newValue);
-      }
-      if (this.selectedItem == 3) {
-        console.log(this.selectedHero, this.newValue);
-        await this.AdminController.heroController.updateHero(this.selectedHero, this.newValue);
-      }
-      this.$emit('updateData');
-      this.$emit('closeUpdatePopup');
+      if (this.selectedItem === 2)
+        await this.AdminController.typeController.updateType(this.selectedType, this.newValue)
 
+      if (this.selectedItem === 3) {
+        // console.log(this.selectedHero, this.newValue)
+        await this.AdminController.heroController.updateHero(this.selectedHero, this.newValue)
+      }
+      this.$emit('updateData')
+      this.$emit('closeUpdatePopup')
     },
   },
 
-};
+}
 </script>
 
 <template lang="">
@@ -103,44 +101,44 @@ export default {
                 :options="selected"
                 select-in="Item"
                 select-name="Что изменяем?"
-                @changeOptionItem="(select) => updateSelectedItem(select)"
+                @change-option-iotem="(select) => updateSelectedItem(select)"
               />
 
               <admin-select
-                v-if="selectedItem == 1 || selectedItem == 2"
+                v-if="selectedItem === 1 || selectedItem === 2"
                 :key="selectedItem"
                 :options="categorys"
                 select-in="Category"
                 select-name="Выберите категорию"
-                @changeOptionCategory="(select) => updateSelectedCategory(select)"
+                @change-option-category="(select) => updateSelectedCategory(select)"
               />
               <admin-select
-                v-if="selectedItem == 2 && selectedCategory"
+                v-if="selectedItem === 2 && selectedCategory"
                 :key="selectedCategory"
                 :options="catalog.categories[selectedCategory].product_types"
                 select-in="Type"
                 select-name="Выберите тип"
-                @changeOptionType="(select) => updateSelectedType(select)"
+                @change-option-type="(select) => updateSelectedType(select)"
               />
               <admin-select
-                v-if="selectedItem == 3"
+                v-if="selectedItem === 3"
                 :key="selectedItem"
                 :options="catalog.heroes"
                 select-in="Hero"
                 select-name="Выберите героя"
-                @changeOptionHero="(select) => updateSelectedHero(select)"
+                @change-option-hero="(select) => updateSelectedHero(select)"
               />
               <admin-input
-                v-if="selectedItem == 1 && selectedCategory || selectedItem == 3 && selectedHero || selectedItem == 2 && selectedType"
+                v-if="selectedItem === 1 && selectedCategory || selectedItem === 3 && selectedHero || selectedItem === 2 && selectedType"
                 input-name="Новое название"
                 :value="newValue"
                 input-in="name"
-                @updateInput="(value) => newValue = value"
+                @update-input="(value) => newValue = value"
               />
               <admin-drop-zone
-                v-if="selectedItem == 1 && selectedCategory"
+                v-if="selectedItem === 1 && selectedCategory"
                 :photos="photos"
-                @uploadPhoto="uploadPhoto"
+                @upload-photo="uploadPhoto"
               />
             </div>
             <div class="bg-gray-50  flex flex-row-reverse">

@@ -5,10 +5,10 @@ export default {
   data() {
     return {
       mobileMenuOpen: false,
-    };
+    }
   },
 
-};
+}
 </script>
 
 <template lang="">

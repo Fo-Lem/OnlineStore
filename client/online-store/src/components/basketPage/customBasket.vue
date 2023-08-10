@@ -1,5 +1,5 @@
 <script>
-import { summarizePriceProductBasket } from '../../controllers/basketController';
+import { summarizePriceProductBasket } from '../../controllers/basketController'
 
 export default {
   name: 'CustomCart',
@@ -17,32 +17,31 @@ export default {
   data() {
     return {
       sumPrice: 0,
-    };
+    }
   },
   watch: {
     basket() {
-      this.sumPrice = summarizePriceProductBasket(this.basket, this.catalog);
+      this.sumPrice = summarizePriceProductBasket(this.basket, this.catalog)
     },
   },
   beforeMount() {
-    console.log(this.basket);
-    this.sumPrice = summarizePriceProductBasket(this.basket, this.catalog);
+    // console.log(this.basket)
+    this.sumPrice = summarizePriceProductBasket(this.basket, this.catalog)
   },
   methods: {
     deleteProductBasket(index) {
-      this.$emit('deleteProductBasket', index);
+      this.$emit('deleteProductBasket', index)
     },
     updateCount(count, index) {
-      if (count > 0) {
-        this.$emit('updateCountProductBasket', count, index);
-      }
+      if (count > 0)
+        this.$emit('updateCountProductBasket', count, index)
     },
     imgUrl(id) {
-      return `${ import.meta.env.VITE_BASE_URL }${ this.catalog.items[id].img_path }/${ this.catalog.items[id].art }_0.jpg`;
+      return `${import.meta.env.VITE_BASE_URL}${this.catalog.items[id].img_path}/${this.catalog.items[id].art}_0.jpg`
     },
   },
 
-};
+}
 </script>
 
 <template lang="">
@@ -80,7 +79,7 @@ export default {
                 <custom-input
                   :id="index"
                   :item="item"
-                  @updateInput="(newCount) => { updateCount(newCount, index) }"
+                  @update-input="(newCount) => { updateCount(newCount, index) }"
                 />
                 <span
                   class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"

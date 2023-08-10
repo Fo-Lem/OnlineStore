@@ -1,17 +1,16 @@
-import { $admin } from '../../../axiosInstance/instance';
+import { $admin } from '../../../axiosInstance/instance'
 
 export default class HeroController {
   async create(data) {
     await $admin
       .post('/hero', data)
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
       })
-      .catch(error => {
-        console.log(error);
-      });
-
+      .catch((error) => {
+        return error
+      })
   }
 
   async update(heroId, newValue) {
@@ -21,14 +20,14 @@ export default class HeroController {
         name: newValue,
 
       })
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
       })
-      .catch(error => {
-        console.log(error);
-      });
-
+      .catch((error) => {
+        // console.log(error)
+        return error
+      })
   }
 
   async delete(heroId) {
@@ -38,13 +37,13 @@ export default class HeroController {
           id: heroId,
         },
       })
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
       })
-      .catch(error => {
-        console.log(error);
-      });
-
+      .catch((error) => {
+        // console.log(error)
+        return error
+      })
   }
 }

@@ -6,46 +6,44 @@ export default {
       type: Object,
       require: true,
     },
-    Admin: {
+    admin: {
       type: Object,
       require: true,
     },
   },
+  emits: ['updateData'],
   data() {
     return {
       searchQuery: '',
-    };
+    }
   },
   computed: {
     searchedItems() {
-
-      const searchObj = {};
+      const searchObj = {}
       for (const [key, obj] of Object.entries(this.catalog.items)) {
-        if (obj.name.toLowerCase().includes(this.searchQuery.toLowerCase())) {
-          searchObj[key] = obj;
-        }
+        if (obj.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
+          searchObj[key] = obj
       }
-      return searchObj;
+      return searchObj
     },
   },
   methods: {
     deleteItem(product) {
-      for (let i = 0; i < 3; i++) {
-        this.Admin.imageController.delete(`${ product.img_path }/${ product.art }_${ i }.jpg`);
-      }
-      this.Admin.productController.delete(product.id);
+      for (let i = 0; i < 3; i++)
+        this.Admin.imageController.delete(`${product.img_path}/${product.art}_${i}.jpg`)
 
-      this.$emit('updateData');
+      this.Admin.productController.delete(product.id)
 
+      this.$emit('updateData')
     },
 
   },
-};
+}
 </script>
 
 <template lang="">
   <div class="relative flex flex-col gap-5 ">
-    <custom-search-input @updateSearchInput="(value) => { searchQuery = value }" />
+    <custom-search-input @update-search-input="(value) => { searchQuery = value }" />
     <table class="w-full text-sm text-left text-gray-500 ">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
         <tr>

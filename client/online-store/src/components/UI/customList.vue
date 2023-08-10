@@ -10,18 +10,18 @@ export default {
 
   computed: {
     imgUrl() {
-      if (this.list.cover_path) {
-        return `${ import.meta.env.VITE_BASE_URL }${ this.list.cover_path.slice(2) }`;
-      }
-      if (this.list.items) {
-        let item = this.list.items[Object.keys(this.list.items)[0]];
-        return `${ import.meta.env.VITE_BASE_URL }${ item.img_path }/${ item.art }_0.jpg`;
-      }
+      if (this.list.cover_path)
+        return `${import.meta.env.VITE_BASE_URL}${this.list.cover_path.slice(2)}`
 
+      if (this.list.items) {
+        const item = this.list.items[Object.keys(this.list.items)[0]]
+        return `${import.meta.env.VITE_BASE_URL}${item.img_path}/${item.art}_0.jpg`
+      }
+      return ''
     },
 
   },
-};
+}
 </script>
 
 <template>
