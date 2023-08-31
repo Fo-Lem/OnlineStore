@@ -1,16 +1,19 @@
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 
-export default {
-  name: 'CustomHeader',
-  components: { Bars3Icon, XMarkIcon },
-  data() {
-    return {
-      mobileMenuOpen: false,
-    }
-  },
+export default defineComponent(
 
-}
+  {
+    name: 'CustomHeader',
+    components: { Bars3Icon, XMarkIcon },
+    data() {
+      return {
+        mobileMenuOpen: false,
+      }
+    },
+
+  })
 </script>
 
 <template lang="">

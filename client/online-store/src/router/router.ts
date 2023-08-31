@@ -57,4 +57,4 @@ const router = createRouter(
     history: createWebHistory(),
   },
 )
-export default router
+export { router }

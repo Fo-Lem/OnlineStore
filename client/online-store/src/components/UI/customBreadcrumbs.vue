@@ -1,17 +1,21 @@
-<script>
-export default {
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { catalog } from '../../controllers/productController'
+
+export default defineComponent({
   name: 'CustomBreadcrumbs',
   props: {
     catalog: {
-      type: Object,
-      require: true,
+      type: Object as PropType<catalog>,
+      required: true,
     },
   },
 
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div class="">
     <ol class="flex justify-center text-gray-700 lg:justify-start">
       <li class="pr-2">
@@ -33,7 +37,7 @@ export default {
           :to="{ name: 'productList', params: { categoryId: $route.params.categoryId } }"
           :class="!$route.params.productId ? 'text-gray-500' : 'hover:underline'"
         >
-          {{ catalog.categories[$route.params.categoryId].name }}
+          {{ catalog.categories[$route.params.categoryId as string].name }}
         </router-link>
       </li>
       <li
@@ -46,7 +50,7 @@ export default {
         v-if="$route.params.categoryId && $route.params.productId"
         class="px-2 text-gray-500"
       >
-        {{ catalog.categories[$route.params.categoryId].product_types[$route.params.productId].name }}
+        {{ catalog.categories[$route.params.categoryId as string].product_types[$route.params.productId as string].name }}
       </li>
     </ol>
   </div>

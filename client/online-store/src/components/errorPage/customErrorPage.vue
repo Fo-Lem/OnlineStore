@@ -1,5 +1,7 @@
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'CustomErrorPage',
   props: {
     error: {
@@ -7,7 +9,7 @@ export default {
       type: Object,
     },
   },
-}
+})
 </script>
 
 <template lang="">

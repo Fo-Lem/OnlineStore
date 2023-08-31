@@ -1,5 +1,7 @@
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'CustomFooter',
 
   data() {
@@ -8,7 +10,7 @@ export default {
     }
   },
 
-}
+})
 </script>
 
 <template lang="">

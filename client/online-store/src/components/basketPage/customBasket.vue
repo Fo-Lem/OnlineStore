@@ -1,50 +1,45 @@
-<script>
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 import { summarizePriceProductBasket } from '../../controllers/basketController'
+import type { basket } from '../../controllers/basketController'
+import type { catalog } from '../../controllers/productController'
 
-export default {
+export default defineComponent({
   name: 'CustomCart',
   props: {
     basket: {
-      require: true,
-      type: Object,
+      required: true,
+      type: Object as PropType<basket>,
     },
     catalog: {
-      require: true,
-      type: Object,
+      required: true,
+      type: Object as PropType<catalog>,
     },
   },
   emits: ['deleteProductBasket', 'updateCountProductBasket'],
-  data() {
-    return {
-      sumPrice: 0,
-    }
-  },
-  watch: {
-    basket() {
-      this.sumPrice = summarizePriceProductBasket(this.basket, this.catalog)
+  computed: {
+    sumPrice() {
+      return summarizePriceProductBasket(this.basket, this.catalog)
     },
-  },
-  beforeMount() {
-    // console.log(this.basket)
-    this.sumPrice = summarizePriceProductBasket(this.basket, this.catalog)
   },
   methods: {
-    deleteProductBasket(index) {
+    deleteProductBasket(index: string | number) {
       this.$emit('deleteProductBasket', index)
     },
-    updateCount(count, index) {
+    updateCount(count: number, index: string | number) {
       if (count > 0)
         this.$emit('updateCountProductBasket', count, index)
     },
-    imgUrl(id) {
+    imgUrl(id: number) {
       return `${import.meta.env.VITE_BASE_URL}${this.catalog.items[id].img_path}/${this.catalog.items[id].art}_0.jpg`
     },
   },
 
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div class="bg-white p-10">
     <div
       v-if="Object.keys(basket).length > 0"
@@ -79,7 +74,7 @@ export default {
                 <custom-input
                   :id="index"
                   :item="item"
-                  @update-input="(newCount) => { updateCount(newCount, index) }"
+                  @update-input="(newCount:number) => { updateCount(newCount, index) }"
                 />
                 <span
                   class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"

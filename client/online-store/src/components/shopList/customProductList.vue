@@ -24,8 +24,8 @@ export default {
   },
   methods: {
     searchFirstHero(categoryId, typeId) {
+      let firstHeroId
       for (const cKey in this.catalog.items) {
-        let firstHeroId
         if (this.catalog.items[cKey].product_type_id === typeId && this.catalog.items[cKey].category_id === categoryId) {
           if (firstHeroId) {
             if (firstHeroId > this.catalog.items[cKey].hero_id)

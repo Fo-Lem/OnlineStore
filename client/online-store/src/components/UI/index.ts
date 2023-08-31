@@ -1,13 +1,13 @@
-import { Dialog, DialogPanel } from '@headlessui/vue'
 import { PhotoIcon } from '@heroicons/vue/24/solid'
 
 import customSearchInput from './customSearchInput.vue'
 import customInput from './customInput.vue'
 import customBreadcrumbs from './customBreadcrumbs.vue'
-import customList from './customList.vue'
+import customCartTypes from './customCartTypes.vue'
+import customCartCategories from './customCartCategories.vue'
 import customLoadingSpiner from './customLoadingSpiner.vue'
 
-export default [
-  customSearchInput, customBreadcrumbs, customList, customLoadingSpiner, Dialog, DialogPanel, PhotoIcon, customInput,
+export const components = [
+  customSearchInput, customBreadcrumbs, customCartTypes, customCartCategories, customLoadingSpiner, PhotoIcon, customInput,
 
 ]

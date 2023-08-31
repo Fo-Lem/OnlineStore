@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 export default {
   name: 'CustomSearchInput',
   props: {
@@ -10,9 +10,9 @@ export default {
     return {}
   },
   methods: {
-    updateInput(event) {
-      // передаем содержимое инпута
-      this.$emit('updateSearchInput', event.target.value)
+    updateInput(event: Event) {
+      if (event.target instanceof HTMLInputElement)
+        this.$emit('updateSearchInput', event.target.value)
     },
   },
 

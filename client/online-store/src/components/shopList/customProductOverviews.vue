@@ -22,7 +22,11 @@ export default {
       inBasket: false,
       curentImage: 0,
       rebuilSize: '',
-      curentProduct: {},
+      curentProduct: {
+        item: [],
+        version: 0,
+        count: 1,
+      },
       heroId: '',
       variants: [],
 
