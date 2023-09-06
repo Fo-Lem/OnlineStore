@@ -1,17 +1,19 @@
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'AdminSelect',
   props: {
     options: {
-      require: true,
+      required: true,
       type: Object,
     },
     selectIn: {
-      require: true,
-      type: String,
+      required: true,
+      type: Number,
     },
     selectName: {
-      require: true,
+      required: true,
       type: String,
     },
     curentOption: {
@@ -20,11 +22,22 @@ export default {
   },
   emits: ['changeOption1', 'changeOption2', 'changeOption3', 'openAddPopup', 'openDeletePopup', 'openUpdatePopup'],
   methods: {
-    changeOption(option) {
-      // console.log(option.target.value)
-      this.$emit(`changeOption${this.selectIn}`, option.target.value)
+    changeOption(event: Event) {
+      if (event.target instanceof HTMLInputElement) {
+        switch (this.selectIn) {
+          case 1:
+            this.$emit('changeOption1', event.target.value)
+            break
+          case 2:
+            this.$emit('changeOption2', event.target.value)
+            break
+          case 3:
+            this.$emit('changeOption3', event.target.value)
+            break
+        }
+      }
     },
-    nameParser(item) {
+    nameParser(item: any) {
       if (item !== undefined) {
         if (item.name)
           return item.name
@@ -36,7 +49,7 @@ export default {
     },
   },
 
-}
+})
 </script>
 
 <template lang="">

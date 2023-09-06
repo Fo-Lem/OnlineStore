@@ -6,9 +6,6 @@ export default {
 
   },
   emits: ['updateSearchInput'],
-  data() {
-    return {}
-  },
   methods: {
     updateInput(event: Event) {
       if (event.target instanceof HTMLInputElement)
@@ -19,7 +16,7 @@ export default {
 }
 </script>
 
-<template lang="">
+<template>
   <div>
     <div class="relative rounded-md shadow-sm">
       <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center self-center pl-2">

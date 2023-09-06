@@ -1,27 +1,38 @@
-<script>
-export default {
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { catalog } from '../../controllers/productController'
+import type { basket, curentProduct } from '../../controllers/basketController'
+import CustomBreadcrumbs from '../UI/customBreadcrumbs.vue'
+
+interface cProduct extends curentProduct {
+}
+
+export default defineComponent({
 
   name: 'CustomShopContainer',
+  components: {
+    CustomBreadcrumbs,
+  },
   props: {
-    // Хранит данные о товарах
     catalog: {
-      require: true,
-      type: Object,
+      required: true,
+      type: Object as PropType<catalog>,
     },
     searchInput: [String, Number],
     basket: {
-      require: true,
-      type: Object,
+      required: true,
+      type: Object as PropType<basket>,
     },
   },
   emits: ['addProductBasket', 'updateSearchInput'],
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div>
     <div class="mx-auto max-w-7xl p-3 flex flex-col-reverse items-center justify-between lg:px-8 md:flex-row ">
-      <custom-breadcrumbs
+      <CustomBreadcrumbs
         :catalog="catalog"
         class="mt-2 md:mt-0"
       />
@@ -30,7 +41,7 @@ export default {
     <router-view
       :basket="basket"
       :catalog="catalog"
-      @add-product-basket="(curentProduct) => { $emit('addProductBasket', curentProduct) }"
+      @add-product-basket="(cProduct:cProduct) => { $emit('addProductBasket', cProduct) }"
     />
   </div>
 </template>

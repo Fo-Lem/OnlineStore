@@ -1,29 +1,36 @@
-<script>
-export default {
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { catalog } from '../../controllers/productController'
+import type { basket } from '../../controllers/basketController'
+import CustomCartCategories from '../UI/customCartCategories.vue'
+import CustomCartTypes from '../UI/customCartTypes.vue'
+
+export default defineComponent({
 
   name: 'CustomProductList',
-
+  components: { CustomCartCategories, CustomCartTypes },
   props: {
     // Определяет текущий компонент для отрисовки
     type: {
-      require: true,
+      required: true,
       type: String,
     },
     // Хранит данные о товарах
     catalog: {
-      require: true,
-      type: Object,
+      required: true,
+      type: Object as PropType<catalog>,
     },
     basket: {
-      require: true,
-      type: Object,
+      required: true,
+      type: Object as PropType<basket>,
     },
   },
   data() {
     return {}
   },
   methods: {
-    searchFirstHero(categoryId, typeId) {
+    searchFirstHero(categoryId: string, typeId: string) {
       let firstHeroId
       for (const cKey in this.catalog.items) {
         if (this.catalog.items[cKey].product_type_id === typeId && this.catalog.items[cKey].category_id === categoryId) {
@@ -43,10 +50,10 @@ export default {
     },
   },
 
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div class="bg-white">
     <div class="mx-auto max-w-2xl px-4 pt-3 pb-6 flex flex-col items-center gap-6 sm:px-6  lg:max-w-7xl lg:px-8">
       <div
@@ -58,9 +65,9 @@ export default {
           :key="category.id"
           :to="{ name: 'productList', params: { categoryId: category.id } }"
         >
-          <custom-list
+          <CustomCartCategories
             v-if="Object.keys(category.product_types).length > 1 && category.name !== 'Без категории'"
-            :list="category"
+            :category="category"
           />
         </router-link>
       </div>
@@ -70,14 +77,14 @@ export default {
         class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
       >
         <router-link
-          v-for="typ in catalog.categories[$route.params.categoryId].product_types"
+          v-for="typ in catalog.categories[$route.params.categoryId as string].product_types"
           :key="typ.id"
           :basket="basket"
-          :to="{ name: 'productOverviews', params: { productId: typ.id, heroId: searchFirstHero($route.params.categoryId, typ.id) } }"
+          :to="{ name: 'productOverviews', params: { productId: typ.id, heroId: searchFirstHero($route.params.categoryId as string, typ.id) } }"
         >
-          <custom-list
+          <CustomCartTypes
             v-if="typ.name !== '-' && typ.items "
-            :list="typ"
+            :type="typ"
           />
         </router-link>
       </div>

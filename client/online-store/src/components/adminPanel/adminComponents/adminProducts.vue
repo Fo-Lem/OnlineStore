@@ -1,6 +1,9 @@
 <script>
+import CustomSearchInput from '../../UI/customSearchInput.vue'
+
 export default {
   name: 'AdminAnalytics',
+  components: { CustomSearchInput },
   props: {
     catalog: {
       type: Object,
@@ -43,7 +46,7 @@ export default {
 
 <template lang="">
   <div class="relative flex flex-col gap-5 ">
-    <custom-search-input @update-search-input="(value) => { searchQuery = value }" />
+    <CustomSearchInput @update-search-input="(value) => { searchQuery = value }" />
     <table class="w-full text-sm text-left text-gray-500 ">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
         <tr>

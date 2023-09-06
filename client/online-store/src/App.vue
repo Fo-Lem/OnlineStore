@@ -1,14 +1,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import customHeader from './components/header/customHeader.vue'
-import customFooter from './components/footer/customFooter.vue'
-import customErrorPage from './components/errorPage/customErrorPage.vue'
+import CustomHeader from './components/header/customHeader.vue'
+import CustomFooter from './components/footer/customFooter.vue'
+
+import CustomErrorPage from './components/errorPage/customErrorPage.vue'
 import { addProductBasket, correctBasket, deleteProductBasket, getDataBasket, updateCountProductBasket } from './controllers/basketController'
 import { getCategorys } from './controllers/productController'
 
 import type { catalog } from './controllers/productController'
 import type { basket, curentProduct } from './controllers/basketController'
+import CustomLoadingSpiner from './components/UI/customLoadingSpiner.vue'
 
 interface State {
   catalog: catalog
@@ -20,7 +22,7 @@ interface State {
 }
 
 export default defineComponent({
-  components: { CustomHeader: customHeader, CustomFooter: customFooter, CustomErrorPage: customErrorPage },
+  components: { CustomHeader, CustomFooter, CustomErrorPage, CustomLoadingSpiner },
   data(): State {
     return {
       catalog: {

@@ -5,7 +5,7 @@ import type { type } from '../../controllers/productController'
 
 export default defineComponent({
 
-  name: 'CustomList',
+  name: 'CustomCartTypes',
 
   props: {
     type: {
@@ -29,7 +29,7 @@ export default defineComponent({
 <template>
   <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-xl xl:aspect-h-8 xl:aspect-w-7">
     <div class="">
-      <img :src="imgUrl" class="h-full w-full object-cover rounded-lg object-center hover:opacity-75">
+      <img :src="imgUrl()" class="h-full w-full object-cover rounded-lg object-center hover:opacity-75">
       <div class="flex justify-between py-2 items-center">
         <h3 v-if="type.name" class="text-gray-900">
           {{ type.name }}

@@ -1,23 +1,42 @@
-<script>
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { catalog, catalogItem, catalogItems } from '../../controllers/productController'
+
+import type { basket, curentProduct } from '../../controllers/basketController'
 import { productInBasket } from '../../controllers/basketController'
 
-export default {
+interface variants {
+  // [key: string]: catalogItem
+
+}
+
+interface State {
+  inBasket: boolean
+  curentImage: number
+  rebuilSize: string
+  curentProduct: curentProduct
+  heroId: string
+  variants: any
+
+}
+export default defineComponent({
   name: 'CustomProductOverviews',
   props: {
 
     catalog: {
-      require: true,
-      type: Object,
+      required: true,
+      type: Object as PropType<catalog>,
     },
     basket: {
-      require: true,
-      type: Object,
+      required: true,
+      type: Object as PropType<basket>,
     },
 
   },
   emits: ['addProductBasket'],
 
-  data() {
+  data(): State {
     return {
       inBasket: false,
       curentImage: 0,
@@ -45,35 +64,35 @@ export default {
 
   },
   beforeMount() {
-    this.updateCurentProduct(this.$route.params.heroId)
+    this.updateCurentProduct(this.$route.params.heroId as string)
   },
   methods: {
-    sizeConvertor(size) {
+    sizeConvertor(size: string): string[] {
       return size.split('x').reduce(
-        (obj, currentSize, index) => {
+        (arr: string[], currentSize: string, index: number) => {
           const Arr = [
             'Ширинa: ', 'Высота: ', 'Глубина: ',
           ]
-          obj[index] = `${Arr[index]} ${currentSize} мм`
-          return obj
-        }, {},
+          arr[index] = `${Arr[index]} ${currentSize} мм`
+          return arr
+        }, [],
       )
     },
     addProductBasket() {
       this.$emit('addProductBasket', this.curentProduct)
       this.inBasket = productInBasket(this.basket, this.curentProduct)
     },
-    groupBy(key) {
-      return function group(array) {
-        return array.reduce((acc, obj) => {
-          const property = obj[key]
-          acc[property] = acc[property] || []
-          acc[property].push(obj)
-          return acc
-        }, {})
-      }
+
+    // TODO доделать
+    groupByHeroId(array: catalogItem[]): catalogItems {
+      return array.reduce((acc: variants[], obj): variants => {
+        const property = obj.hero_id
+        acc[property] = acc[property] || []
+        acc[property] += (obj)
+        return acc
+      }, {})
     },
-    updateCurentProduct(newHeroId, newVersion = 0) {
+    updateCurentProduct(newHeroId: string, newVersion = 0) {
       this.curentProduct = {
         item: [],
         version: newVersion,
@@ -85,23 +104,22 @@ export default {
           if (cItem.category_id === this.$route.params.categoryId && cItem.product_type_id === this.$route.params.productId)
             this.variants.push(cItem)
         }
-        const groupByHeroId = this.groupBy('hero_id')
-        this.variants = groupByHeroId(this.variants)
+        // const groupByHeroId = this.groupBy('hero_id')
+        this.variants = this.groupByHeroId(this.variants)
       }
       for (const item in this.variants[newHeroId])
         this.curentProduct.item.push(this.variants[newHeroId][item].id)
-
       this.inBasket = productInBasket(this.basket, this.curentProduct)
     },
   },
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div class="bg-white mb-5">
     <div class=" max-w-7xl mx-auto pt-3 px-6">
       <div
-        v-if="$route.params.heroId > 0 && catalog.items[curentProduct.item[curentProduct.version]]"
+        v-if="$route.params.heroId as string !== '0' && catalog.items[curentProduct.item[curentProduct.version]]"
         class=" flex flex-col justify-between gap-5 lg:flex-row"
       >
         <!-- Галлерея -->

@@ -1,10 +1,12 @@
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'CustomLoadingSpiner',
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div class="text-center mx-auto max-w-7xl p-6">
     <div role="status">
       <svg

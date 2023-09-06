@@ -1,29 +1,33 @@
 import { $user } from '../axiosInstance/instance.ts'
 
+export interface catalogItem {
+
+  art: string
+  id: string
+  id_1: string
+  category_id: string
+  product_type_id: string
+  hero_id: string
+  img_path: string
+  name: string
+  size: string
+  price: number
+  description: string
+
+}
 export interface catalogItems {
-  [key: string]: {
-    art: string
-    id: number
-    id_1: number
-    category_id: number
-    product_type_id: number
-    hero_id: number
-    img_path: string
-    name: string
-    size: string
-    price: number
-    description: string
-  }
+  [key: string]: catalogItem
+
 }
 export interface catalogHeroes {
   [key: string]: {
-    id: number
+    id: string
     name: string
   }
 }
 export interface type {
 
-  id: number
+  id: string
   name: string
   items: catalogItems
 
@@ -32,8 +36,8 @@ export interface catalogTypes {
   [key: string]: type
 }
 export interface category {
-  id: number
-  name: number
+  id: string
+  name: string
   cover_path: string
   product_types: catalogTypes
 
