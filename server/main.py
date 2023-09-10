@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Response, Request
-from fastapi.responses import RedirectResponse
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import Config
@@ -26,15 +26,15 @@ app.add_middleware(
 @app.middleware('/http')
 async def authorization_controller(request: Request, call_next):
     target_is_admin: str = request.url.path
-    response = await call_next(request)
     if target_is_admin.startswith('/admin'):
-        auth = request.headers.get('Authorization')
-        if auth:
-            token = auth.split(' ')[1]
-            is_valid = check_token(token)
-            if is_valid:
-                return RedirectResponse('/api/catalog')
-        return RedirectResponse('/index.html')
+        auth = request.headers.get('Authorization', 'n o')
+        token = auth.split(' ')[1]
+        is_valid = check_token(token)
+        if not is_valid:
+            return JSONResponse({
+                'err': 'Access denied'
+            }, status_code=401)
+    response = await call_next(request)
     return response
 
 @app.get('/admin')
