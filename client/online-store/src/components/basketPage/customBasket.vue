@@ -4,9 +4,13 @@ import { defineComponent } from 'vue'
 import { summarizePriceProductBasket } from '../../controllers/basketController'
 import type { basket } from '../../controllers/basketController'
 import type { catalog } from '../../controllers/productController'
+import CustomInput from '../UI/customInput.vue'
 
 export default defineComponent({
   name: 'CustomCart',
+  components: {
+    CustomInput,
+  },
   props: {
     basket: {
       required: true,
@@ -71,7 +75,7 @@ export default defineComponent({
                   class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
                   @click="updateCount(Number(item.count) - 1, index)"
                 > - </span>
-                <custom-input
+                <CustomInput
                   :id="index"
                   :item="item"
                   @update-input="(newCount:number) => { updateCount(newCount, index) }"

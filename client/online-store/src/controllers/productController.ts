@@ -54,7 +54,7 @@ export interface catalog {
 export async function getCategorys(): Promise<catalog> {
   return await $user.get<catalog>('/catalog')
     .then((res) => {
-      return sortItems(res.data)
+      return spreadItems(res.data)
     })
     .catch((error) => {
       // console.log(error)
@@ -62,8 +62,13 @@ export async function getCategorys(): Promise<catalog> {
     })
 }
 
-export function sortItems(catalog: catalog) {
+export function spreadItems(catalog: catalog) {
   for (const [key, item] of Object.entries(catalog.items)) {
+    item.category_id = String(item.category_id)
+    item.hero_id = String(item.hero_id)
+    item.product_type_id = String(item.product_type_id)
+    item.id = String(item.id)
+    item.id_1 = String(item.id_1)
     if (!catalog.categories[item.category_id].product_types[item.product_type_id].items)
       catalog.categories[item.category_id].product_types[item.product_type_id].items = {}
 

@@ -1,16 +1,15 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
-import type { catalog, catalogItem, catalogItems } from '../../controllers/productController'
+import type { catalog, catalogItem } from '../../controllers/productController'
 
 import type { basket, curentProduct } from '../../controllers/basketController'
 import { productInBasket } from '../../controllers/basketController'
 
-interface variants {
-  // [key: string]: catalogItem
+interface Variants {
+  [key: string]: catalogItem[]
 
 }
-
 interface State {
   inBasket: boolean
   curentImage: number
@@ -46,7 +45,7 @@ export default defineComponent({
         version: 0,
         count: 1,
       },
-      heroId: '',
+      heroId: '0',
       variants: [],
 
     }
@@ -83,12 +82,11 @@ export default defineComponent({
       this.inBasket = productInBasket(this.basket, this.curentProduct)
     },
 
-    // TODO доделать
-    groupByHeroId(array: catalogItem[]): catalogItems {
-      return array.reduce((acc: variants[], obj): variants => {
-        const property = obj.hero_id
-        acc[property] = acc[property] || []
-        acc[property] += (obj)
+    groupByHeroId(array: catalogItem[]): Variants {
+      return array.reduce((acc: Variants, obj) => {
+        const hero_id = obj.hero_id
+        acc[hero_id] = acc[hero_id] || []
+        acc[hero_id].push(obj)
         return acc
       }, {})
     },
@@ -98,17 +96,19 @@ export default defineComponent({
         version: newVersion,
         count: 1,
       }
+
       if (this.variants.length === 0) {
-        for (const item in this.catalog.items) {
-          const cItem = this.catalog.items[item]
-          if (cItem.category_id === this.$route.params.categoryId && cItem.product_type_id === this.$route.params.productId)
-            this.variants.push(cItem)
+        for (const itemId in this.catalog.items) {
+          const item = this.catalog.items[itemId]
+          if (item.category_id === this.$route.params.categoryId && item.product_type_id === this.$route.params.productId)
+            this.variants.push(item)
         }
-        // const groupByHeroId = this.groupBy('hero_id')
         this.variants = this.groupByHeroId(this.variants)
       }
+
       for (const item in this.variants[newHeroId])
         this.curentProduct.item.push(this.variants[newHeroId][item].id)
+
       this.inBasket = productInBasket(this.basket, this.curentProduct)
     },
   },
@@ -214,11 +214,11 @@ export default defineComponent({
                 <div class="flex flex-wrap gap-2 items-center ">
                   <button
                     v-for="(itemId, index) in curentProduct.item"
-                    :key="index"
+                    :key="itemId"
                     class="rounded-lg text-sm px-4 py-2 border border-black border-opacity-10"
                     :class="[curentProduct.version === index ? 'ring-2' : '']"
                     type="button"
-                    @click="updateCurentProduct($route.params.heroId, index)"
+                    @click="updateCurentProduct($route.params.heroId as string, index)"
                   >
                     {{ index + 1 }}
                   </button>

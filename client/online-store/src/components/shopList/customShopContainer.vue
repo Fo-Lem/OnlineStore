@@ -5,9 +5,6 @@ import type { catalog } from '../../controllers/productController'
 import type { basket, curentProduct } from '../../controllers/basketController'
 import CustomBreadcrumbs from '../UI/customBreadcrumbs.vue'
 
-interface cProduct extends curentProduct {
-}
-
 export default defineComponent({
 
   name: 'CustomShopContainer',
@@ -26,6 +23,12 @@ export default defineComponent({
     },
   },
   emits: ['addProductBasket', 'updateSearchInput'],
+  methods: {
+    addProductBasket(curentProduct: curentProduct) {
+      this.$emit('addProductBasket', curentProduct)
+    },
+
+  },
 })
 </script>
 
@@ -41,7 +44,7 @@ export default defineComponent({
     <router-view
       :basket="basket"
       :catalog="catalog"
-      @add-product-basket="(cProduct:cProduct) => { $emit('addProductBasket', cProduct) }"
+      @add-product-basket="addProductBasket"
     />
   </div>
 </template>

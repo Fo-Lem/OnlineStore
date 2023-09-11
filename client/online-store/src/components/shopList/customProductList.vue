@@ -32,17 +32,17 @@ export default defineComponent({
   methods: {
     searchFirstHero(categoryId: string, typeId: string) {
       let firstHeroId
-      for (const cKey in this.catalog.items) {
-        if (this.catalog.items[cKey].product_type_id === typeId && this.catalog.items[cKey].category_id === categoryId) {
-          if (firstHeroId) {
-            if (firstHeroId > this.catalog.items[cKey].hero_id)
-              firstHeroId = this.catalog.items[cKey].hero_id
-          }
-          else {
-            firstHeroId = this.catalog.items[cKey].hero_id
-          }
+      for (const itemId in this.catalog.categories[categoryId].product_types[typeId].items) {
+        const itemHeroId = this.catalog.categories[categoryId].product_types[typeId].items[itemId].hero_id
+        if (firstHeroId) {
+          if (firstHeroId > itemHeroId)
+            firstHeroId = itemHeroId
+        }
+        else {
+          firstHeroId = itemHeroId
         }
       }
+
       if (!firstHeroId)
         return 0
 

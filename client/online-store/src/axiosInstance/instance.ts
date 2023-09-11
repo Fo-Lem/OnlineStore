@@ -1,3 +1,4 @@
+import type { InternalAxiosRequestConfig } from 'axios'
 import axios from 'axios'
 
 const $user = axios.create({
@@ -7,12 +8,14 @@ const $user = axios.create({
 const $admin = axios.create({
   baseURL: import.meta.env.VITE_ADMIN_URL,
 })
-// const authInterceptor = config => {
-//     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
-//     return config
-// }
 
-// $admin.interceptors.request.use(authInterceptor)
+function authInterceptor(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
+  if (config.headers)
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+  return config
+}
+
+$admin.interceptors.request.use(authInterceptor)
 export {
   $admin, $user,
 }
