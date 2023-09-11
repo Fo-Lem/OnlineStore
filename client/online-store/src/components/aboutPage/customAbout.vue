@@ -1,16 +1,10 @@
-<script>
+<script lang="ts">
 export default {
   name: 'CustomHeader',
-  data() {
-    return {
-      mobileMenuOpen: false,
-    }
-  },
-
 }
 </script>
 
-<template lang="">
+<template>
   <section class="text-gray-600 body-font">
     <div class="max-w-7xl px-6 py-24 mx-auto">
       <div class="flex items-center  mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
