@@ -1,15 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 import customShopContainer from '../components/shopList/customShopContainer.vue'
 import customProductList from '../components/shopList/customProductList.vue'
 import customProductOverviews from '../components/shopList/customProductOverviews.vue'
-import customAdminPanel from '../components/adminPanel/customAdminPanel.vue'
+import customAdminPanel from '../components/adminPanel/customAdminPanelWrapper.vue'
 import customBasket from '../components/basketPage/customBasket.vue'
 import customAbout from '../components/aboutPage/customAbout.vue'
 import adminAnalytics from '../components/adminPanel/adminComponents/adminAnalytics.vue'
 import adminPanelCreations from '../components/adminPanel/adminComponents/adminPanelCreations.vue'
 import adminPanelUpdateProduct from '../components/adminPanel/adminComponents/adminPanelUpdateProduct.vue'
 import adminProducts from '../components/adminPanel/adminComponents/adminProducts.vue'
+import { isAdmin } from '../components/adminPanel/helpers/isAdmin'
+import adminAuth from '../components/adminPanel/adminComponents/adminAuth.vue'
 
 const routes = [
   { path: '/', redirect: '/catalog' },
@@ -29,7 +30,7 @@ const routes = [
     ],
   },
   {
-    path: '/cart',
+    path: '/basket',
     component: customBasket,
   },
   {
@@ -37,12 +38,12 @@ const routes = [
     component: customAbout,
   },
   {
-    path: '/_adminPanel', redirect: '/_adminPanel/products',
-  },
-  {
+    name: 'adminPanel',
     path: '/_adminPanel',
+    redirect: '/_adminPanel/products',
     component: customAdminPanel,
     children: [
+      { name: 'authorization', path: 'auth', component: adminAuth },
       { name: 'analutics', path: 'analytics', component: adminAnalytics },
       { name: 'products', path: 'products', component: adminProducts },
       { name: 'panelCreations', path: 'admin-panel-creations', component: adminPanelCreations },
@@ -57,4 +58,12 @@ const router = createRouter(
     history: createWebHistory(),
   },
 )
+router.beforeEach(async (to, _from, next) => {
+  if (to.name !== 'authorization') {
+    if (await isAdmin())
+      next({ name: 'authorization' })
+  }
+
+  else { next() }
+})
 export { router }

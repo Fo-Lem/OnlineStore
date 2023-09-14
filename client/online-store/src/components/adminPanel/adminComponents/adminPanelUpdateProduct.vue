@@ -72,7 +72,7 @@ export default {
         size: `${this.curentProduct.size.height}x${this.curentProduct.size.width}x${this.curentProduct.size.depth}`,
         price: this.curentProduct.newPrice,
       }
-      await this.Admin.productController.update(obj)
+      await this.Admin.productController.update(obj.id, obj.id_1, obj.name, obj.category_id, obj.product_type_id, obj.hero_id, obj.description, obj.size, obj.price)
       this.$emit('updateData')
       this.$router.push({ name: 'products' })
     },

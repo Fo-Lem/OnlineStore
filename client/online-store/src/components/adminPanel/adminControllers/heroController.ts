@@ -1,9 +1,25 @@
 import { $admin } from '../../../axiosInstance/instance'
 
-export default class ProductController {
-  async create(data) {
+export default class HeroController {
+  async create(heroName: string) {
     await $admin
-      .post('/product', data)
+      .post('/hero', { heroName })
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
+      })
+      .catch((error) => {
+        return error
+      })
+  }
+
+  async update(heroId: number, newHeroName: string) {
+    await $admin
+      .put('/hero', {
+        id: heroId,
+        name: newHeroName,
+
+      })
       .then((response) => {
         // console.log(response.data)
         return response.data
@@ -14,24 +30,11 @@ export default class ProductController {
       })
   }
 
-  async update(data) {
+  async delete(heroId: number) {
     await $admin
-      .put('/product', data)
-      .then((response) => {
-        // console.log(response.data)
-        return response.data
-      })
-      .catch((error) => {
-        // console.log(error)
-        return error
-      })
-  }
-
-  async delete(productId) {
-    await $admin
-      .delete('/product', {
+      .delete('/hero', {
         data: {
-          id: productId,
+          id: heroId,
         },
       })
       .then((response) => {

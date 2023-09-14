@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 export default {
   name: 'AdminInput',
   props: {
@@ -21,8 +21,9 @@ export default {
   },
   emits: ['updateInput'],
   methods: {
-    updateInput(event) {
-      this.$emit('updateInput', event.target.value)
+    updateInput(event: Event) {
+      if (event.target instanceof HTMLInputElement)
+        this.$emit('updateInput', event.target.value)
     },
   },
 

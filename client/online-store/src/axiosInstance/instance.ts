@@ -6,7 +6,7 @@ const $user = axios.create({
 })
 
 const $admin = axios.create({
-  baseURL: import.meta.env.VITE_ADMIN_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
 })
 
 function authInterceptor(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {

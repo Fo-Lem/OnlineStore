@@ -1,24 +1,11 @@
 import { $admin } from '../../../axiosInstance/instance'
 
-export default class HeroController {
-  async create(data) {
+export default class CategoruController {
+  async create(categoryName: string, coverImg: string) {
     await $admin
-      .post('/hero', data)
-      .then((response) => {
-        // console.log(response.data)
-        return response.data
-      })
-      .catch((error) => {
-        return error
-      })
-  }
-
-  async update(heroId, newValue) {
-    await $admin
-      .put('/hero', {
-        id: heroId,
-        name: newValue,
-
+      .post('/category', {
+        name: categoryName,
+        cover_img: coverImg,
       })
       .then((response) => {
         // console.log(response.data)
@@ -30,11 +17,28 @@ export default class HeroController {
       })
   }
 
-  async delete(heroId) {
+  async update(categoryId: number, newCategoryName: string, newCoverImg?: string) {
     await $admin
-      .delete('/hero', {
+      .put('/category', {
+        id: categoryId,
+        name: newCategoryName,
+        cover_img: newCoverImg,
+      })
+      .then((response) => {
+        // console.log(response.data)
+        return response.data
+      })
+      .catch((error) => {
+        // console.log(error)
+        return error
+      })
+  }
+
+  async delete(categoryId: number) {
+    await $admin
+      .delete('/category', {
         data: {
-          id: heroId,
+          id: categoryId,
         },
       })
       .then((response) => {

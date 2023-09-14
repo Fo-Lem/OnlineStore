@@ -95,7 +95,7 @@ export default {
         fd.append('name', `${`${obj.art}_${index}`}.jpg`)
         await this.Admin.imageController.create(fd)
       })
-      await this.Admin.productController.create(obj)
+      await this.Admin.productController.create(obj.name, obj.category_id, obj.product_type_id, obj.hero_id, obj.description, obj.art, obj.img_path, obj.size, obj.price)
       this.$emit('updateData')
       this.remoteNewProduct()
     },

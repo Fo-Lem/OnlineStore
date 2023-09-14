@@ -1,9 +1,12 @@
 import { $admin } from '../../../axiosInstance/instance'
 
 export default class TypeController {
-  async create(data) {
+  async create(categoryId: number, typeName: string) {
     await $admin
-      .post('/product_type', data)
+      .post('/product_type', {
+        category_id: categoryId,
+        name: typeName,
+      })
       .then((response) => {
         // console.log(response.data)
         return response.data
@@ -14,11 +17,11 @@ export default class TypeController {
       })
   }
 
-  async update(typeId, newValue) {
+  async update(typeId: number, newTypeName: string) {
     await $admin
       .put('/product_type', {
         id: typeId,
-        name: newValue,
+        name: newTypeName,
       })
       .then((response) => {
         // console.log(response.data)
@@ -30,7 +33,7 @@ export default class TypeController {
       })
   }
 
-  async delete(typeId) {
+  async delete(typeId: number) {
     await $admin
       .delete('/product_type', {
         data: {
