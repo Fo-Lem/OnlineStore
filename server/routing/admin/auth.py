@@ -9,7 +9,7 @@ from main import auth_conf, app
 
 ADMIN = auth_conf['admin']
 
-@app.post('/panel/login')
+@app.post('/api/login')
 def home_admin(
         login:str=Body(embed=True),
         password:str=Body(embed=True)
