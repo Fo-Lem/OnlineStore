@@ -1,6 +1,4 @@
-from enum import Enum
-
-class HTTP_RESPONSE_MESSAGE(Enum):
+class HTTP_RESPONSE_MESSAGE:
     #Default
     SUCCSESSFUL = "Successful"
     ABORTED = "Aborted"

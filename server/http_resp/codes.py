@@ -1,6 +1,4 @@
-from enum import Enum
-
-class HTTP_RESPONSE_CODE(Enum):
+class HTTP_RESPONSE_CODE:
     #Default
     SUCCSESSFUL = 200
     ABORTED = 409
