@@ -1,7 +1,7 @@
 from fastapi import Body
 from fastapi.responses import JSONResponse
 
-from main import app
+from main import app, HTTP_RESPONSE_CODE, HTTP_RESPONSE_MESSAGE
 from admin.api import add_entity, update_entity, reference_delete
 from database.structure import categories_to_types, product_types
 
@@ -14,11 +14,11 @@ def add_product_type(category_id:str=Body(embed=True),name=Body(embed=True)):
             'name': name,
             'product_type_id': product_type_id,
             'c_t_p': res
-            },status_code=201)
+            },status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_CREATED)
     except:
         return JSONResponse({
-            'err': 'Incorrect data'
-            },status_code=213)
+            'err': HTTP_RESPONSE_MESSAGE.INCORRECT_DATA
+        },status_code=HTTP_RESPONSE_CODE.INCORRECT_DATA)
 
 @app.put('/admin/product_type')
 def update_product_type(id=Body(embed=True), name=Body(embed=True)):
@@ -26,22 +26,22 @@ def update_product_type(id=Body(embed=True), name=Body(embed=True)):
     if res > 0:
         return JSONResponse({
             'name': name,
-        },status_code=201)
+        },status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_MODIFIED)
     else:
         return JSONResponse({
-            'err': 'Inncorrect data',
-        }, status_code=213)
+            'err': HTTP_RESPONSE_MESSAGE.INCORRECT_DATA,
+        }, status_code=HTTP_RESPONSE_CODE.INCORRECT_DATA)
     
 
 @app.delete('/admin/product_type')
 def delete_product_type(id=Body(embed=True)):
-    msg = 'Deleted'
-    status=201
+    msg = HTTP_RESPONSE_MESSAGE.SUCCESSFUL_DELEATED
+    status=HTTP_RESPONSE_CODE.SUCCESSFUL_DELEATED
     try:
         reference_delete(product_types, categories_to_types, id, 'product_type_id')
-    except Exception as e:
-        msg = str(e)
-        status = 213
+    except:
+        msg = HTTP_RESPONSE_MESSAGE.ABORTED_DELEATED
+        status = HTTP_RESPONSE_CODE.ABORTED_DELEATED
 
     return JSONResponse({
             'msg': msg,

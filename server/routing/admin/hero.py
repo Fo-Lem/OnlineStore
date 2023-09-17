@@ -1,7 +1,7 @@
 from fastapi import Body
 from fastapi.responses import JSONResponse
 
-from main import app
+from main import app, HTTP_RESPONSE_CODE, HTTP_RESPONSE_MESSAGE
 from admin.api import add_entity, update_entity, delete_entity
 from database.structure import heroes
 
@@ -11,7 +11,7 @@ def add_hero(name=Body(embed=True)):
     return JSONResponse({
         'id': hero_id,
         'name': name
-        },status_code=201)
+        },status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_CREATED)
 
 @app.put('/admin/hero')
 def update_hero(id=Body(embed=True), name=Body(embed=True)):
@@ -19,15 +19,15 @@ def update_hero(id=Body(embed=True), name=Body(embed=True)):
     if res > 0:
         return JSONResponse({
             'name': name,
-        },status_code=201)
+        },status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_MODIFIED)
     else:
         return JSONResponse({
-            'err': 'Inncorrect data',
-        }, status_code=213)
+            'err': HTTP_RESPONSE_CODE.INCORRECT_DATA,
+        }, status_code=HTTP_RESPONSE_MESSAGE.INCORRECT_DATA)
     
 @app.delete('/admin/hero')
 def delete_hero(id=Body(embed=True)):
     delete_entity(heroes, id=id)
     return JSONResponse({
-        'msg': 'Deleted'
-        },status_code=201)
+        'msg': HTTP_RESPONSE_MESSAGE.SUCCESSFUL_DELEATED
+        },status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_DELEATED)

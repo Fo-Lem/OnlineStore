@@ -2,7 +2,7 @@ from fastapi import Body
 from fastapi.responses import JSONResponse
 from typing import Union
 
-from main import app
+from main import app, HTTP_RESPONSE_CODE, HTTP_RESPONSE_MESSAGE
 from admin.api import add_entity, update_entity, reference_delete
 from database.structure import categories_to_types, identities, items
 
@@ -43,12 +43,12 @@ def add_product(
     id_ = add_entity(items, **item)
     identity.update(item)
     identity['id'] = id_
-    return JSONResponse(identity, status_code=201)
+    return JSONResponse(identity, status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_CREATED)
 
 @app.post('/admin/product_type_to_category')
 def set_product_type_to_category(category_id=Body(embed=True),product_type_id=Body(embed=True)):
     res = add_entity(categories_to_types, category_id=category_id, product_type_id=product_type_id)
-    return JSONResponse({'id': res}, status_code=201)
+    return JSONResponse({'id': res}, status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_CREATED)
 
 @app.put('/admin/product')
 def update_product(
@@ -58,7 +58,7 @@ def update_product(
     if params.get('id', None) == None:
         return JSONResponse({
             'err': 'Id value is nessasary',
-        }, status_code=213) 
+        }, status_code=HTTP_RESPONSE_MESSAGE.ABORTED_MODIFIED) 
     #update_entity(items, params['id_1'])
     item = ['size', 'price']
     item_params = {}
@@ -67,8 +67,8 @@ def update_product(
             item_params[param]=params.pop(param)
     if item_params!={} and params.get('id_1', None)==None:
         return JSONResponse({
-            'msg': 'item parameter is nessasary',
-        }, status_code=213)
+            'err': 'item parameter is nessasary',
+        }, status_code=HTTP_RESPONSE_MESSAGE.ABORTED_MODIFIED)
     elif item_params!={}:
         item_id = params.pop('id_1')
         update_entity(items, item_id, **item_params)
@@ -77,18 +77,18 @@ def update_product(
     return JSONResponse({
             'item_params': item_params,
             'params': params
-        }, status_code=201) 
+        }, status_code=HTTP_RESPONSE_MESSAGE.SUCCESSFUL_MODIFIED) 
 
 
 @app.delete('/admin/product')
 def delete_product(id=Body(embed=True)):
-    status = 201
-    msg = 'Deleted'
+    status = HTTP_RESPONSE_CODE.SUCCESSFUL_DELEATED
+    msg = HTTP_RESPONSE_MESSAGE.SUCCESSFUL_DELEATED
     try:
         reference_delete(identities, items, id, 'identity_id')
-    except Exception as e:
-        msg = str(e)
-        status = 213
+    except:
+        msg = HTTP_RESPONSE_MESSAGE.ABORTED_DELEATED
+        status = HTTP_RESPONSE_CODE.ABORTED_DELEATED
 
     return JSONResponse({
             'msg': msg,

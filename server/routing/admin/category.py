@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Union
 
-from main import app
+from main import app, HTTP_RESPONSE_CODE, HTTP_RESPONSE_MESSAGE
 
 from admin.api import add_entity, update_entity, reference_delete, conn
 from database.structure import categories, categories_to_types, identities
@@ -23,7 +23,7 @@ def add_category(name=Body(embed=True),cover_img=Body(embed=True)):
         'name': name,
         'cover_img': cover_img,
         'categories_to_types_id':categ_to_type_id
-        },status_code=201)
+        },status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_CREATED)
 
 @app.put('/admin/category')
 def update_category(
@@ -36,8 +36,8 @@ def update_category(
         params['cover_img'] = category.cover_img
     if params == {}:
         return JSONResponse({
-            'err': "You don't provide any parametrs",
-        }, status_code=213)
+            'err': HTTP_RESPONSE_MESSAGE.NO_ANY_PARAMETRS,
+        }, status_code=HTTP_RESPONSE_CODE.NO_ANY_PARAMETRS)
     try:
         res = update_entity(categories, id=category.id, **params)
     except:
@@ -46,23 +46,23 @@ def update_category(
         return JSONResponse({
             'name': category.name,
             'cover_path': category.cover_img
-        },status_code=201)
+        },status_code=HTTP_RESPONSE_CODE.SUCCESSFUL_MODIFIED)
     else:
         return JSONResponse({
-            'err': 'Inncorrect data',
-        }, status_code=213)
+            'err': HTTP_RESPONSE_MESSAGE.INCORRECT_DATA,
+        }, status_code=HTTP_RESPONSE_CODE.INCORRECT_DATA)
 
 @app.delete('/admin/category')
 def delete_category(id=Body(embed=True)):
-    status = 201
-    msg = 'Deleted'
+    status = HTTP_RESPONSE_CODE.SUCCESSFUL_DELEATED
+    msg = HTTP_RESPONSE_MESSAGE.SUCCESSFUL_DELEATED
     try:
         upd = identities.update().where(identities.c.category_id==id).values(category_id=-1)
         conn.execute(upd)
         reference_delete(categories, categories_to_types, id, 'category_id')
-    except Exception as e:
-        msg = str(e)
-        status = 213
+    except:
+        msg = HTTP_RESPONSE_MESSAGE.ABORTED_DELEATED
+        status = HTTP_RESPONSE_CODE.ABORTED_DELEATED
 
     return JSONResponse({
             'msg': msg,

@@ -3,7 +3,8 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import Config
-#from routing.admin.auth import check_token
+from http_resp.codes import HTTP_RESPONSE_CODE
+from http_resp.message import HTTP_RESPONSE_MESSAGE
 
 app = FastAPI()
 auth_conf = Config('conf/auth.conf')
@@ -32,14 +33,14 @@ async def authorization_controller(request: Request, call_next):
         is_valid = check_token(token)
         if not is_valid:
             return JSONResponse({
-                'err': 'Access denied'
-            }, status_code=401)
+                'err': HTTP_RESPONSE_MESSAGE.ACCESS_DENIED
+            }, status_code=HTTP_RESPONSE_CODE.ACCESS_DENIED)
     response = await call_next(request)
     return response
 
 @app.get('/admin')
 def test():
-    return ''
+    return 'You have access to admin panel!'
 
 import routing.clients.catalog 
 import routing.clients.tables 
