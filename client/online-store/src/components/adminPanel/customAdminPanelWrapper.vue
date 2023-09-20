@@ -1,7 +1,12 @@
 <script lang="ts">
-import { Admin } from './adminControllers/adminControllers'
+import { defineComponent } from 'vue'
+import { isAdmin } from './adminComponents/http/isAdmin'
 
-export default {
+interface State {
+  isAdminAuth: boolean
+  mobileMenuOpen: boolean
+}
+export default defineComponent({
   name: 'CustomAdminPanelWrapper',
   props: {
     catalog: {
@@ -13,25 +18,27 @@ export default {
 
   emits: ['updateData'],
 
-  data() {
+  data(): State {
     return {
       mobileMenuOpen: false,
-      Admin: {},
+      isAdminAuth: false,
 
     }
   },
 
-  beforeMount() {
-    this.Admin = new Admin()
+  async beforeMount() {
+    if (await isAdmin())
+      this.isAdminAuth = true
   },
 
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div>
     <div class="mx-auto ">
       <button
+        v-if="isAdminAuth"
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
         aria-controls="default-sidebar"
@@ -56,7 +63,7 @@ export default {
       </button>
 
       <aside
-        v-if="Admin"
+        v-if="isAdminAuth"
         id="default-sidebar"
         class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
@@ -122,9 +129,9 @@ export default {
         </div>
       </aside>
 
-      <div class="p-4 sm:ml-64">
+      <div class="p-4 " :class="{ 'sm:ml-64': isAdminAuth }">
         <router-view
-          :Admin="Admin"
+          :is-admin-auth="isAdminAuth"
           :catalog="catalog"
           @update-data="$emit('updateData')"
         />
@@ -138,3 +145,4 @@ export default {
    border: 1px solid gray;
 }
 </style>
+./adminComponents/http/isAdmin

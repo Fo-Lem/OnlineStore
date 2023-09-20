@@ -20,7 +20,27 @@ export default defineComponent({
       default: '',
     },
   },
-  emits: ['changeOption1', 'changeOption2', 'changeOption3', 'openAddPopup', 'openDeletePopup', 'openUpdatePopup'],
+  emits: {
+    changeOption1(value: string) {
+      return value
+    },
+    changeOption2(value: string) {
+      return value
+    },
+    changeOption3(value: string) {
+      return value
+    },
+    openAddPopup() {
+      return true
+    },
+    openDeletePopup() {
+      return true
+    },
+    openUpdatePopup() {
+      return true
+    },
+  },
+
   methods: {
     changeOption(event: Event) {
       if (event.target instanceof HTMLInputElement) {

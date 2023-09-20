@@ -5,13 +5,13 @@ import HeroController from './heroController'
 import ImageController from './imageController'
 
 export class Admin {
-  categoryController = new CategoruController()
+  static categoryController = new CategoruController()
 
-  productController = new ProductController()
+  static productController = new ProductController()
 
-  typeController = new TypeController()
+  static typeController = new TypeController()
 
-  heroController = new HeroController()
+  static heroController = new HeroController()
 
-  imageController = new ImageController()
+  static imageController = new ImageController()
 }

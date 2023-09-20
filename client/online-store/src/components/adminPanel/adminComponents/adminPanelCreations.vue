@@ -1,23 +1,58 @@
-<script>
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { catalog, catalogCategories, catalogHeroes, catalogTypes } from '../../../controllers/productController'
+import { Admin } from '../adminControllers/adminControllers'
 import adminAddPopup from './popup/adminAddPopup.vue'
 import adminDeletePopup from './popup/adminDeletePopup.vue'
 import adminUpdatePopup from './popup/adminUpdatePopup.vue'
 
-export default {
+interface State {
+  openAddPopup: boolean
+  openDeletePopup: boolean
+  openUpdatePopup: boolean
+  size: {
+    height: string
+    width: string
+    depth: string
+  }
+  newProduct: {
+    productName: string
+    selected: {
+      category: number
+      type: number
+      hero: number
+    }
+    size: {
+      height: number
+      width: number
+      depth: number
+    }
+    description: string
+    price: number
+    photos: FileList[]
+  }
+
+}
+interface ElementSelected {
+  [key: number]: string
+}
+
+export default defineComponent({
   name: 'AdminPanelCreations',
   components: { AdminAddPopup: adminAddPopup, AdminDeletePopup: adminDeletePopup, AdminUpdatePopup: adminUpdatePopup },
   props: {
     catalog: {
-      type: Object,
-      require: true,
+      type: Object as PropType<catalog>,
+      required: true,
     },
-    admin: {
-      type: Object,
-      require: true,
+    isAdminAuth: {
+      type: Boolean,
+      required: true,
     },
   },
   emits: ['updateData'],
-  data() {
+  data(): State {
     return {
       openAddPopup: false,
       openDeletePopup: false,
@@ -30,17 +65,17 @@ export default {
       newProduct: {
         productName: '',
         selected: {
-          category: '',
-          type: '',
-          hero: '',
+          category: 0,
+          type: 0,
+          hero: 0,
         },
         size: {
-          height: '',
-          width: '',
-          depth: '',
+          height: 0,
+          width: 0,
+          depth: 0,
         },
         description: '',
-        price: '',
+        price: 0,
         photos: [],
       },
     }
@@ -48,25 +83,23 @@ export default {
 
   methods: {
 
-    getElementSelected(items) {
-      // console.log()
-      // console.log(items)
-      const res = {}
+    getElementSelected(items: catalogTypes | catalogCategories | catalogHeroes) {
+      const res: ElementSelected = {}
       for (const key in items)
         res[key] = items[key].name
 
       return res
     },
-    updateSelectedCategory(select) {
+    updateSelectedCategory(select: number) {
       this.newProduct.selected.category = select
-      this.newProduct.selected.type = ''
-      this.newProduct.selected.hero = ''
+      this.newProduct.selected.type = 0
+      this.newProduct.selected.hero = 0
     },
-    updateSelectedType(select) {
+    updateSelectedType(select: number) {
       this.newProduct.selected.type = select
-      this.newProduct.selected.hero = ''
+      this.newProduct.selected.hero = 0
     },
-    uploadPhoto(photos) {
+    uploadPhoto(photos: FileList[]) {
       this.newProduct.photos = photos
     },
     async AddProduct() {
@@ -90,12 +123,12 @@ export default {
       }
       this.newProduct.photos.forEach(async (photo, index) => {
         const fd = new FormData()
-        fd.append('file', photo)
+        fd.append('file', photo[0])
         fd.append('path', `items/${this.catalog.categories[obj.category_id].name}`)
         fd.append('name', `${`${obj.art}_${index}`}.jpg`)
-        await this.Admin.imageController.create(fd)
+        await Admin.imageController.create(fd)
       })
-      await this.Admin.productController.create(obj.name, obj.category_id, obj.product_type_id, obj.hero_id, obj.description, obj.art, obj.img_path, obj.size, obj.price)
+      await Admin.productController.create(obj.name, obj.category_id, obj.product_type_id, obj.hero_id, obj.description, obj.art, obj.img_path, obj.size, obj.price)
       this.$emit('updateData')
       this.remoteNewProduct()
     },
@@ -103,36 +136,36 @@ export default {
       this.newProduct = {
         productName: '',
         selected: {
-          category: '',
-          type: '',
-          hero: '',
+          category: 0,
+          type: 0,
+          hero: 0,
         },
         size: {
-          height: '',
-          width: '',
-          depth: '',
+          height: 0,
+          width: 0,
+          depth: 0,
         },
         description: '',
-        price: '',
+        price: 0,
         photos: [],
       }
     },
 
   },
-}
+})
 </script>
 
 <template>
   <AdminAddPopup
     v-if="openAddPopup"
-    :admin-controller="AdminController"
+    :admin-controller="Admin"
     :categorys="getElementSelected(catalog.categories)"
     @update-data="$emit('updateData')"
     @close-add-popup="openAddPopup = !openAddPopup"
   />
   <AdminDeletePopup
     v-if="openDeletePopup"
-    :admin-controller="AdminController"
+    :admin-controller="Admin"
     :catalog="catalog"
     :categorys="getElementSelected(catalog.categories)"
     @update-data="$emit('updateData')"
@@ -142,7 +175,7 @@ export default {
     v-if="openUpdatePopup"
     :catalog="catalog"
     :categorys="getElementSelected(catalog.categories)"
-    :admin-controller="AdminController"
+    :admin-controller="Admin"
     @update-data="$emit('updateData')"
     @close-update-popup="openUpdatePopup = !openUpdatePopup"
   />
@@ -198,7 +231,7 @@ export default {
       </div>
 
       <admin-input
-        v-for="(item, index) in newProduct.size"
+        v-for="(_item, index) in newProduct.size"
         :key="index"
         :input-name="size[index]"
         :input-in="index"

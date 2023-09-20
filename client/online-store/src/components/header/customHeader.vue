@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Bars3Icon } from '@heroicons/vue/24/outline'
 
 export default defineComponent(
 
   {
     name: 'CustomHeader',
-    components: { Bars3Icon, XMarkIcon },
+    components: { Bars3Icon },
     data() {
       return {
         mobileMenuOpen: false,
@@ -73,6 +73,7 @@ export default defineComponent(
         </router-link>
       </div>
     </nav>
+    <hr class="mx-auto max-w-7xl">
   </header>
 </template>
 

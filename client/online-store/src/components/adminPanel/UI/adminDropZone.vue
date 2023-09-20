@@ -1,38 +1,41 @@
-<script>
-export default {
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'AdminDropZone',
   props: {
     photos: {
-      require: true,
-      type: Array,
+      required: true,
+      type: Array as PropType<FileList[]>,
     },
   },
-  emits: ['uploadPhoto'],
+  emits: {
+    uploadPhoto(photos: FileList[]) {
+      return photos
+    },
+  },
   data() {
     return {
       isDrag: false,
     }
   },
   methods: {
-    uploadPhoto(currentTarget) {
-      if (currentTarget.target.files)
-        this.$emit('uploadPhoto', [...this.photos, ...currentTarget.target.files])
-
-      if (fileUpload.value)
-        fileUpload.value = ''
-
+    uploadPhoto(currentTarget: Event) {
+      if (currentTarget.target instanceof HTMLInputElement && currentTarget.target.files)
+        this.$emit('uploadPhoto', [...this.photos, ...currentTarget.target.files] as FileList[])
       this.isDrag = false
     },
-    getSrc(photo) {
+    getSrc(photo: File) {
       return URL.createObjectURL(photo)
     },
-    removePhoto(index) {
-      this.$emit('uploadPhoto', this.photos.filter((p, i) => i !== index))
+    removePhoto(index: number) {
+      this.$emit('uploadPhoto', this.photos.filter((_p, i) => i !== index))
     },
 
   },
 
-}
+})
 </script>
 
 <template>
@@ -49,7 +52,7 @@ export default {
         class="relative block text-md leading-6 m-5 text-gray-900"
       >
         <div
-          v-if="Object.keys(photos).length === 0 > 0"
+          v-if="photos.length === 0"
           class="flex flex-col items-center justify-center pt-5 pb-6"
         >
           <svg
@@ -85,7 +88,7 @@ export default {
           @dragleave="isDrag = false"
         >
         <div
-          v-if="Object.keys(photos).length > 0"
+          v-if="photos.length > 0"
           class="flex justify-center gap-5"
         >
           <div
@@ -96,7 +99,7 @@ export default {
               <img
                 class="max-h-48 rounded-md"
                 :src="getSrc(photo)"
-                :alt="`фотография${index}`"
+                :alt="`фотография${index + 1}`"
               >
               <p class="text-sm text-center">
                 {{ photo.name }}
@@ -107,7 +110,7 @@ export default {
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
-                @click.stop.prevent="removePhoto(index)"
+                @click="removePhoto(index)"
               >
                 <path
                   clip-rule="evenodd"

@@ -3,11 +3,11 @@ import { $user } from '../axiosInstance/instance.ts'
 export interface catalogItem {
 
   art: string
-  id: string
-  id_1: string
-  category_id: string
-  product_type_id: string
-  hero_id: string
+  id: number
+  id_1: number
+  category_id: number
+  product_type_id: number
+  hero_id: number
   img_path: string
   name: string
   size: string
@@ -16,34 +16,34 @@ export interface catalogItem {
 
 }
 export interface catalogItems {
-  [key: string]: catalogItem
+  [key: number]: catalogItem
 
 }
 export interface catalogHeroes {
-  [key: string]: {
-    id: string
+  [key: number]: {
+    id: number
     name: string
   }
 }
 export interface type {
 
-  id: string
+  id: number
   name: string
   items: catalogItems
 
 }
 export interface catalogTypes {
-  [key: string]: type
+  [key: number]: type
 }
 export interface category {
-  id: string
+  id: number
   name: string
   cover_path: string
   product_types: catalogTypes
 
 }
 export interface catalogCategories {
-  [key: string]: category
+  [key: number]: category
 }
 export interface catalog {
   categories: catalogCategories
@@ -64,11 +64,6 @@ export async function getCategorys(): Promise<catalog> {
 
 export function spreadItems(catalog: catalog) {
   for (const [key, item] of Object.entries(catalog.items)) {
-    item.category_id = String(item.category_id)
-    item.hero_id = String(item.hero_id)
-    item.product_type_id = String(item.product_type_id)
-    item.id = String(item.id)
-    item.id_1 = String(item.id_1)
     if (!catalog.categories[item.category_id].product_types[item.product_type_id].items)
       catalog.categories[item.category_id].product_types[item.product_type_id].items = {}
 

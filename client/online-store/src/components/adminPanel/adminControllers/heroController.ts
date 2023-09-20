@@ -5,8 +5,8 @@ export default class HeroController {
     await $admin
       .post('/hero', { heroName })
       .then((response) => {
-        // console.log(response.data)
-        return response.data
+        console.log(response.status)
+        return response.status
       })
       .catch((error) => {
         return error

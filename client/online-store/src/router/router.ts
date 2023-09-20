@@ -9,8 +9,8 @@ import adminAnalytics from '../components/adminPanel/adminComponents/adminAnalyt
 import adminPanelCreations from '../components/adminPanel/adminComponents/adminPanelCreations.vue'
 import adminPanelUpdateProduct from '../components/adminPanel/adminComponents/adminPanelUpdateProduct.vue'
 import adminProducts from '../components/adminPanel/adminComponents/adminProducts.vue'
-import { isAdmin } from '../components/adminPanel/helpers/isAdmin'
 import adminAuth from '../components/adminPanel/adminComponents/adminAuth.vue'
+import { isAdmin } from '../components/adminPanel/adminComponents/http/isAdmin'
 
 const routes = [
   { path: '/', redirect: '/catalog' },
@@ -59,11 +59,14 @@ const router = createRouter(
   },
 )
 router.beforeEach(async (to, _from, next) => {
-  if (to.name !== 'authorization') {
+  if (to.name === 'adminPanel' || to.name === 'analutics' || to.name === 'products' || to.name === 'panelCreations' || to.name === 'panelUpdate') {
     if (await isAdmin())
+      next()
+    else
       next({ name: 'authorization' })
   }
-
   else { next() }
+
+  console.log(to.name)
 })
 export { router }

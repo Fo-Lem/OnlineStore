@@ -4,11 +4,11 @@ export default {
   props: {
     catalog: {
       type: Object,
-      require: true,
+      required: true,
     },
-    admin: {
-      type: Object,
-      require: true,
+    isAdminAuth: {
+      type: Boolean,
+      required: true,
     },
   },
   emits: ['updateData'],

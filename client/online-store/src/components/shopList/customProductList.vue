@@ -26,11 +26,8 @@ export default defineComponent({
       type: Object as PropType<basket>,
     },
   },
-  data() {
-    return {}
-  },
   methods: {
-    searchFirstHero(categoryId: string, typeId: string) {
+    searchFirstHero(categoryId: number, typeId: number) {
       let firstHeroId
       for (const itemId in this.catalog.categories[categoryId].product_types[typeId].items) {
         const itemHeroId = this.catalog.categories[categoryId].product_types[typeId].items[itemId].hero_id
@@ -77,10 +74,10 @@ export default defineComponent({
         class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
       >
         <router-link
-          v-for="typ in catalog.categories[$route.params.categoryId as string].product_types"
+          v-for="typ in catalog.categories[($route.params.categoryId as unknown) as number].product_types"
           :key="typ.id"
           :basket="basket"
-          :to="{ name: 'productOverviews', params: { productId: typ.id, heroId: searchFirstHero($route.params.categoryId as string, typ.id) } }"
+          :to="{ name: 'productOverviews', params: { productId: typ.id, heroId: searchFirstHero(($route.params.categoryId as unknown) as number, typ.id) } }"
         >
           <CustomCartTypes
             v-if="typ.name !== '-' && typ.items "

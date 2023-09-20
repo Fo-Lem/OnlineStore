@@ -15,6 +15,7 @@ export default defineComponent({
 
 <template lang="">
   <footer class="bg-white text-sm">
+    <hr class="mx-auto max-w-7xl">
     <div class="mx-auto w-full max-w-screen-xl">
       <div class="grid grid-cols-1 gap-8 px-8 py-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div>

@@ -7,7 +7,7 @@ import type { basket, curentProduct } from '../../controllers/basketController'
 import { productInBasket } from '../../controllers/basketController'
 
 interface Variants {
-  [key: string]: catalogItem[]
+  [key: number]: catalogItem[]
 
 }
 interface State {
@@ -16,7 +16,7 @@ interface State {
   rebuilSize: string
   curentProduct: curentProduct
   heroId: string
-  variants: any
+  variants: Variants
 
 }
 export default defineComponent({
@@ -33,7 +33,11 @@ export default defineComponent({
     },
 
   },
-  emits: ['addProductBasket'],
+  emits: {
+    addProductBasket(curentProduct: curentProduct) {
+      return curentProduct
+    },
+  },
 
   data(): State {
     return {
@@ -83,24 +87,25 @@ export default defineComponent({
     },
 
     groupByHeroId(array: catalogItem[]): Variants {
-      return array.reduce((acc: Variants, obj) => {
+      return array.reduce<Variants>((acc, obj) => {
         const hero_id = obj.hero_id
         acc[hero_id] = acc[hero_id] || []
         acc[hero_id].push(obj)
         return acc
       }, {})
     },
+    // TODO доделать
     updateCurentProduct(newHeroId: string, newVersion = 0) {
       this.curentProduct = {
         item: [],
         version: newVersion,
         count: 1,
       }
-
-      if (this.variants.length === 0) {
+      console.log(this.variants)
+      if (Object.keys(this.variants).length === 0) {
         for (const itemId in this.catalog.items) {
           const item = this.catalog.items[itemId]
-          if (item.category_id === this.$route.params.categoryId && item.product_type_id === this.$route.params.productId)
+          if ((item.category_id as unknown) as string === this.$route.params.categoryId && (item.product_type_id as unknown) as string === this.$route.params.productId)
             this.variants.push(item)
         }
         this.variants = this.groupByHeroId(this.variants)
@@ -119,10 +124,9 @@ export default defineComponent({
   <div class="bg-white mb-5">
     <div class=" max-w-7xl mx-auto pt-3 px-6">
       <div
-        v-if="$route.params.heroId as string !== '0' && catalog.items[curentProduct.item[curentProduct.version]]"
+        v-if="$route.params.heroId !== '0' && catalog.items[curentProduct.item[curentProduct.version]]"
         class=" flex flex-col justify-between gap-5 lg:flex-row"
       >
-        <!-- Галлерея -->
         <div class="max-w-5xl ">
           <div>
             <img

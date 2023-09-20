@@ -1,5 +1,7 @@
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'AdminInput',
   props: {
     value: {
@@ -19,7 +21,11 @@ export default {
       type: String,
     },
   },
-  emits: ['updateInput'],
+  emits: {
+    updateInput(value: string) {
+      return value
+    },
+  },
   methods: {
     updateInput(event: Event) {
       if (event.target instanceof HTMLInputElement)
@@ -27,7 +33,7 @@ export default {
     },
   },
 
-}
+})
 </script>
 
 <template lang="">

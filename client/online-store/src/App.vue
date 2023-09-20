@@ -43,7 +43,6 @@ export default defineComponent({
   beforeMount() {
     if (localStorage.basket !== undefined && localStorage.basket !== '')
       this.basket = getDataBasket()
-    // console.log(this.basket)
 
     this.initCatalog()
   },
@@ -81,24 +80,20 @@ export default defineComponent({
 
 <template>
   <div>
-    <div v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel'">
-      <CustomHeader />
-      <hr class="mx-auto max-w-7xl">
-    </div>
+    <CustomHeader v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading" />
+
     <CustomErrorPage v-if="error.name" :error="error" />
     <CustomLoadingSpiner v-if="!loading" />
+    <main>
+      <router-view
+        v-if="loading && !error.name" :basket="basket" :catalog="catalog" :search-input="searchInput"
+        @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"
+        @update-count-product-basket="(newCount: number, id: number) => { updateCountProductBasket(newCount, id) }"
+        @add-product-basket="(curentProduct: curentProduct) => { addProductBasket(basket, curentProduct) }"
+        @update-data="initCatalog"
+      />
+    </main>
 
-    <router-view
-      v-if="loading && !error.name" :basket="basket" :catalog="catalog" :search-input="searchInput"
-      @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"
-      @update-count-product-basket="(newCount: number, id: number) => { updateCountProductBasket(newCount, id) }"
-      @add-product-basket="(curentProduct: curentProduct) => { addProductBasket(basket, curentProduct) }"
-      @update-data="initCatalog"
-    />
-
-    <div v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel'">
-      <hr class="mx-auto max-w-7xl">
-      <CustomFooter />
-    </div>
+    <CustomFooter v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading" />
   </div>
 </template>

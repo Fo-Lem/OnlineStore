@@ -21,19 +21,28 @@ export default defineComponent({
       type: Object as PropType<catalog>,
     },
   },
-  emits: ['deleteProductBasket', 'updateCountProductBasket'],
+  emits: {
+    deleteProductBasket(index: number) {
+      return index
+    },
+    updateCountProductBasket(count: number, index: number) {
+      return index && count
+    },
+  },
   computed: {
     sumPrice() {
       return summarizePriceProductBasket(this.basket, this.catalog)
     },
   },
   methods: {
-    deleteProductBasket(index: string | number) {
+    deleteProductBasket(index: number) {
       this.$emit('deleteProductBasket', index)
     },
-    updateCount(count: number, index: string | number) {
-      if (count > 0)
-        this.$emit('updateCountProductBasket', count, index)
+    updateCount(count: number | string, index: number) {
+      if (typeof count === 'number') {
+        if (count > 0)
+          this.$emit('updateCountProductBasket', count, index)
+      }
     },
     imgUrl(id: number) {
       return `${import.meta.env.VITE_BASE_URL}${this.catalog.items[id].img_path}/${this.catalog.items[id].art}_0.jpg`
@@ -78,7 +87,7 @@ export default defineComponent({
                 <CustomInput
                   :id="index"
                   :item="item"
-                  @update-input="(newCount:number) => { updateCount(newCount, index) }"
+                  @update-input="updateCount($event, index)"
                 />
                 <span
                   class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"

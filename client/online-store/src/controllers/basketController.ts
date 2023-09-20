@@ -1,7 +1,7 @@
 import type { catalog } from './productController'
 
 export interface basket {
-  [key: string]: {
+  [key: number]: {
     item: number[]
     version: number
     count: number
@@ -46,11 +46,10 @@ export function deleteProductBasket(id: number): basket {
   return basket
 }
 export function correctBasket(basket: basket, catalog: catalog): basket {
-  for (const [key, obj] of Object.entries(basket)) {
-    if (!catalog.items[obj.item[obj.version]])
+  for (const key in basket) {
+    if (!catalog.items[basket[key].item[basket[key].version]])
       delete basket[key]
   }
-
   saveDataBasket(basket)
   return basket
 }
