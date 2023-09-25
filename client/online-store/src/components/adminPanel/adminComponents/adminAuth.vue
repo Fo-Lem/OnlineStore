@@ -2,12 +2,16 @@
 import AdminInput from '../UI/adminInput.vue'
 import { login } from './http/login'
 
+interface State {
+  login: string
+  password: string
+}
 export default {
   name: 'AdminAuth',
   components: {
     AdminInput,
   },
-  data() {
+  data(): State {
     return {
       login: 'secrAd56',
       password: 'gveih5yh.5',
@@ -16,10 +20,9 @@ export default {
   methods: {
     async authAdmin() {
       await login(this.login, this.password)
-      if (localStorage.getItem('token'))
-        console.log(localStorage.getItem('token'))
       this.$router.push('/_adminPanel')
     },
+
   },
 }
 </script>
@@ -53,5 +56,3 @@ export default {
     </div>
   </div>
 </template>
-./http/auth
-./http/login

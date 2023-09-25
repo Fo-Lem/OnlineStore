@@ -10,7 +10,7 @@ export default defineComponent({
     },
     selectIn: {
       required: true,
-      type: Number,
+      type: String,
     },
     selectName: {
       required: true,
@@ -45,13 +45,13 @@ export default defineComponent({
     changeOption(event: Event) {
       if (event.target instanceof HTMLInputElement) {
         switch (this.selectIn) {
-          case 1:
+          case 'Category':
             this.$emit('changeOptionCategory', event.target.value as unknown as number)
             break
-          case 2:
+          case 'Type':
             this.$emit('changeOptionType', event.target.value as unknown as number)
             break
-          case 3:
+          case 'Hero':
             this.$emit('changeOptionHero', event.target.value as unknown as number)
             break
         }

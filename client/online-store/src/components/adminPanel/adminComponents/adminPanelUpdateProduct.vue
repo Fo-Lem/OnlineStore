@@ -130,7 +130,7 @@ export default defineComponent({
     class="py-5 flex flex-col gap-5"
     @submit.prevent="UpdateProduct"
   >
-    <admin-input
+    <AdminInput
       input-name="Название продукта"
       input-in="productName"
       placeholder="Меч длинный &laquoАлеша Попович&raquo"
@@ -138,7 +138,7 @@ export default defineComponent({
       @update-input="(value:string) => curentProduct.name = value"
     />
 
-    <admin-select
+    <AdminInput
       :key="curentProduct.name"
       :options="getElementSelected(catalog.categories)"
       select-in="Category"

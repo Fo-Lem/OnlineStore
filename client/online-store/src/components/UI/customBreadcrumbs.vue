@@ -50,7 +50,7 @@ export default defineComponent({
         v-if="$route.params.categoryId && $route.params.productId"
         class="px-2 text-gray-500"
       >
-        {{ catalog.categories[($route.params.categoryId as unknown) as number].product_types[$route.params.productId as string].name }}
+        {{ catalog.categories[($route.params.categoryId as unknown) as number].product_types[($route.params.productId as unknown) as number].name }}
       </li>
     </ol>
   </div>

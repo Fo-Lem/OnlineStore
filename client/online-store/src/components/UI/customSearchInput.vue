@@ -2,11 +2,11 @@
 export default {
   name: 'CustomSearchInput',
   props: {
-    searchInput: [String, Number],
+    searchInput: String,
 
   },
   emits: {
-    updateSearchInput(value: string | number) {
+    updateSearchInput(value: string) {
       return value
     },
   },

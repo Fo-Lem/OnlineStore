@@ -5,24 +5,23 @@ export default defineComponent({
   name: 'AdminInput',
   props: {
     value: {
-      require: true,
-      type: String,
+      required: true,
+      type: [String, Number],
     },
     placeholder: {
-      require: true,
       type: String,
     },
     inputIn: {
-      require: true,
+      required: true,
       type: String,
     },
     inputName: {
-      require: true,
+      required: true,
       type: String,
     },
   },
   emits: {
-    updateInput(value: string | number) {
+    updateInput(value: string) {
       return value
     },
   },

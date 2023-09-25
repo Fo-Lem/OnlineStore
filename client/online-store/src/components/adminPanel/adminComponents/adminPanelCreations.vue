@@ -3,6 +3,8 @@ import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 import type { catalog, catalogCategories, catalogHeroes, catalogTypes } from '../../../controllers/productController'
 import { Admin } from '../adminControllers/adminControllers'
+import AdminInput from '../UI/adminInput.vue'
+import AdminSelect from '../UI/adminSelect.vue'
 import adminAddPopup from './popup/adminAddPopup.vue'
 import adminDeletePopup from './popup/adminAddPopup.vue'
 import adminUpdatePopup from './popup/adminDeletePopup.vue'
@@ -40,7 +42,7 @@ export interface ElementSelected {
 
 export default defineComponent({
   name: 'AdminPanelCreations',
-  components: { AdminAddPopup: adminAddPopup, AdminDeletePopup: adminDeletePopup, AdminUpdatePopup: adminUpdatePopup },
+  components: { AdminAddPopup: adminAddPopup, AdminDeletePopup: adminDeletePopup, AdminUpdatePopup: adminUpdatePopup, AdminInput, AdminSelect },
   props: {
     catalog: {
       type: Object as PropType<catalog>,
@@ -181,7 +183,7 @@ export default defineComponent({
     class="flex flex-col gap-5"
     @submit.prevent="AddProduct"
   >
-    <admin-input
+    <AdminInput
       input-name="Название продукта"
       input-in="productName"
       placeholder="Меч длинный &laquoАлеша Попович&raquo"
@@ -189,7 +191,7 @@ export default defineComponent({
       @update-input="(value: string) => newProduct.productName = value"
     />
 
-    <admin-select
+    <AdminSelect
       :key="newProduct.productName"
       :options="getElementSelected(catalog.categories)"
       select-in="Category"
@@ -200,7 +202,7 @@ export default defineComponent({
       @open-update-popup="openUpdatePopup = true"
     />
 
-    <admin-select
+    <AdminSelect
       v-if="newProduct.selected.category"
       :key="newProduct.selected.category"
       :options="getElementSelected(catalog.categories[newProduct.selected.category].product_types)"
@@ -208,7 +210,7 @@ export default defineComponent({
       select-name="Тип"
       @change-option-type="updateSelectedType"
     />
-    <admin-select
+    <AdminSelect
       v-if="newProduct.selected.type"
       :key="newProduct.selected.type"
       :options="getElementSelected(catalog.heroes)"
@@ -227,14 +229,14 @@ export default defineComponent({
         </p>
       </div>
 
-      <admin-input
+      <AdminInput
         v-for="(_item, index) in newProduct.size"
         :key="index"
         :input-name="size[index]"
         :input-in="index"
         placeholder="300"
         :value="newProduct.size[index]"
-        @update-input="(value: number) => newProduct.size[index] = value"
+        @update-input="(value) => { newProduct.size[index] = (value as unknown) as number }"
       />
     </div>
 
@@ -251,12 +253,12 @@ export default defineComponent({
         placeholder="Write your thoughts here..."
       />
     </div>
-    <admin-input
+    <AdminInput
       input-name="Цена"
       input-in="price"
       placeholder="3000"
       :value="newProduct.price"
-      @update-input="(value: number) => newProduct.price = value"
+      @update-input="(value) => { newProduct.price = (value as unknown) as number }"
     />
 
     <admin-drop-zone

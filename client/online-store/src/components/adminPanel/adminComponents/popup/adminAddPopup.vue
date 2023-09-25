@@ -19,7 +19,14 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['closeAddPopup', 'updateData'],
+  emits: {
+    closeAddPopup() {
+      return true
+    },
+    updateData() {
+      return true
+    },
+  },
   data(): State {
     return {
       newItem: '',

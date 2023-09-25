@@ -67,6 +67,6 @@ router.beforeEach(async (to, _from, next) => {
   }
   else { next() }
 
-  console.log(to.name)
+  console.error(to.name)
 })
 export { router }

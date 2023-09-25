@@ -1,12 +1,19 @@
-<script>
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 import CustomSearchInput from '../../UI/customSearchInput.vue'
+import type { catalog, catalogItem, catalogItems } from '../../../controllers/productController'
+import { Admin } from '../adminControllers/adminControllers'
 
-export default {
+interface State {
+  searchQuery: string
+}
+export default defineComponent({
   name: 'AdminAnalytics',
   components: { CustomSearchInput },
   props: {
     catalog: {
-      type: Object,
+      type: Object as PropType<catalog>,
       required: true,
     },
     isAdminAuth: {
@@ -15,38 +22,40 @@ export default {
     },
   },
   emits: ['updateData'],
-  data() {
+  data(): State {
     return {
       searchQuery: '',
+
     }
   },
   computed: {
-    searchedItems() {
-      const searchObj = {}
-      for (const [key, obj] of Object.entries(this.catalog.items)) {
-        if (obj.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
-          searchObj[key] = obj
+    searchedItems(): catalogItems {
+      const searchObj = {} as catalogItems
+      for (const key in this.catalog.items) {
+        const item = this.catalog.items[key]
+        if (item.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
+          searchObj[key] = item
       }
       return searchObj
     },
   },
   methods: {
-    deleteItem(product) {
+    deleteItem(product: catalogItem) {
       for (let i = 0; i < 3; i++)
-        this.Admin.imageController.delete(`${product.img_path}/${product.art}_${i}.jpg`)
+        Admin.imageController.delete(`${product.img_path}/${product.art}_${i}.jpg`)
 
-      this.Admin.productController.delete(product.id)
+      Admin.productController.delete(product.id)
 
       this.$emit('updateData')
     },
 
   },
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div class="relative flex flex-col gap-5 ">
-    <CustomSearchInput @update-search-input="(value) => { searchQuery = value }" />
+    <CustomSearchInput @update-search-input="(value:string) => { searchQuery = value }" />
     <table class="w-full text-sm text-left text-gray-500 ">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
         <tr>
