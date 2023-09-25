@@ -37,7 +37,7 @@ export default defineComponent({
           :to="{ name: 'productList', params: { categoryId: $route.params.categoryId } }"
           :class="!$route.params.productId ? 'text-gray-500' : 'hover:underline'"
         >
-          {{ catalog.categories[$route.params.categoryId as string].name }}
+          {{ catalog.categories[($route.params.categoryId as unknown) as number].name }}
         </router-link>
       </li>
       <li
@@ -50,7 +50,7 @@ export default defineComponent({
         v-if="$route.params.categoryId && $route.params.productId"
         class="px-2 text-gray-500"
       >
-        {{ catalog.categories[$route.params.categoryId as string].product_types[$route.params.productId as string].name }}
+        {{ catalog.categories[($route.params.categoryId as unknown) as number].product_types[$route.params.productId as string].name }}
       </li>
     </ol>
   </div>

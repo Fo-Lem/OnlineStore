@@ -21,22 +21,22 @@ export default defineComponent({
     },
   },
   emits: {
-    changeOption1(value: string) {
+    changeOptionCategory(value: number) {
       return value
     },
-    changeOption2(value: string) {
+    changeOptionType(value: number) {
       return value
     },
-    changeOption3(value: string) {
+    changeOptionHero(value: number) {
       return value
     },
-    openAddPopup() {
+    openAddPopup(): boolean {
       return true
     },
-    openDeletePopup() {
+    openDeletePopup(): boolean {
       return true
     },
-    openUpdatePopup() {
+    openUpdatePopup(): boolean {
       return true
     },
   },
@@ -46,13 +46,13 @@ export default defineComponent({
       if (event.target instanceof HTMLInputElement) {
         switch (this.selectIn) {
           case 1:
-            this.$emit('changeOption1', event.target.value)
+            this.$emit('changeOptionCategory', event.target.value as unknown as number)
             break
           case 2:
-            this.$emit('changeOption2', event.target.value)
+            this.$emit('changeOptionType', event.target.value as unknown as number)
             break
           case 3:
-            this.$emit('changeOption3', event.target.value)
+            this.$emit('changeOptionHero', event.target.value as unknown as number)
             break
         }
       }

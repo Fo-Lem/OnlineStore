@@ -22,7 +22,7 @@ export default defineComponent({
     },
   },
   emits: {
-    updateInput(value: string) {
+    updateInput(value: string | number) {
       return value
     },
   },

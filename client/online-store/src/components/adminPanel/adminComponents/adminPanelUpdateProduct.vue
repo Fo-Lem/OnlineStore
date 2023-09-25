@@ -1,9 +1,39 @@
-<script>
-export default {
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { catalog, catalogItem } from '../../../controllers/productController'
+import { Admin } from '../adminControllers/adminControllers'
+
+interface State {
+  sizeName: {
+    height: 'Высота'
+    width: 'Ширина'
+    depth: 'Глубина'
+  }
+  newProduct: newProduct
+  curentProduct: catalogItem
+
+}
+interface newProduct {
+
+  newCategory_id: number
+  newProduct_type_id: number
+  newHero_id: number
+  newDescription: string
+  newPrice: number
+  size: {
+    height: number
+    width: number
+    depth: number
+  }
+  photos: FileList[]
+
+}
+export default defineComponent({
   name: 'AdminPanelUpdateProduct',
   props: {
     catalog: {
-      type: Object,
+      type: Object as PropType<catalog>,
       required: true,
     },
     isAdminAuth: {
@@ -12,35 +42,49 @@ export default {
     },
   },
   emits: ['updateData'],
-  data() {
+  data(): State {
     return {
-      size: {
+      sizeName: {
         height: 'Высота',
         width: 'Ширина',
         depth: 'Глубина',
       },
-      curentProduct: {},
+      curentProduct: {} as catalogItem,
+      newProduct: {
+        newCategory_id: 0,
+        newProduct_type_id: 0,
+        newHero_id: 0,
+        newDescription: '',
+        newPrice: 0,
+        size: {
+          height: 0,
+          width: 0,
+          depth: 0,
+        },
+        photos: [],
+
+      },
     }
   },
   beforeMount() {
-    Object.assign(this.curentProduct, this.catalog.items[this.$route.params.itemId])
-    this.curentProduct.newCategory_id = this.curentProduct.category_id
-    this.curentProduct.newProduct_type_id = this.curentProduct.product_type_id
-    this.curentProduct.newHero_id = this.curentProduct.hero_id
-    this.curentProduct.newPrice = this.curentProduct.price
-    this.sizeParser(this.curentProduct.size)
-    this.curentProduct.newDescription = this.curentProduct.description
-    this.curentProduct.photos = []
+    this.curentProduct = this.catalog.items[this.$route.params.itemId as unknown as number]
+    this.newProduct.newCategory_id = this.curentProduct.category_id
+    this.newProduct.newProduct_type_id = this.curentProduct.product_type_id
+    this.newProduct.newHero_id = this.curentProduct.hero_id
+    this.newProduct.newPrice = this.curentProduct.price
+    this.newProduct.size = this.sizeParser(this.curentProduct.size)
+    this.newProduct.newDescription = this.curentProduct.description
+    this.newProduct.photos = []
     // console.log(this.curentProduct)
   },
 
   methods: {
-    sizeParser(size) {
+    sizeParser(size: string): State['newProduct']['size'] {
       const arr = size.split('x')
-      this.curentProduct.size = {
-        height: arr[0],
-        width: arr[1],
-        depth: arr[2],
+      return {
+        height: arr[0] as unknown as number,
+        width: arr[1] as unknown as number,
+        depth: arr[2] as unknown as number,
       }
     },
 
@@ -72,13 +116,13 @@ export default {
         size: `${this.curentProduct.size.height}x${this.curentProduct.size.width}x${this.curentProduct.size.depth}`,
         price: this.curentProduct.newPrice,
       }
-      await this.Admin.productController.update(obj.id, obj.id_1, obj.name, obj.category_id, obj.product_type_id, obj.hero_id, obj.description, obj.size, obj.price)
+      await Admin.productController.update(obj.id, obj.id_1, obj.name, obj.category_id, obj.product_type_id, obj.hero_id, obj.description, obj.size, obj.price)
       this.$emit('updateData')
       this.$router.push({ name: 'products' })
     },
 
   },
-}
+})
 </script>
 
 <template>
@@ -91,7 +135,7 @@ export default {
       input-in="productName"
       placeholder="Меч длинный &laquoАлеша Попович&raquo"
       :value="curentProduct.name"
-      @update-input="(value) => curentProduct.name = value"
+      @update-input="(value:string) => curentProduct.name = value"
     />
 
     <admin-select
@@ -100,19 +144,16 @@ export default {
       select-in="Category"
       select-name="Категория"
       :curent-option="{ index: curentProduct.category_id, option: catalog.categories[curentProduct.category_id].name }"
-      @change-option-category="(select) => updateSelectedCategory(select)"
-      @open-add-popup="openAddPopup = true"
-      @open-delete-popup="openDeletePopup = true"
-      @open-update-popup="openUpdatePopup = true"
+      @change-option-category="(select:number) => updateSelectedCategory(select)"
     />
 
     <admin-select
-      :key="curentProduct.newCategory_id"
-      :options="getElementSelected(catalog.categories[curentProduct.newCategory_id].product_types)"
+      :key="newProduct.newCategory_id"
+      :options="getElementSelected(catalog.categories[newProduct.newCategory_id].product_types)"
       :curent-option="{ index: curentProduct.product_type_id, option: catalog.categories[curentProduct.category_id].product_types[curentProduct.product_type_id].name }"
       select-in="Type"
       select-name="Тип"
-      @change-option-type="(select) => updateSelectedType(select)"
+      @change-option-type="(select:number) => updateSelectedType(select)"
     />
 
     <admin-select
@@ -121,7 +162,7 @@ export default {
       select-in="Hero"
       select-name="Герой"
       :curent-option="{ index: curentProduct.hero_id, option: catalog.heroes[curentProduct.hero_id].name }"
-      @change-option-hero="(select) => curentProduct.newHero_id = select"
+      @change-option-hero="(select:number) => newProduct.newHero_id = select"
     />
 
     <div class="flex flex-col gap-2">
@@ -135,13 +176,13 @@ export default {
       </div>
 
       <admin-input
-        v-for="(item, index) in curentProduct.size"
+        v-for="(item, index) in newProduct.size"
         :key="index"
-        :input-name="size[index]"
+        :input-name="sizeName[index]"
         :input-in="index"
         placeholder="300"
         :value="item"
-        @update-input="(value) => curentProduct.size[index] = value"
+        @update-input="(value: number) => newProduct.size[index] = value"
       />
     </div>
 
@@ -152,7 +193,7 @@ export default {
       >Описание</label>
       <textarea
         id="message"
-        v-model="curentProduct.newDescription"
+        v-model="newProduct.newDescription"
         rows="4"
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
         placeholder="Write your thoughts here..."
@@ -163,7 +204,7 @@ export default {
       input-in="price"
       placeholder="3000"
       :value="String(curentProduct.price)"
-      @update-input="(value) => curentProduct.newPrice = value"
+      @update-input="(value:number) => newProduct.newPrice = value"
     />
 
     <div class="mt-6 flex items-center justify-end gap-x-6">

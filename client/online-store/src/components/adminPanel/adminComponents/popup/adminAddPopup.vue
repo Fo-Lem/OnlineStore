@@ -1,74 +1,87 @@
-<script>
-export default {
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { ElementSelected } from '../adminPanelCreations.vue'
+
+// import { Admin } from '../../adminControllers/adminControllers'
+interface State {
+  newItem: string
+  selectedItem: number
+  selectedCategory: number
+  selected: { 1: 'Категорию'; 2: 'Тип'; 3: 'Героя' }
+  photos: FileList[]
+}
+export default defineComponent({
   name: 'AdminAddPopup',
   props: {
-    categorys: {
-      type: Object,
-      require: true,
-    },
-    adminController: {
-      type: Object,
-      require: true,
+    categories: {
+      type: Object as PropType<ElementSelected>,
+      required: true,
     },
   },
   emits: ['closeAddPopup', 'updateData'],
-  data() {
+  data(): State {
     return {
       newItem: '',
-      selectedItem: '',
-      selectedCategory: '',
+      selectedItem: 0,
+      selectedCategory: 0,
       selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя' },
       photos: [],
     }
   },
   methods: {
-    updateSelectedItem(select) {
+    updateSelectedItem(select: number) {
       this.selectedItem = select
     },
-    updateSelectedCategory(select) {
+    updateSelectedCategory(select: number) {
       this.selectedCategory = select
     },
-    uploadPhoto(photos) {
+    uploadPhoto(photos: FileList[]) {
       this.photos = photos
     },
-    async createItem() {
-      const formData = new FormData(createItem)
-      const select = formData.get('Item')
-      if (select === 1) {
-        const fd = new FormData()
-        fd.append('file', formData.get('fileUpload'))
-        fd.append('path', formData.get('name'))
-        fd.append('name', `${formData.get('name')}.jpg`)
-        await this.AdminController.imageController.createImage(fd)
-        const obj = {
-          name: formData.get('name'),
-          cover_img: `../imgs/${formData.get('name')}/${formData.get('name')}.jpg`,
-        }
-        this.AdminController.categoryController.createCategory(obj)
-      }
-      if (select === 2) {
-        const obj = {
-          name: formData.get('name'),
-          category_id: `${formData.get('Category')}`,
-        }
-        await this.AdminController.typeController.createType(obj)
-      }
-      if (select === 3) {
-        const obj = {
-          name: formData.get('name'),
-        }
-        await this.AdminController.heroController.createHero(obj)
-      }
+    async createItem(event: Event) {
+      // console.log(event)
+      // const newItem = document.getElementById('newItem')
+      // if (newItem !== null) {
+      //   const formData = new FormData(newItem)
+      //   const select = formData.get('Item')
+      // }
 
-      this.$emit('updateData')
-      this.$emit('closeAddPopup')
+      // if (select === 1) {
+      //   const fd = new FormData()
+      //   fd.append('file', formData.get('fileUpload'))
+      //   fd.append('path', formData.get('name'))
+      //   fd.append('name', `${formData.get('name')}.jpg`)
+      //   await this.AdminController.imageController.createImage(fd)
+      //   const obj = {
+      //     name: formData.get('name'),
+      //     cover_img: `../imgs/${formData.get('name')}/${formData.get('name')}.jpg`,
+      //   }
+      //   this.AdminController.categoryController.createCategory(obj)
+      // }
+      // if (select === 2) {
+      //   const obj = {
+      //     name: formData.get('name'),
+      //     category_id: `${formData.get('Category')}`,
+      //   }
+      //   await this.AdminController.typeController.createType(obj)
+      // }
+      // if (select === 3) {
+      //   const obj = {
+      //     name: formData.get('name'),
+      //   }
+      //   await this.AdminController.heroController.createHero(obj)
+      // }
+
+      // this.$emit('updateData')
+      // this.$emit('closeAddPopup')
     },
   },
 
-}
+})
 </script>
 
-<template lang="">
+<template>
   <div
     class="relative  z-10"
     aria-labelledby="modal-title"
@@ -81,7 +94,7 @@ export default {
       <div class="flex min-h-full items-end justify-center p-4 text-center sm:ml-64 sm:items-center sm:p-0">
         <div class="relative overflow-hidden rounded-lg bg-white text-left p-5 shadow-xl ">
           <form
-            id="createItem"
+            id="newItem"
             action="#"
             @submit.prevent="createItem"
           >

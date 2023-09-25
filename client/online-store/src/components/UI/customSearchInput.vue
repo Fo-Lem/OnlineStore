@@ -5,7 +5,11 @@ export default {
     searchInput: [String, Number],
 
   },
-  emits: ['updateSearchInput'],
+  emits: {
+    updateSearchInput(value: string | number) {
+      return value
+    },
+  },
   methods: {
     updateInput(event: Event) {
       if (event.target instanceof HTMLInputElement)

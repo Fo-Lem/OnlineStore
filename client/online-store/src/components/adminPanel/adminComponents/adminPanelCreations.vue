@@ -4,8 +4,8 @@ import { defineComponent } from 'vue'
 import type { catalog, catalogCategories, catalogHeroes, catalogTypes } from '../../../controllers/productController'
 import { Admin } from '../adminControllers/adminControllers'
 import adminAddPopup from './popup/adminAddPopup.vue'
-import adminDeletePopup from './popup/adminDeletePopup.vue'
-import adminUpdatePopup from './popup/adminUpdatePopup.vue'
+import adminDeletePopup from './popup/adminAddPopup.vue'
+import adminUpdatePopup from './popup/adminDeletePopup.vue'
 
 interface State {
   openAddPopup: boolean
@@ -34,7 +34,7 @@ interface State {
   }
 
 }
-interface ElementSelected {
+export interface ElementSelected {
   [key: number]: string
 }
 
@@ -158,24 +158,21 @@ export default defineComponent({
 <template>
   <AdminAddPopup
     v-if="openAddPopup"
-    :admin-controller="Admin"
-    :categorys="getElementSelected(catalog.categories)"
+    :categories="getElementSelected(catalog.categories)"
     @update-data="$emit('updateData')"
     @close-add-popup="openAddPopup = !openAddPopup"
   />
   <AdminDeletePopup
     v-if="openDeletePopup"
-    :admin-controller="Admin"
     :catalog="catalog"
-    :categorys="getElementSelected(catalog.categories)"
+    :categories="getElementSelected(catalog.categories)"
     @update-data="$emit('updateData')"
     @close-delete-popup="openDeletePopup = !openDeletePopup"
   />
   <AdminUpdatePopup
     v-if="openUpdatePopup"
     :catalog="catalog"
-    :categorys="getElementSelected(catalog.categories)"
-    :admin-controller="Admin"
+    :categories="getElementSelected(catalog.categories)"
     @update-data="$emit('updateData')"
     @close-update-popup="openUpdatePopup = !openUpdatePopup"
   />
@@ -189,7 +186,7 @@ export default defineComponent({
       input-in="productName"
       placeholder="Меч длинный &laquoАлеша Попович&raquo"
       :value="newProduct.productName"
-      @update-input="(value) => newProduct.productName = value"
+      @update-input="(value: string) => newProduct.productName = value"
     />
 
     <admin-select
@@ -197,7 +194,7 @@ export default defineComponent({
       :options="getElementSelected(catalog.categories)"
       select-in="Category"
       select-name="Категория"
-      @change-option-category="(select) => updateSelectedCategory(select)"
+      @change-option-category="updateSelectedCategory"
       @open-add-popup="openAddPopup = true"
       @open-delete-popup="openDeletePopup = true"
       @open-update-popup="openUpdatePopup = true"
@@ -209,7 +206,7 @@ export default defineComponent({
       :options="getElementSelected(catalog.categories[newProduct.selected.category].product_types)"
       select-in="Type"
       select-name="Тип"
-      @change-option-type="(select) => updateSelectedType(select)"
+      @change-option-type="updateSelectedType"
     />
     <admin-select
       v-if="newProduct.selected.type"
@@ -217,7 +214,7 @@ export default defineComponent({
       :options="getElementSelected(catalog.heroes)"
       select-in="Hero"
       select-name="Герой"
-      @change-option-hero="(select) => newProduct.selected.hero = select"
+      @change-option-hero="(select: number) => newProduct.selected.hero = select"
     />
 
     <div class="flex flex-col gap-2">
@@ -237,7 +234,7 @@ export default defineComponent({
         :input-in="index"
         placeholder="300"
         :value="newProduct.size[index]"
-        @update-input="(value) => newProduct.size[index] = value"
+        @update-input="(value: number) => newProduct.size[index] = value"
       />
     </div>
 
@@ -259,7 +256,7 @@ export default defineComponent({
       input-in="price"
       placeholder="3000"
       :value="newProduct.price"
-      @update-input="(value) => newProduct.price = value"
+      @update-input="(value: number) => newProduct.price = value"
     />
 
     <admin-drop-zone

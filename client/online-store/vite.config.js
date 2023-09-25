@@ -4,13 +4,15 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(
-  //   {
-  //   template: {
-  //     compilerOptions: {
-  //       isCustomElement: () => true,
-  //     },
-  //   },
-  // }
+    {
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => {
+            return tag.startsWith('x-')
+          },
+        },
+      },
+    },
   )],
   build: {
     rollupOptions: {

@@ -11,8 +11,9 @@ export default defineComponent({
     },
   },
   emits: {
+
     uploadPhoto(photos: FileList[]) {
-      return photos
+      return photos.length > 0
     },
   },
   data() {

@@ -1,18 +1,20 @@
-<script>
-export default {
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { catalog } from '../../../../controllers/productController'
+import { Admin } from '../../adminControllers/adminControllers'
+import type { ElementSelected } from '../adminPanelCreations.vue'
+
+export default defineComponent({
   name: 'AdminDeletePopup',
   props: {
-    categorys: {
-      type: Object,
-      require: true,
+    categories: {
+      type: Object as PropType<ElementSelected>,
+      required: true,
     },
     catalog: {
-      type: Object,
-      require: true,
-    },
-    adminController: {
-      type: Object,
-      require: true,
+      type: Object as PropType<catalog>,
+      required: true,
     },
   },
 
@@ -50,14 +52,14 @@ export default {
     },
     async deleteItem() {
       if (this.selectedItem === 1) {
-        await this.AdminController.imageController.deleteImage(this.catalog.categories[this.selectedCategory].cover_path)
-        await this.AdminController.categoryController.deleteCategory(this.selectedCategory)
+        await Admin.imageController.delete(this.catalog.categories[this.selectedCategory].cover_path)
+        await Admin.categoryController.delete(this.selectedCategory)
       }
       if (this.selectedItem === 2)
-        await this.AdminController.typeController.deleteType(this.selectedType)
+        await Admin.typeController.delete(this.selectedType)
 
       if (this.selectedItem === 3)
-        await this.AdminController.heroController.deleteHero(this.selectedHero)
+        await Admin.heroController.delete(this.selectedHero)
 
       this.selectedItem = ''
       this.selectedCategory = ''
@@ -68,7 +70,7 @@ export default {
     },
   },
 
-}
+})
 </script>
 
 <template lang="">

@@ -2,7 +2,7 @@
 export default {
   name: 'AdminUpdatePopup',
   props: {
-    categorys: {
+    categories: {
       type: Object,
       require: true,
     },
