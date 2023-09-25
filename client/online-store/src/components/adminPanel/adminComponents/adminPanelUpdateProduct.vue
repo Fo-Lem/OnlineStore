@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
-import type { catalog, catalogItem } from '../../../controllers/productController'
+import type { catalog, catalogCategories, catalogHeroes, catalogItem, catalogTypes } from '../../../controllers/productController'
 import { Admin } from '../adminControllers/adminControllers'
+import type { ElementSelected } from './adminPanelCreations.vue'
 
 interface State {
   sizeName: {
@@ -15,7 +16,7 @@ interface State {
 
 }
 interface newProduct {
-
+  newName: string
   newCategory_id: number
   newProduct_type_id: number
   newHero_id: number
@@ -51,6 +52,7 @@ export default defineComponent({
       },
       curentProduct: {} as catalogItem,
       newProduct: {
+        newName: '',
         newCategory_id: 0,
         newProduct_type_id: 0,
         newHero_id: 0,
@@ -88,33 +90,31 @@ export default defineComponent({
       }
     },
 
-    getElementSelected(items) {
-      // console.log()
-      // console.log(items)
-      const res = {}
+    getElementSelected(items: catalogTypes | catalogCategories | catalogHeroes) {
+      const res = {} as ElementSelected
       for (const key in items)
-        res[key] = items[key].name
+        res[key as unknown as number] = items[key].name
 
       return res
     },
-    updateSelectedCategory(select) {
-      this.curentProduct.newCategory_id = select
+    updateSelectedCategory(select: number) {
+      this.newProduct.newCategory_id = select
     },
-    updateSelectedType(select) {
-      this.curentProduct.newProduct_type_id = select
+    updateSelectedType(select: number) {
+      this.newProduct.newProduct_type_id = select
     },
     async UpdateProduct() {
       // console.log(this.curentProduct)
       const obj = {
         id: this.curentProduct.id,
         id_1: this.curentProduct.id_1,
-        name: this.curentProduct.name,
-        category_id: this.curentProduct.newCategory_id,
-        product_type_id: this.curentProduct.newProduct_type_id,
-        hero_id: this.curentProduct.newHero_id,
-        description: this.curentProduct.newDescription,
-        size: `${this.curentProduct.size.height}x${this.curentProduct.size.width}x${this.curentProduct.size.depth}`,
-        price: this.curentProduct.newPrice,
+        name: this.newProduct.newName,
+        category_id: this.newProduct.newCategory_id,
+        product_type_id: this.newProduct.newProduct_type_id,
+        hero_id: this.newProduct.newHero_id,
+        description: this.newProduct.newDescription,
+        size: `${this.newProduct.size.height}x${this.newProduct.size.width}x${this.newProduct.size.depth}`,
+        price: this.newProduct.newPrice,
       }
       await Admin.productController.update(obj.id, obj.id_1, obj.name, obj.category_id, obj.product_type_id, obj.hero_id, obj.description, obj.size, obj.price)
       this.$emit('updateData')
@@ -134,7 +134,7 @@ export default defineComponent({
       input-name="Название продукта"
       input-in="productName"
       placeholder="Меч длинный &laquoАлеша Попович&raquo"
-      :value="curentProduct.name"
+      :value="newProduct.newName"
       @update-input="(value:string) => curentProduct.name = value"
     />
 
