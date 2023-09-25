@@ -16,13 +16,6 @@ origins = [
     "*"
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 @app.middleware('/http')
 async def authorization_controller(request: Request, call_next):
@@ -34,13 +27,22 @@ async def authorization_controller(request: Request, call_next):
         if not is_valid:
             return JSONResponse({
                 'err': HTTP_RESPONSE_MESSAGE.ACCESS_DENIED
-            }, status_code=HTTP_RESPONSE_CODE.ACCESS_DENIED)
-    response = await call_next(request)
+            }, status_code=HTTP_RESPONSE_CODE.ACCESS_DENIED,
+            headers={"Access-Control-Allow-Origin": "*"})
+    response:Response = await call_next(request)
+    response.headers["Access-Control-Allow-Origins"] = "*"
     return response
 
-@app.get('/admin')
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get('/admin/test')
 def test():
-    return 'You have access to admin panel!'
+    return Response('You have access to admin panel!')
 
 import routing.clients.catalog 
 import routing.clients.tables 
