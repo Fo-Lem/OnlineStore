@@ -2,6 +2,10 @@
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 import type { ElementSelected } from '../adminPanelCreations.vue'
+import AdminSelect from '../../UI/adminSelect.vue'
+import AdminInput from '../../UI/adminInput.vue'
+import AdminDropZone from '../../UI/adminDropZone.vue'
+import { Admin } from '../../adminControllers/adminControllers'
 
 // import { Admin } from '../../adminControllers/adminControllers'
 interface State {
@@ -13,6 +17,7 @@ interface State {
 }
 export default defineComponent({
   name: 'AdminAddPopup',
+  components: { AdminSelect, AdminInput, AdminDropZone },
   props: {
     categories: {
       type: Object as PropType<ElementSelected>,
@@ -46,45 +51,40 @@ export default defineComponent({
     uploadPhoto(photos: FileList[]) {
       this.photos = photos
     },
-    async createItem(event: Event) {
-      // console.log(event)
-      // const newItem = document.getElementById('newItem')
-      // if (newItem !== null) {
-      //   const formData = new FormData(newItem)
-      //   const select = formData.get('Item')
-      // }
+    async createItem() {
+      const newItem = document.getElementById('newItem') as HTMLFormElement
+      const formData = new FormData(newItem)
+      const select = Number(formData.get('Item'))
 
-      // if (select === 1) {
-      //   const fd = new FormData()
-      //   fd.append('file', formData.get('fileUpload'))
-      //   fd.append('path', formData.get('name'))
-      //   fd.append('name', `${formData.get('name')}.jpg`)
-      //   await this.AdminController.imageController.createImage(fd)
-      //   const obj = {
-      //     name: formData.get('name'),
-      //     cover_img: `../imgs/${formData.get('name')}/${formData.get('name')}.jpg`,
-      //   }
-      //   this.AdminController.categoryController.createCategory(obj)
-      // }
-      // if (select === 2) {
-      //   const obj = {
-      //     name: formData.get('name'),
-      //     category_id: `${formData.get('Category')}`,
-      //   }
-      //   await this.AdminController.typeController.createType(obj)
-      // }
-      // if (select === 3) {
-      //   const obj = {
-      //     name: formData.get('name'),
-      //   }
-      //   await this.AdminController.heroController.createHero(obj)
-      // }
-
-      // this.$emit('updateData')
-      // this.$emit('closeAddPopup')
+      if (select === 1) {
+        const fd = new FormData()
+        fd.append('file', newItem.get('fileUpload'))
+        fd.append('path', newItem.get('name'))
+        fd.append('name', `${newItem.get('name')}.jpg`)
+        await Admin.imageController.create(fd)
+        const obj = {
+          name: formData.get('name') as string,
+          cover_img: `../imgs/${formData.get('name')}/${formData.get('name')}.jpg`,
+        }
+        await Admin.categoryController.create(obj.name, obj.cover_img)
+      }
+      if (select === 2) {
+        const obj = {
+          name: formData.get('name') as string,
+          category_id: Number(formData.get('Category')),
+        }
+        await Admin.typeController.create(obj.category_id, obj.name)
+      }
+      if (select === 3) {
+        const obj = {
+          name: formData.get('name') as string,
+        }
+        await Admin.heroController.create(obj.name)
+      }
+      this.$emit('updateData')
+      this.$emit('closeAddPopup')
     },
   },
-
 })
 </script>
 
@@ -106,27 +106,27 @@ export default defineComponent({
             @submit.prevent="createItem"
           >
             <div class="bg-white flex flex-col w-74 sm:w-96 gap-5 mb-5">
-              <admin-select
+              <AdminSelect
                 :options="selected"
                 select-in="Item"
                 select-name="Что создаем?"
                 @change-option-item="(select) => updateSelectedItem(select)"
               />
-              <admin-select
+              <AdminSelect
                 v-if="selectedItem === 2"
-                :options="categorys"
+                :options="categories"
                 select-in="Category"
                 select-name="Выберите категорию"
                 @change-option-category="(select) => updateSelectedCategory(select)"
               />
-              <admin-input
+              <AdminInput
                 v-if="selectedItem"
                 input-name="Название"
                 :value="newItem"
                 input-in="name"
                 @update-input="(value) => newItem = value"
               />
-              <admin-drop-zone
+              <AdminDropZone
                 v-if="selectedItem === 1"
                 :photos="photos"
                 @upload-photo="uploadPhoto"

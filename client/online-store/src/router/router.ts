@@ -10,6 +10,8 @@ import adminPanelCreations from '../components/adminPanel/adminComponents/adminP
 import adminPanelUpdateProduct from '../components/adminPanel/adminComponents/adminPanelUpdateProduct.vue'
 import adminProducts from '../components/adminPanel/adminComponents/adminProducts.vue'
 import adminAuth from '../components/adminPanel/adminComponents/adminAuth.vue'
+import { isAdmin } from '../components/adminPanel/adminComponents/http/isAdmin'
+import { relogin } from '../components/adminPanel/adminComponents/http/relogin'
 
 const routes = [
   { path: '/', redirect: '/catalog' },
@@ -59,11 +61,18 @@ const router = createRouter(
 )
 router.beforeEach(async (to, _from, next) => {
   if (to.name === 'adminPanel' || to.name === 'analutics' || to.name === 'products' || to.name === 'panelCreations' || to.name === 'panelUpdate') {
-    // if (await isAdmin())
-    //   next()
-    // else
-    //   next({ name: 'authorization' })
-    next()
+    if (await isAdmin()) {
+      next()
+    }
+    else {
+      if (await relogin())
+        next()
+
+      else
+        next({ name: 'authorization' })
+    }
+
+    // next()
   }
   else { next() }
 

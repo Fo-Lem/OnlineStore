@@ -11,6 +11,11 @@ export default {
   components: {
     AdminInput,
   },
+  emits: {
+    isAdminAuth() {
+      return true
+    },
+  },
   data(): State {
     return {
       login: 'secrAd56',
@@ -19,8 +24,10 @@ export default {
   },
   methods: {
     async authAdmin() {
-      await login(this.login, this.password)
-      this.$router.push('/_adminPanel')
+      if (await login(this.login, this.password)) {
+        this.$emit('isAdminAuth')
+        this.$router.push('/_adminPanel')
+      }
     },
 
   },

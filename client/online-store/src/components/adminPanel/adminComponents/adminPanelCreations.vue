@@ -5,9 +5,10 @@ import type { catalog, catalogCategories, catalogHeroes, catalogTypes } from '..
 import { Admin } from '../adminControllers/adminControllers'
 import AdminInput from '../UI/adminInput.vue'
 import AdminSelect from '../UI/adminSelect.vue'
-import adminAddPopup from './popup/adminAddPopup.vue'
-import adminDeletePopup from './popup/adminAddPopup.vue'
-import adminUpdatePopup from './popup/adminDeletePopup.vue'
+import AdminDropZone from '../UI/adminDropZone.vue'
+import AdminAddPopup from './popup/adminAddPopup.vue'
+import AdminDeletePopup from './popup/adminDeletePopup.vue'
+import AdminUpdatePopup from './popup/adminUpdatePopup.vue'
 
 interface State {
   openAddPopup: boolean
@@ -42,7 +43,7 @@ export interface ElementSelected {
 
 export default defineComponent({
   name: 'AdminPanelCreations',
-  components: { AdminAddPopup: adminAddPopup, AdminDeletePopup: adminDeletePopup, AdminUpdatePopup: adminUpdatePopup, AdminInput, AdminSelect },
+  components: { AdminAddPopup, AdminDeletePopup, AdminUpdatePopup, AdminInput, AdminSelect, AdminDropZone },
   props: {
     catalog: {
       type: Object as PropType<catalog>,
@@ -53,7 +54,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['updateData'],
+  emits: ['updateData', 'isAdminAuth'],
   data(): State {
     return {
       openAddPopup: false,
@@ -162,21 +163,21 @@ export default defineComponent({
     v-if="openAddPopup"
     :categories="getElementSelected(catalog.categories)"
     @update-data="$emit('updateData')"
-    @close-add-popup="openAddPopup = !openAddPopup"
+    @close-add-popup="openAddPopup = false"
   />
   <AdminDeletePopup
     v-if="openDeletePopup"
     :catalog="catalog"
     :categories="getElementSelected(catalog.categories)"
     @update-data="$emit('updateData')"
-    @close-delete-popup="openDeletePopup = !openDeletePopup"
+    @close-delete-popup="openDeletePopup = false"
   />
   <AdminUpdatePopup
     v-if="openUpdatePopup"
     :catalog="catalog"
     :categories="getElementSelected(catalog.categories)"
     @update-data="$emit('updateData')"
-    @close-update-popup="openUpdatePopup = !openUpdatePopup"
+    @close-update-popup="openUpdatePopup = false"
   />
 
   <form
@@ -261,7 +262,7 @@ export default defineComponent({
       @update-input="(value) => { newProduct.price = (value as unknown) as number }"
     />
 
-    <admin-drop-zone
+    <AdminDropZone
       :photos="newProduct.photos"
       @upload-photo="uploadPhoto"
     />

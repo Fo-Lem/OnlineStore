@@ -99,11 +99,11 @@ export default defineComponent({
             <div class="relative cursor-default">
               <img
                 class="max-h-48 rounded-md"
-                :src="getSrc(photo)"
+                :src="getSrc(photo[0])"
                 :alt="`фотография${index + 1}`"
               >
               <p class="text-sm text-center">
-                {{ photo.name }}
+                {{ photo[0].name }}
               </p>
               <svg
                 fill="white"

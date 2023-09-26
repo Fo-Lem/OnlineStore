@@ -8,7 +8,7 @@ export default defineConfig({
       template: {
         compilerOptions: {
           isCustomElement: (tag) => {
-            return tag.startsWith('x-')
+            return tag.startsWith('admin-')
           },
         },
       },

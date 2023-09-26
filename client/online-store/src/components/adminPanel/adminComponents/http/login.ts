@@ -9,7 +9,7 @@ interface FetchLogin {
 }
 export type ErrorMessage = string
 
-export async function login(login: string, password: string): Promise<boolean | ErrorMessage> {
+export async function login(login: string, password: string): Promise<boolean> {
   login = hashMd5(login)
   password = hashMd5(password)
   return await $auth.post<FetchLogin>('/login', { login, password }).then((res) => {

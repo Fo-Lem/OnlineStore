@@ -4,9 +4,18 @@ import { defineComponent } from 'vue'
 import type { catalog } from '../../../../controllers/productController'
 import { Admin } from '../../adminControllers/adminControllers'
 import type { ElementSelected } from '../adminPanelCreations.vue'
+import AdminSelect from '../../UI/adminSelect.vue'
 
+interface State {
+  selectedItem: number
+  selectedHero: number
+  selectedType: number
+  selectedCategory: number
+  selected: { [key: number]: string }
+}
 export default defineComponent({
   name: 'AdminDeletePopup',
+  components: { AdminSelect },
   props: {
     categories: {
       type: Object as PropType<ElementSelected>,
@@ -17,38 +26,32 @@ export default defineComponent({
       required: true,
     },
   },
-
   emits: ['closeDeletePopup', 'updateData'],
-
-  data() {
+  data(): State {
     return {
-      selectedItem: '',
-      selectedHero: '',
-      selectedType: '',
-      selectedCategory: '',
+      selectedItem: 0,
+      selectedHero: 0,
+      selectedType: 0,
+      selectedCategory: 0,
       selected: { 1: 'Категорию', 2: 'Тип', 3: 'Героя' },
     }
   },
   methods: {
-
-    updateSelectedItem(select) {
+    updateSelectedItem(select: number) {
       this.selectedItem = select
-      this.selectedCategory = ''
-      this.selectedType = ''
-      this.selectedHero = ''
+      this.selectedCategory = 0
+      this.selectedType = 0
+      this.selectedHero = 0
     },
-    updateSelectedCategory(select) {
+    updateSelectedCategory(select: number) {
       this.selectedCategory = select
-      this.selectedType = ''
+      this.selectedType = 0
     },
-    updateSelectedType(select) {
+    updateSelectedType(select: number) {
       this.selectedType = select
     },
-    updateSelectedHero(select) {
+    updateSelectedHero(select: number) {
       this.selectedHero = select
-    },
-    uploadPhoto(photos) {
-      this.photos = photos
     },
     async deleteItem() {
       if (this.selectedItem === 1) {
@@ -57,23 +60,20 @@ export default defineComponent({
       }
       if (this.selectedItem === 2)
         await Admin.typeController.delete(this.selectedType)
-
       if (this.selectedItem === 3)
         await Admin.heroController.delete(this.selectedHero)
-
-      this.selectedItem = ''
-      this.selectedCategory = ''
-      this.selectedType = ''
-      this.selectedHero = ''
+      this.selectedItem = 0
+      this.selectedCategory = 0
+      this.selectedType = 0
+      this.selectedHero = 0
       this.$emit('updateData')
       this.$emit('closeDeletePopup')
     },
   },
-
 })
 </script>
 
-<template lang="">
+<template>
   <div
     class="relative  z-10"
     aria-labelledby="modal-title"
@@ -91,21 +91,21 @@ export default defineComponent({
             @submit.prevent="deleteItem"
           >
             <div class="bg-white flex flex-col w-74 sm:w-96 gap-5 mb-5">
-              <admin-select
+              <AdminSelect
                 :options="selected"
                 select-in="Item"
                 select-name="Что удаляем?"
                 @change-option-item="(select) => updateSelectedItem(select)"
               />
-              <admin-select
+              <AdminSelect
                 v-if="selectedItem === 1 || selectedItem === 2"
                 :key="selectedItem"
-                :options="categorys"
+                :options="categories"
                 select-in="Category"
                 select-name="Выберите категорию"
                 @change-option-category="(select) => updateSelectedCategory(select)"
               />
-              <admin-select
+              <AdminSelect
                 v-if="selectedItem === 2 && selectedCategory"
                 :key="selectedCategory"
                 :options="catalog.categories[selectedCategory].product_types"
@@ -113,7 +113,7 @@ export default defineComponent({
                 select-name="Выберите тип"
                 @change-option-type="(select) => updateSelectedType(select)"
               />
-              <admin-select
+              <AdminSelect
                 v-if="selectedItem === 3"
                 :key="selectedItem"
                 :options="catalog.heroes"

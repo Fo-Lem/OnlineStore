@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { isAdmin } from './adminComponents/http/isAdmin'
+import { relogin } from './adminComponents/http/relogin'
 
 interface State {
   isAdminAuth: boolean
@@ -20,15 +21,23 @@ export default defineComponent({
 
   data(): State {
     return {
+
       mobileMenuOpen: false,
       isAdminAuth: false,
 
     }
   },
-
   async beforeMount() {
-    if (await isAdmin())
+    if (await isAdmin()) {
       this.isAdminAuth = true
+    }
+    else {
+      if (await relogin())
+        this.isAdminAuth = true
+
+      else
+        this.isAdminAuth = false
+    }
   },
 
 })
@@ -44,7 +53,7 @@ export default defineComponent({
         aria-controls="default-sidebar"
         type="button"
         class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        @click="mobileMenuOpen = !mobileMenuOpen"
+        @click="mobileMenuOpen = true"
       >
         <span class="sr-only">Open sidebar</span>
         <svg
@@ -66,6 +75,7 @@ export default defineComponent({
         v-if="isAdminAuth"
         id="default-sidebar"
         class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        :class="{ '-translate-x-0': mobileMenuOpen }"
         aria-label="Sidebar"
       >
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
@@ -74,6 +84,7 @@ export default defineComponent({
               <router-link
                 :to="{ name: 'analutics' }"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                @click="mobileMenuOpen = false"
               >
                 <svg
                   class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -95,6 +106,7 @@ export default defineComponent({
               <router-link
                 :to="{ name: 'products' }"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                @click="mobileMenuOpen = false"
               >
                 <svg
                   aria-hidden="true"
@@ -114,6 +126,7 @@ export default defineComponent({
               <router-link
                 :to="{ name: 'panelCreations' }"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                @click="mobileMenuOpen = false"
               >
                 <svg
                   aria-hidden="true"
@@ -133,6 +146,7 @@ export default defineComponent({
         <router-view
           :is-admin-auth="isAdminAuth"
           :catalog="catalog"
+          @is-admin-auth="isAdminAuth = true"
           @update-data="$emit('updateData')"
         />
       </div>
@@ -145,4 +159,3 @@ export default defineComponent({
    border: 1px solid gray;
 }
 </style>
-./adminComponents/http/isAdmin

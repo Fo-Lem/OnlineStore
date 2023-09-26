@@ -1,23 +1,23 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
-import type { catalog, catalogItem } from '../../controllers/productController'
+import type { catalog, catalogItem, catalogItems } from '../../controllers/productController'
 
 import type { basket, curentProduct } from '../../controllers/basketController'
 import { productInBasket } from '../../controllers/basketController'
 
-interface Variants {
-  [key: number]: catalogItem[]
-
-}
 interface State {
   inBasket: boolean
   curentImage: number
   rebuilSize: string
   curentProduct: curentProduct
-  heroId: string
+  heroId: number
   variants: Variants
+  catalogItems: catalogItem[]
 
+}
+interface Variants {
+  [key: number]: catalogItem[]
 }
 export default defineComponent({
   name: 'CustomProductOverviews',
@@ -49,8 +49,9 @@ export default defineComponent({
         version: 0,
         count: 1,
       },
-      heroId: '0',
+      heroId: 0,
       variants: [],
+      catalogItems: [],
 
     }
   },
@@ -67,7 +68,7 @@ export default defineComponent({
 
   },
   beforeMount() {
-    this.updateCurentProduct(this.$route.params.heroId as string)
+    this.updateCurentProduct(this.$route.params.heroId as unknown as number)
   },
   methods: {
     sizeConvertor(size: string): string[] {
@@ -86,29 +87,29 @@ export default defineComponent({
       this.inBasket = productInBasket(this.basket, this.curentProduct)
     },
 
-    groupByHeroId(array: catalogItem[]): Variants {
-      return array.reduce<Variants>((acc, obj) => {
-        const hero_id = obj.hero_id
-        acc[hero_id] = acc[hero_id] || []
-        acc[hero_id].push(obj)
-        return acc
-      }, {})
+    groupByHeroId(catalogItems: catalogItems): Variants {
+      const obj = {} as Variants
+      for (const index in catalogItems) {
+        const item = catalogItems[index]
+        obj[item.hero_id] = obj[item.hero_id] || []
+        obj[item.hero_id].push(item)
+      }
+      return obj
     },
     // TODO доделать
-    updateCurentProduct(newHeroId: string, newVersion = 0) {
+    updateCurentProduct(newHeroId: number, newVersion = 0) {
       this.curentProduct = {
         item: [],
         version: newVersion,
         count: 1,
       }
-      console.log(this.variants)
-      if (Object.keys(this.variants).length === 0) {
+      if (Object.keys(this.catalogItems).length === 0) {
         for (const itemId in this.catalog.items) {
           const item = this.catalog.items[itemId]
-          if ((item.category_id as unknown) as string === this.$route.params.categoryId && (item.product_type_id as unknown) as string === this.$route.params.productId)
-            this.variants.push(item)
+          if (item.category_id === (this.$route.params.categoryId as unknown) as number && item.product_type_id === (this.$route.params.productId as unknown) as number)
+            this.catalogItems.push(item)
         }
-        this.variants = this.groupByHeroId(this.variants)
+        this.variants = this.groupByHeroId(this.catalog.items)
       }
 
       for (const item in this.variants[newHeroId])
@@ -199,7 +200,7 @@ export default defineComponent({
                   >
                     <div
                       class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none"
-                      :class="[$route.params.heroId === hero[0].hero_id ? 'ring-2' : '']"
+                      :class="[Number($route.params.heroId) === hero[0].hero_id ? 'ring-2' : '']"
                     >
                       <span
                         aria-hidden="true"
@@ -222,7 +223,7 @@ export default defineComponent({
                     class="rounded-lg text-sm px-4 py-2 border border-black border-opacity-10"
                     :class="[curentProduct.version === index ? 'ring-2' : '']"
                     type="button"
-                    @click="updateCurentProduct($route.params.heroId as string, index)"
+                    @click="updateCurentProduct(Number($route.params.heroId), index)"
                   >
                     {{ index + 1 }}
                   </button>

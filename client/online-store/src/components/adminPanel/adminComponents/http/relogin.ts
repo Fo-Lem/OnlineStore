@@ -8,16 +8,18 @@ interface FetchRelogin {
 
 }
 
-export async function login(): Promise<boolean | ErrorMessage > {
+export async function relogin(): Promise<boolean> {
   const refresh_token = localStorage.getItem('refresh_token')
   return await $auth.post<FetchRelogin>('/relogin', { refresh_token }).then((res) => {
-    if (res.status === 213)
-      return res.data.msg
+    if (res.status === 213) {
+      console.error(res.data.msg)
+      return false
+    }
     localStorage.setItem('token', res.data.token)
     localStorage.setItem('refresh_token', res.data.refresh_token)
     return true
-  }).catch((error: Error): ErrorMessage => {
+  }).catch((error: Error): boolean => {
     console.error(error)
-    return error.message
+    return false
   })
 }

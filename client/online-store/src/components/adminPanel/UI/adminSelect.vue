@@ -21,14 +21,17 @@ export default defineComponent({
     },
   },
   emits: {
-    changeOptionCategory(value: number) {
-      return value
+    changeOptionCategory(select: number) {
+      return select
     },
-    changeOptionType(value: number) {
-      return value
+    changeOptionType(select: number) {
+      return select
     },
-    changeOptionHero(value: number) {
-      return value
+    changeOptionHero(select: number) {
+      return select
+    },
+    changeOptionItem(select: number) {
+      return select
     },
     openAddPopup(): boolean {
       return true
@@ -43,16 +46,19 @@ export default defineComponent({
 
   methods: {
     changeOption(event: Event) {
-      if (event.target instanceof HTMLInputElement) {
+      if (event.target instanceof HTMLSelectElement) {
         switch (this.selectIn) {
           case 'Category':
-            this.$emit('changeOptionCategory', event.target.value as unknown as number)
+            this.$emit('changeOptionCategory', Number(event.target.value))
             break
           case 'Type':
-            this.$emit('changeOptionType', event.target.value as unknown as number)
+            this.$emit('changeOptionType', Number(event.target.value))
             break
           case 'Hero':
-            this.$emit('changeOptionHero', event.target.value as unknown as number)
+            this.$emit('changeOptionHero', Number(event.target.value))
+            break
+          case 'Item':
+            this.$emit('changeOptionItem', Number(event.target.value))
             break
         }
       }
