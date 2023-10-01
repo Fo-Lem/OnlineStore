@@ -13,7 +13,7 @@ interface State {
   selectedItem: number
   selectedCategory: number
   selected: { 1: 'Категорию'; 2: 'Тип'; 3: 'Героя' }
-  photos: FileList[]
+  photos: File[]
 }
 export default defineComponent({
   name: 'AdminAddPopup',
@@ -48,7 +48,7 @@ export default defineComponent({
     updateSelectedCategory(select: number) {
       this.selectedCategory = select
     },
-    uploadPhoto(photos: FileList[]) {
+    uploadPhoto(photos: File[]) {
       this.photos = photos
     },
     async createItem() {
@@ -70,14 +70,14 @@ export default defineComponent({
       }
       if (select === 2) {
         const obj = {
-          name: formData.get('name') as string,
+          name: String(formData.get('name')),
           category_id: Number(formData.get('Category')),
         }
         await Admin.typeController.create(obj.category_id, obj.name)
       }
       if (select === 3) {
         const obj = {
-          name: formData.get('name') as string,
+          name: String(formData.get('name')),
         }
         await Admin.heroController.create(obj.name)
       }

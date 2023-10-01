@@ -25,7 +25,7 @@ export interface catalogHeroes {
     name: string
   }
 }
-export interface type {
+export interface catalogType {
 
   id: number
   name: string
@@ -33,9 +33,9 @@ export interface type {
 
 }
 export interface catalogTypes {
-  [key: number]: type
+  [key: number]: catalogType
 }
-export interface category {
+export interface catalogCategory {
   id: number
   name: string
   cover_path: string
@@ -43,7 +43,7 @@ export interface category {
 
 }
 export interface catalogCategories {
-  [key: number]: category
+  [key: number]: catalogCategory
 }
 export interface catalog {
   categories: catalogCategories

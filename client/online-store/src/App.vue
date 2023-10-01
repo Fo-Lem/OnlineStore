@@ -47,8 +47,8 @@ export default defineComponent({
     this.initCatalog()
   },
   methods: {
-    addProductBasket(basket: basket, curentProduct: curentProduct) {
-      this.basket = addProductBasket(basket, curentProduct)
+    addProductBasket(curentProduct: curentProduct) {
+      this.basket = addProductBasket(curentProduct)
     },
     deleteProductBasket(id: number) {
       this.basket = deleteProductBasket(id)
@@ -62,7 +62,7 @@ export default defineComponent({
     async initCatalog() {
       await getCategorys().then((data) => {
         this.catalog = data
-        correctBasket(this.basket, this.catalog)
+        correctBasket(this.catalog)
       })
         .catch((error) => {
           // console.log(error)
@@ -79,21 +79,19 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
-    <CustomHeader v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading" />
+  <CustomHeader v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading && !error.name" />
 
-    <CustomErrorPage v-if="error.name" :error="error" />
-    <CustomLoadingSpiner v-if="!loading" />
-    <main>
-      <router-view
-        v-if="loading && !error.name" :basket="basket" :catalog="catalog" :search-input="searchInput"
-        @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"
-        @update-count-product-basket="(newCount: number, id: number) => { updateCountProductBasket(newCount, id) }"
-        @add-product-basket="(curentProduct: curentProduct) => { addProductBasket(basket, curentProduct) }"
-        @update-data="initCatalog"
-      />
-    </main>
+  <CustomErrorPage v-if="error.name" :error="error" />
+  <CustomLoadingSpiner v-if="!loading" />
+  <main>
+    <router-view
+      v-if="loading && !error.name" :basket="basket" :catalog="catalog" :search-input="searchInput"
+      @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"
+      @update-count-product-basket="(newCount: number, id: number) => { updateCountProductBasket(newCount, id) }"
+      @add-product-basket="(curentProduct: curentProduct) => { addProductBasket(curentProduct) }"
+      @update-data="initCatalog"
+    />
+  </main>
 
-    <CustomFooter v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading" />
-  </div>
+  <CustomFooter v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading && !error.name" />
 </template>

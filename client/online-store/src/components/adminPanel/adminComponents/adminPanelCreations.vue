@@ -33,7 +33,7 @@ interface State {
     }
     description: string
     price: number
-    photos: FileList[]
+    photos: File[]
   }
 
 }
@@ -102,7 +102,7 @@ export default defineComponent({
       this.newProduct.selected.type = select
       this.newProduct.selected.hero = 0
     },
-    uploadPhoto(photos: FileList[]) {
+    uploadPhoto(photos: File[]) {
       this.newProduct.photos = photos
     },
     async AddProduct() {
@@ -126,7 +126,7 @@ export default defineComponent({
       }
       this.newProduct.photos.forEach(async (photo, index) => {
         const fd = new FormData()
-        fd.append('file', photo[0])
+        fd.append('file', photo)
         fd.append('path', `items/${this.catalog.categories[obj.category_id].name}`)
         fd.append('name', `${`${obj.art}_${index}`}.jpg`)
         await Admin.imageController.create(fd)

@@ -84,7 +84,7 @@ export default defineComponent({
     },
     addProductBasket() {
       this.$emit('addProductBasket', this.curentProduct)
-      this.inBasket = productInBasket(this.basket, this.curentProduct)
+      this.inBasket = productInBasket(this.curentProduct)
     },
 
     groupByHeroId(catalogItems: catalogItems): Variants {
@@ -106,7 +106,7 @@ export default defineComponent({
       if (Object.keys(this.catalogItems).length === 0) {
         for (const itemId in this.catalog.items) {
           const item = this.catalog.items[itemId]
-          if (item.category_id === (this.$route.params.categoryId as unknown) as number && item.product_type_id === (this.$route.params.productId as unknown) as number)
+          if (item.category_id === Number(this.$route.params.categoryId) && item.product_type_id === Number(this.$route.params.productId))
             this.catalogItems.push(item)
         }
         this.variants = this.groupByHeroId(this.catalog.items)
@@ -114,8 +114,8 @@ export default defineComponent({
 
       for (const item in this.variants[newHeroId])
         this.curentProduct.item.push(this.variants[newHeroId][item].id)
-
-      this.inBasket = productInBasket(this.basket, this.curentProduct)
+      // TODO
+      this.inBasket = productInBasket(this.curentProduct)
     },
   },
 })

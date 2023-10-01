@@ -74,10 +74,10 @@ export default defineComponent({
         class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
       >
         <router-link
-          v-for="typ in catalog.categories[($route.params.categoryId as unknown) as number].product_types"
+          v-for="typ in catalog.categories[Number($route.params.categoryId)].product_types"
           :key="typ.id"
           :basket="basket"
-          :to="{ name: 'productOverviews', params: { productId: typ.id, heroId: searchFirstHero(($route.params.categoryId as unknown) as number, typ.id) } }"
+          :to="{ name: 'productOverviews', params: { productId: typ.id, heroId: searchFirstHero(Number($route.params.categoryId), typ.id) } }"
         >
           <CustomCartTypes
             v-if="typ.name !== '-' && typ.items "

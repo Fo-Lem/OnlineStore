@@ -7,12 +7,12 @@ export default defineComponent({
   props: {
     photos: {
       required: true,
-      type: Array as PropType<FileList[]>,
+      type: Array as PropType<File[]>,
     },
   },
   emits: {
 
-    uploadPhoto(photos: FileList[]) {
+    uploadPhoto(photos: File[]) {
       return photos.length > 0
     },
   },
@@ -24,7 +24,8 @@ export default defineComponent({
   methods: {
     uploadPhoto(currentTarget: Event) {
       if (currentTarget.target instanceof HTMLInputElement && currentTarget.target.files)
-        this.$emit('uploadPhoto', [...this.photos, ...currentTarget.target.files] as FileList[])
+        this.$emit('uploadPhoto', [...this.photos, ...currentTarget.target.files] as File[])
+
       this.isDrag = false
     },
     getSrc(photo: File) {
@@ -75,7 +76,7 @@ export default defineComponent({
             <span class="font-semibold">Нажмите, чтобы добавить</span> или перетащите
           </p>
           <p class="text-xs text-gray-500 ">
-            JPG(MAX. 1000x1000px)
+            JPG(1000x1000px)
           </p>
         </div>
         <input
@@ -99,11 +100,11 @@ export default defineComponent({
             <div class="relative cursor-default">
               <img
                 class="max-h-48 rounded-md"
-                :src="getSrc(photo[0])"
+                :src="getSrc(photo)"
                 :alt="`фотография${index + 1}`"
               >
               <p class="text-sm text-center">
-                {{ photo[0].name }}
+                {{ photo.name }}
               </p>
               <svg
                 fill="white"

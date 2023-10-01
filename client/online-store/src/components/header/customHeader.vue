@@ -12,47 +12,50 @@ export default defineComponent(
         mobileMenuOpen: false,
       }
     },
+    methods: {
+      toggleMobileMenu() {
+        this.mobileMenuOpen = !this.mobileMenuOpen
+      },
+    },
 
   })
 </script>
 
 <template lang="">
-  <header class="bg-white">
+  <header class="bg-white mx-auto max-w-7xl px-6 lg:px-8">
     <nav
-      class="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8"
+      class="flex justify-between"
       aria-label="Global"
     >
-      <div class="flex items-center gap-2 lg:flex-1">
+      <div class="flex gap-2">
         <router-link
           to="/catalog"
-          class="-m-1.5 p-1.5"
+          class="flex items-center gap-2"
         >
-          <span class="sr-only">WoodHouse</span>
           <img
-            class="h-20 w-auto"
+            class="h-16 lg:h-20 w-auto"
             src="../../assets/logo.svg"
             alt=""
           >
+          <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-gray-900">
+            WoodHouse
+          </h1>
         </router-link>
-        <h1 class="text-3xl font-semibold tracking-wider leading-6 text-gray-900">
-          WoodHouse
-        </h1>
       </div>
 
-      <div class="flex lg:hidden">
+      <div class="flex items-center lg:hidden">
         <button
           type="button"
-          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          @click="mobileMenuOpen = !mobileMenuOpen"
+          @click="toggleMobileMenu"
         >
           <span class="sr-only">Open main menu</span>
           <Bars3Icon
-            class="h-6 w-6"
+            class="h-8 w-8"
             aria-hidden="true"
           />
         </button>
       </div>
-      <div class="items-center hidden lg:gap-x-12 lg:flex ">
+      <div class=" hidden lg:gap-x-12 lg:flex items-center">
         <router-link
           class="font-semibold leading-6 text-gray-900"
           to="/catalog"
@@ -72,6 +75,56 @@ export default defineComponent(
           О нас
         </router-link>
       </div>
+      <dialog id="mobileMenu" :open="mobileMenuOpen" class="w-full shadow-sm pb-4 md:pb-6 px-4 md:px-6 bg-white top-0 lg:hidden ">
+        <div>
+          <div class="flex justify-between items-center gap-2 lg:flex-1">
+            <router-link
+              to="/catalog"
+              class="-m-1.5 p-1.5 flex items-center gap-2"
+            >
+              <img
+                class="h-16 lg:h-20 w-auto"
+                src="../../assets/logo.svg"
+                alt=""
+              >
+              <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-gray-900">
+                WoodHouse
+              </h1>
+            </router-link>
+            <button
+              type="button"
+              @click="toggleMobileMenu"
+            >
+              <span class="sr-only">Open main menu</span>
+              <Bars3Icon
+                class="h-6 w-6"
+                aria-hidden="true"
+              />
+            </button>
+          </div>
+
+          <div class="items-center flex gap-1 flex-col">
+            <router-link
+              class="font-semibold leading-6 p-2 text-gray-900"
+              to="/catalog"
+            >
+              Каталог
+            </router-link>
+            <router-link
+              class="font-semibold leading-6 p-2 text-gray-900"
+              to="/basket"
+            >
+              Корзина
+            </router-link>
+            <router-link
+              class="font-semibold leading-6 p-2 text-gray-900"
+              to="/about"
+            >
+              О нас
+            </router-link>
+          </div>
+        </div>
+      </dialog>
     </nav>
     <hr class="mx-auto max-w-7xl">
   </header>

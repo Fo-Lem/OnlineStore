@@ -22,16 +22,24 @@ export default defineComponent({
   },
   emits: {
     changeOptionCategory(select: number) {
-      return select
+      Number(select)
+
+      return Boolean(select)
     },
     changeOptionType(select: number) {
-      return select
+      Number(select)
+
+      return Boolean(select)
     },
     changeOptionHero(select: number) {
-      return select
+      Number(select)
+
+      return Boolean(select)
     },
     changeOptionItem(select: number) {
-      return select
+      Number(select)
+
+      return Boolean(select)
     },
     openAddPopup(): boolean {
       return true

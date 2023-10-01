@@ -30,10 +30,6 @@ export default defineComponent({
       type: Object as PropType<catalog>,
       required: true,
     },
-    Admin: {
-      type: Object,
-      required: true,
-    },
   },
   emits: ['closeUpdatePopup', 'updateData'],
   data(): State {

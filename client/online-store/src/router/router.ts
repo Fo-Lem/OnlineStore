@@ -15,7 +15,6 @@ import { relogin } from '../components/adminPanel/adminComponents/http/relogin'
 
 const routes = [
   { path: '/', redirect: '/catalog' },
-
   {
     name: 'catalog',
     path: '/catalog',
@@ -71,8 +70,6 @@ router.beforeEach(async (to, _from, next) => {
       else
         next({ name: 'authorization' })
     }
-
-    // next()
   }
   else { next() }
 

@@ -21,46 +21,45 @@ export interface curentProduct {
 }
 
 export function getDataBasket(): basket {
-  return JSON.parse(localStorage.basket)
+  return localStorage.basket ? JSON.parse(localStorage.basket) : {}
 }
 
-export function saveDataBasket(basket: basket): basket {
-  localStorage.basket = JSON.stringify(basket)
-  return basket
+export function saveDataBasket(newBasket: basket): basket {
+  localStorage.basket = JSON.stringify(newBasket)
+  return newBasket
 }
 
-export function addProductBasket(basket: basket, newProduct: newProduct): basket {
+export function addProductBasket(newProduct: newProduct): basket {
+  const basket = getDataBasket()
   let id = 1
   if (Object.keys(basket).length > 0)
     id = Number(Object.keys(basket)[Object.keys(basket).length - 1]) + 1
 
   basket[id] = newProduct
-  saveDataBasket(basket)
-  return basket
+  return saveDataBasket(basket)
 }
 
 export function deleteProductBasket(id: number): basket {
   const basket = getDataBasket()
   delete basket[id]
-  saveDataBasket(basket)
-  return basket
+  return saveDataBasket(basket)
 }
-export function correctBasket(basket: basket, catalog: catalog): basket {
+export function correctBasket(catalog: catalog): basket {
+  const basket = getDataBasket()
   for (const key in basket) {
     if (!catalog.items[basket[key].item[basket[key].version]])
       delete basket[key]
   }
-  saveDataBasket(basket)
-  return basket
+  return saveDataBasket(basket)
 }
 
 export function updateCountProductBasket(newCount: number, id: number) {
   const basket = getDataBasket()
   basket[id].count = newCount
-  saveDataBasket(basket)
-  return basket
+  return saveDataBasket(basket)
 }
-export function summarizePriceProductBasket(basket: basket, catalog: catalog): number {
+export function summarizePriceProductBasket(catalog: catalog): number {
+  const basket = getDataBasket()
   let sum = 0
   if (Object.keys(basket).length > 0) {
     for (const key in basket) {
@@ -70,7 +69,9 @@ export function summarizePriceProductBasket(basket: basket, catalog: catalog): n
   }
   return sum
 }
-export function productInBasket(basket: basket, curentProduct: curentProduct): boolean {
+export function productInBasket(curentProduct: curentProduct): boolean {
+  const basket = getDataBasket()
+
   if (Object.keys(basket).length > 0) {
     let flagIs = true
     for (const key in basket) {
