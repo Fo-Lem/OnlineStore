@@ -80,10 +80,10 @@ export default defineComponent({
 
 <template>
   <CustomHeader v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading && !error.name" />
+  <main class=" max-w-7xl py-5 px-6 lg:px-8 m-auto min-h-[calc(100vh-80px)]">
+    <CustomErrorPage v-if="error.name" :error="error" />
+    <CustomLoadingSpiner v-if="!loading" />
 
-  <CustomErrorPage v-if="error.name" :error="error" />
-  <CustomLoadingSpiner v-if="!loading" />
-  <main>
     <router-view
       v-if="loading && !error.name" :basket="basket" :catalog="catalog" :search-input="searchInput"
       @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"

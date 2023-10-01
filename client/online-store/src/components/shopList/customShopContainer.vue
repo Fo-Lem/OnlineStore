@@ -34,13 +34,10 @@ export default defineComponent({
 
 <template>
   <div>
-    <div class="mx-auto max-w-7xl p-3 flex flex-col-reverse items-center justify-between lg:px-8 md:flex-row ">
-      <CustomBreadcrumbs
-        :catalog="catalog"
-        class="mt-2 md:mt-0"
-      />
-      <!-- <custom-search-input @update-search-input="(value)=>{this.$emit('updateSearchInput',value)}" v-bind:searchInput="searchInput" v-if="!$route.params.heroId" class="md:w-1/2" ></custom-search-input> -->
-    </div>
+    <CustomBreadcrumbs
+      class="mb-5"
+      :catalog="catalog"
+    />
     <router-view
       :basket="basket"
       :catalog="catalog"

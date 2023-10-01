@@ -73,18 +73,10 @@ export function productInBasket(curentProduct: curentProduct): boolean {
   const basket = getDataBasket()
 
   if (Object.keys(basket).length > 0) {
-    let flagIs = true
     for (const key in basket) {
-      if (JSON.stringify(basket[key].item) !== JSON.stringify(curentProduct.item)) {
-        flagIs = false
-        break
-      }
-      if (JSON.stringify(basket[key].version) !== JSON.stringify(curentProduct.version)) {
-        flagIs = false
-        break
-      }
+      if (basket[key].item[basket[key].version] === curentProduct.item[curentProduct.version])
+        return true
     }
-    return flagIs
   }
   return false
 }

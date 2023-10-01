@@ -17,9 +17,9 @@ export default defineComponent({
   <footer class="bg-white text-sm">
     <hr class="mx-auto max-w-7xl">
     <div class="mx-auto w-full max-w-screen-xl">
-      <div class="grid grid-cols-1 gap-8 px-8 py-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div class="grid grid-cols-1 gap-8 px-8 py-6 text-center md:grid-cols-3 ">
         <div>
-          <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">
+          <h2 class="mb-6 text-sm  font-semibold text-gray-900 uppercase ">
             Company
           </h2>
           <ul class="text-gray-500  font-medium">
@@ -102,37 +102,6 @@ export default defineComponent({
                 href="#"
                 class="hover:underline"
               >Terms &amp; Conditions</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">
-            Download
-          </h2>
-          <ul class="text-gray-500  font-medium">
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >iOS</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Android</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Windows</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >MacOS</a>
             </li>
           </ul>
         </div>

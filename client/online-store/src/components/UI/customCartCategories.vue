@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
-import type { category } from '../../controllers/productController'
+import type { catalogCategory } from '../../controllers/productController'
 
 export default defineComponent({
 
@@ -10,7 +10,7 @@ export default defineComponent({
   props: {
     category: {
       required: true,
-      type: Object as PropType<category>,
+      type: Object as PropType<catalogCategory>,
     },
   },
 
@@ -25,14 +25,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-xl xl:aspect-h-8 xl:aspect-w-7">
-    <div class="">
-      <img :src="imgUrl()" class="h-full w-full object-cover rounded-lg object-center hover:opacity-75">
-      <div class="flex justify-between py-2 items-center">
-        <h3 v-if="category" class="text-gray-900">
-          {{ category.name }}
-        </h3>
-      </div>
+  <div class="border border-gray-200 rounded-xl p-4 hover:scale-105 transition flex flex-col gap-2">
+    <img :src="imgUrl()" class="h-full w-full object-cover rounded-lg object-center hover:opacity-75">
+    <div class="flex justify-between items-center">
+      <h3 v-if="category" class="text-gray-900 w-full text-lg">
+        {{ category.name }}
+      </h3>
     </div>
   </div>
 </template>

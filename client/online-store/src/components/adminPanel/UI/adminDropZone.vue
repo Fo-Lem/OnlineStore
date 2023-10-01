@@ -32,7 +32,9 @@ export default defineComponent({
       return URL.createObjectURL(photo)
     },
     removePhoto(index: number) {
-      this.$emit('uploadPhoto', this.photos.filter((_p, i) => i !== index))
+      this.$emit('uploadPhoto', this.photos.filter((_p, i) => {
+        return i !== index
+      }))
     },
 
   },

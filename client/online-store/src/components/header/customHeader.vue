@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Bars3Icon } from '@heroicons/vue/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 export default defineComponent(
 
   {
     name: 'CustomHeader',
-    components: { Bars3Icon },
+    components: { Bars3Icon, XMarkIcon },
     data() {
       return {
         mobileMenuOpen: false,
@@ -21,7 +21,7 @@ export default defineComponent(
   })
 </script>
 
-<template lang="">
+<template>
   <header class="bg-white mx-auto max-w-7xl px-6 lg:px-8">
     <nav
       class="flex justify-between"
@@ -75,7 +75,7 @@ export default defineComponent(
           О нас
         </router-link>
       </div>
-      <dialog id="mobileMenu" :open="mobileMenuOpen" class="w-full shadow-sm pb-4 md:pb-6 px-4 md:px-6 bg-white top-0 lg:hidden ">
+      <dialog id="mobileMenu" :open="mobileMenuOpen" class="w-full z-50 backdrop-blur-lg shadow-sm pb-4 md:pb-6 px-6 bg-white top-0 lg:hidden ">
         <div>
           <div class="flex justify-between items-center gap-2 lg:flex-1">
             <router-link
@@ -85,7 +85,7 @@ export default defineComponent(
               <img
                 class="h-16 lg:h-20 w-auto"
                 src="../../assets/logo.svg"
-                alt=""
+                alt="Логотип"
               >
               <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-gray-900">
                 WoodHouse
@@ -96,8 +96,8 @@ export default defineComponent(
               @click="toggleMobileMenu"
             >
               <span class="sr-only">Open main menu</span>
-              <Bars3Icon
-                class="h-6 w-6"
+              <XMarkIcon
+                class="h-8 w-8"
                 aria-hidden="true"
               />
             </button>
