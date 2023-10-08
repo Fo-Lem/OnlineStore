@@ -13,3 +13,5 @@ routing/clients/__pycache__/
 api/__pycache__/
 routing/__pycache__/
 scripts/start.py
+templates/mail/
+http_resp/__pycache__/*

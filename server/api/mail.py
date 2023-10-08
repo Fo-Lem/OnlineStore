@@ -10,30 +10,12 @@ EMAIL_SENDER = mail_conf['email_sender']
 EMAIL_PASSWORD = mail_conf['email_password']
 EMAIL_RECEIVER = mail_conf['email_receiver']
 
-def send_mail(fio, email, phone, receive_method, total_price, order):
-    # Set the subject and body of the email
-    subject = 'Новый заказ!!!'
-    body = f"""
-    ФИО: {fio}
-    Телефон: {phone}
-    Почта: {email}
-    Метод доставки: {receive_method}
-    Итоговая сумма заказа: {total_price}
-
-    Заказ: 
-    """
-
-    html = f"""\
-    <img src="{order}" width="400" height="300">
-    """
-
+def send_mail(html):
     em = MIMEMultipart()
     em['From'] = EMAIL_SENDER
     em['To'] = EMAIL_RECEIVER
-    em['Subject'] = subject
+    em['Subject'] = "Новый заказ"
     part2 = MIMEText(html, 'html')
-    body = MIMEText(body, 'plain')
-    em.attach(body)
     em.attach(part2)
 
     # Add SSL (layer of security)
