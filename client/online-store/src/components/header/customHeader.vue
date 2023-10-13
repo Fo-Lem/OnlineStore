@@ -16,6 +16,9 @@ export default defineComponent(
       toggleMobileMenu() {
         this.mobileMenuOpen = !this.mobileMenuOpen
       },
+      imgUrl() {
+        return `${import.meta.env.VITE_BASE_URL}/imgs/logo.svg`
+      },
     },
 
   })
@@ -34,7 +37,7 @@ export default defineComponent(
         >
           <img
             class="h-16 lg:h-20 w-auto"
-            src="../../assets/logo.svg"
+            :src="imgUrl()"
             alt=""
           >
           <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-gray-900">
@@ -55,7 +58,7 @@ export default defineComponent(
           />
         </button>
       </div>
-      <div class=" hidden lg:gap-x-12 lg:flex items-center">
+      <div class=" hidden text-lg lg:gap-x-12 lg:flex items-center">
         <router-link
           class="font-semibold leading-6 text-gray-900"
           to="/catalog"
@@ -68,12 +71,12 @@ export default defineComponent(
         >
           Корзина
         </router-link>
-        <router-link
+        <!-- <router-link
           class="font-semibold leading-6 text-gray-900"
           to="/about"
         >
           О нас
-        </router-link>
+        </router-link> -->
       </div>
       <dialog id="mobileMenu" :open="mobileMenuOpen" class="w-full z-50 backdrop-blur-lg shadow-sm pb-4 md:pb-6 px-6 bg-white top-0 lg:hidden ">
         <div>
@@ -84,7 +87,7 @@ export default defineComponent(
             >
               <img
                 class="h-16 lg:h-20 w-auto"
-                src="../../assets/logo.svg"
+                :src="imgUrl()"
                 alt="Логотип"
               >
               <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-gray-900">
@@ -103,7 +106,7 @@ export default defineComponent(
             </button>
           </div>
 
-          <div class="items-center flex gap-1 flex-col">
+          <div class="items-center text-lg flex gap-1 flex-col">
             <router-link
               class="font-semibold leading-6 p-2 text-gray-900"
               to="/catalog"
@@ -116,12 +119,12 @@ export default defineComponent(
             >
               Корзина
             </router-link>
-            <router-link
+            <!-- <router-link
               class="font-semibold leading-6 p-2 text-gray-900"
               to="/about"
             >
               О нас
-            </router-link>
+            </router-link> -->
           </div>
         </div>
       </dialog>
@@ -130,4 +133,9 @@ export default defineComponent(
   </header>
 </template>
 
-<style scoped></style>
+<style scoped>
+.router-link-active{
+  font-weight: bold;
+
+}
+</style>

@@ -22,10 +22,13 @@ export default defineComponent({
       type: Object as PropType<basket>,
     },
   },
-  emits: ['addProductBasket', 'updateSearchInput'],
+  emits: ['addProductBasket', 'updateSearchInput', 'deleteProductBasket'],
   methods: {
     addProductBasket(curentProduct: curentProduct) {
       this.$emit('addProductBasket', curentProduct)
+    },
+    deleteProductBasket(index: number) {
+      this.$emit('deleteProductBasket', index)
     },
 
   },
@@ -35,12 +38,13 @@ export default defineComponent({
 <template>
   <div>
     <CustomBreadcrumbs
-      class="mb-5"
+      class="mb-3 md:mb-5"
       :catalog="catalog"
     />
     <router-view
       :basket="basket"
       :catalog="catalog"
+      @delete-product-basket="deleteProductBasket"
       @add-product-basket="addProductBasket"
     />
   </div>

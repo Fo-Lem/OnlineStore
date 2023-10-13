@@ -17,7 +17,7 @@ export default defineComponent({
 
 <template>
   <div class="">
-    <ol class="flex justify-center text-gray-700 lg:justify-start">
+    <ol class="flex justify-center text-sm md:text-base text-gray-700 lg:justify-start">
       <li class="pr-2">
         <router-link
           to="/catalog"

@@ -4,7 +4,6 @@ import customProductList from '../components/shopList/customProductList.vue'
 import customProductOverviews from '../components/shopList/customProductOverviews.vue'
 import customAdminPanel from '../components/adminPanel/customAdminPanelWrapper.vue'
 import customBasket from '../components/basketPage/customBasket.vue'
-import customAbout from '../components/aboutPage/customAbout.vue'
 import adminAnalytics from '../components/adminPanel/adminComponents/adminAnalytics.vue'
 import adminPanelCreations from '../components/adminPanel/adminComponents/adminPanelCreations.vue'
 import adminPanelUpdateProduct from '../components/adminPanel/adminComponents/adminPanelUpdateProduct.vue'
@@ -30,13 +29,14 @@ const routes = [
     ],
   },
   {
+    name: 'basket',
     path: '/basket',
     component: customBasket,
   },
-  {
-    path: '/about',
-    component: customAbout,
-  },
+  // {
+  //   path: '/about',
+  //   component: customAbout,
+  // },
   {
     name: 'adminPanel',
     path: '/_adminPanel',

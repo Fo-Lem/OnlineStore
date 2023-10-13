@@ -37,6 +37,9 @@ export default defineComponent({
     addProductBasket(curentProduct: curentProduct) {
       return curentProduct
     },
+    deleteProductBasket(index: number) {
+      return Number(index)
+    },
   },
 
   data(): State {
@@ -85,6 +88,19 @@ export default defineComponent({
     addProductBasket() {
       this.$emit('addProductBasket', this.curentProduct)
       this.inBasket = productInBasket(this.curentProduct)
+    },
+    deleteProductBasket() {
+      let index = 0
+      for (const key in this.basket) {
+        if (this.basket[key].item[this.basket[key].version] === this.curentProduct.item[this.curentProduct.version]) {
+          index = Number(key)
+          break
+        }
+      }
+      if (index) {
+        this.$emit('deleteProductBasket', index)
+        this.inBasket = productInBasket(this.curentProduct)
+      }
     },
 
     groupByHeroId(catalogItems: catalogItems): Variants {
@@ -170,14 +186,13 @@ export default defineComponent({
 
       <!-- Информация -->
       <div class="flex-1 ">
-        <h2 class="text-3xl tracking-tight text-gray-900">
+        <h2 class="text-2xl md:text-3xl tracking-tight text-gray-900">
           {{ catalog.items[curentProduct.item[curentProduct.version]].name }}
         </h2>
         <hr>
 
-        <form
+        <div
           class=" flex gap-5 flex-col mt-5"
-          @submit.prevent="addProductBasket"
         >
           <!-- Варианты -->
           <div class="flex flex-col gap-5">
@@ -265,20 +280,22 @@ export default defineComponent({
           <div v-if="!inBasket">
             <button
               type="submit"
-              class="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-green-500 px-8 py-3 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              @click="addProductBasket"
             >
               Добавить в корзину
             </button>
           </div>
-          <div
-            v-else
-            class="mt-5 flex w-full justify-center rounded-md border border-transparent bg-gray-100"
-          >
-            <h1 class=" px-8 py-3 text-base text-gray-500 font-medium">
-              Товар уже в корзине
-            </h1>
+          <div v-if="inBasket">
+            <button
+              type="submit"
+              class="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-red-500 px-8 py-3 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              @click="deleteProductBasket()"
+            >
+              Удалить из корзины
+            </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
     <div
