@@ -80,3 +80,7 @@ export function productInBasket(curentProduct: curentProduct): boolean {
   }
   return false
 }
+
+export function clearBasket() {
+  saveDataBasket({})
+}

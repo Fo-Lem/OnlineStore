@@ -25,10 +25,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="border border-gray-200 rounded-xl p-4 hover:scale-105 transition flex flex-col gap-2">
-    <img :src="imgUrl()" class="h-full w-full object-cover rounded-lg object-center hover:opacity-75">
+  <div class=" border-2 border-primary rounded-xl p-5 hover:scale-105 transition flex flex-col gap-2">
+    <img :src="imgUrl()" class="h-full w-full object-cover rounded-lg object-center">
     <div class="flex justify-between items-center">
-      <h3 v-if="category" class="text-gray-900 w-full text-lg">
+      <h3 v-if="category" class="text-primary w-full text-lg">
         {{ category.name }}
       </h3>
     </div>

@@ -17,16 +17,16 @@ export default defineComponent({
 
 <template>
   <div class="">
-    <ol class="flex justify-center text-sm md:text-base text-gray-700 lg:justify-start">
+    <ol class="flex justify-center text-sm md:text-base text-primary lg:justify-start">
       <li class="pr-2">
         <router-link
           to="/catalog"
-          :class="!$route.params.categoryId ? 'text-gray-500' : 'hover:underline'"
+          :class="!$route.params.categoryId ? 'text-primary font-medium' : 'hover:underline'"
         >
           Главная
         </router-link>
       </li>
-      <li class="text-gray-500 select-none">
+      <li v-if="$route.params.categoryId" class="text-primary select-none">
         /
       </li>
       <li
@@ -35,20 +35,20 @@ export default defineComponent({
       >
         <router-link
           :to="{ name: 'productList', params: { categoryId: $route.params.categoryId } }"
-          :class="!$route.params.productId ? 'text-gray-500' : 'hover:underline'"
+          :class="!$route.params.productId ? 'text-primary font-medium' : 'hover:underline'"
         >
           {{ catalog.categories[Number($route.params.categoryId)].name }}
         </router-link>
       </li>
       <li
         v-if="$route.params.productId"
-        class="text-gray-500 select-none"
+        class="text-primary select-none"
       >
         /
       </li>
       <li
         v-if="$route.params.categoryId && $route.params.productId"
-        class="px-2 text-gray-500"
+        class="px-2 text-primary font-medium"
       >
         {{ catalog.categories[Number($route.params.categoryId)].product_types[Number($route.params.productId)].name }}
       </li>

@@ -25,7 +25,7 @@ export default defineComponent(
 </script>
 
 <template>
-  <header class="bg-white mx-auto max-w-7xl px-6 lg:px-8">
+  <header class=" mx-auto max-w-7xl px-6 lg:px-8">
     <nav
       class="flex justify-between"
       aria-label="Global"
@@ -40,7 +40,7 @@ export default defineComponent(
             :src="imgUrl()"
             alt=""
           >
-          <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-gray-900">
+          <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-primary">
             WoodHouse
           </h1>
         </router-link>
@@ -53,32 +53,26 @@ export default defineComponent(
         >
           <span class="sr-only">Open main menu</span>
           <Bars3Icon
-            class="h-8 w-8"
+            class="h-8 w-8 text-primary"
             aria-hidden="true"
           />
         </button>
       </div>
       <div class=" hidden text-lg lg:gap-x-12 lg:flex items-center">
         <router-link
-          class="font-semibold leading-6 text-gray-900"
+          class="font-semibold leading-6 text-primary"
           to="/catalog"
         >
           Каталог
         </router-link>
         <router-link
-          class="font-semibold leading-6 text-gray-900"
+          class="font-semibold leading-6 text-primary"
           to="/basket"
         >
           Корзина
         </router-link>
-        <!-- <router-link
-          class="font-semibold leading-6 text-gray-900"
-          to="/about"
-        >
-          О нас
-        </router-link> -->
       </div>
-      <dialog id="mobileMenu" :open="mobileMenuOpen" class="w-full z-50 backdrop-blur-lg shadow-sm pb-4 md:pb-6 px-6 bg-white top-0 lg:hidden ">
+      <dialog id="mobileMenu" :open="mobileMenuOpen" class="w-full bg-primary-light-2 z-50 backdrop-blur-lg shadow-sm pb-4 md:pb-6 px-6 bg-primary-light top-0 lg:hidden ">
         <div>
           <div class="flex justify-between items-center gap-2 lg:flex-1">
             <router-link
@@ -90,7 +84,7 @@ export default defineComponent(
                 :src="imgUrl()"
                 alt="Логотип"
               >
-              <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-gray-900">
+              <h1 class="text-3xl lg:text-5xl font-semibold tracking-wider leading-6 text-primary">
                 WoodHouse
               </h1>
             </router-link>
@@ -100,7 +94,7 @@ export default defineComponent(
             >
               <span class="sr-only">Open main menu</span>
               <XMarkIcon
-                class="h-8 w-8"
+                class="h-8 w-8 text-primary"
                 aria-hidden="true"
               />
             </button>
@@ -108,28 +102,22 @@ export default defineComponent(
 
           <div class="items-center text-lg flex gap-1 flex-col">
             <router-link
-              class="font-semibold leading-6 p-2 text-gray-900"
+              class="font-semibold leading-6 p-2 text-primary"
               to="/catalog"
             >
               Каталог
             </router-link>
             <router-link
-              class="font-semibold leading-6 p-2 text-gray-900"
+              class="font-semibold leading-6 p-2 text-primary"
               to="/basket"
             >
               Корзина
             </router-link>
-            <!-- <router-link
-              class="font-semibold leading-6 p-2 text-gray-900"
-              to="/about"
-            >
-              О нас
-            </router-link> -->
           </div>
         </div>
+        <hr class="border-primary border-t-2">
       </dialog>
     </nav>
-    <hr class="mx-auto max-w-7xl">
   </header>
 </template>
 

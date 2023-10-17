@@ -49,10 +49,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-white">
+  <div>
     <div
       v-if="type === 'categoryList'"
-      class="grid grid-cols-1 gap-x-5 gap-y-10 md:grid-cols-2 md:gap-x-6 lg:grid-cols-3 lg:gap-x-7 xl:grid-cols-4 xl:gap-x-8"
+      class="grid grid-cols-1 gap-x-5 gap-y-10 md:grid-cols-2 md:gap-x-6 lg:grid-cols-3 lg:gap-x-7 xl:gap-x-8"
     >
       <div
         v-for="category in catalog.categories"

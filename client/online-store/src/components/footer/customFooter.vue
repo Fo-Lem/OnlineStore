@@ -14,101 +14,13 @@ export default defineComponent({
 </script>
 
 <template lang="">
-  <footer class="bg-white text-sm">
+  <footer class="bg-primary-light-1 text-sm">
     <div class="mx-auto px-8 py-6 max-w-7xl">
-      <hr class="mx-auto mb-5">
-      <div class="grid grid-cols-1 gap-8 text-center md:grid-cols-3 ">
-        <div>
-          <h2 class="mb-6 text-sm  font-semibold text-gray-900 uppercase ">
-            Company
-          </h2>
-          <ul class="text-gray-500  font-medium">
-            <li class="mb-4">
-              <a
-                href="#"
-                class=" hover:underline"
-              >About</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Careers</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Brand Center</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Blog</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">
-            Help center
-          </h2>
-          <ul class="text-gray-500  font-medium">
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Discord Server</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Twitter</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Facebook</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Contact Us</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">
-            Legal
-          </h2>
-          <ul class="text-gray-500  font-medium">
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Privacy Policy</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Licensing</a>
-            </li>
-            <li class="mb-4">
-              <a
-                href="#"
-                class="hover:underline"
-              >Terms &amp; Conditions</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="px-8 py-6  md:flex md:items-center md:justify-between">
-        <span class="text-sm text-gray-500  sm:text-center">© 2023 <a href="https://flowbite.com/">Flowbite™</a>. All Rights Reserved.
-        </span>
+      <div class="grid grid-cols-1 gap-8 text-center md:grid-cols-3 " />
+      <span class="text-sm text-primary-dark  sm:text-center">© 2023 WoodHouse. Все права защищены.
+      </span>
+      <!-- <div class="px-8 py-6  md:flex md:items-center md:justify-between">
+
         <div class="flex mt-4 space-x-6 sm:justify-center md:mt-0">
           <a
             href="#"
@@ -187,7 +99,7 @@ export default defineComponent({
             <span class="sr-only">Dribbble account</span>
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
   </footer>
 </template>

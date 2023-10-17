@@ -138,7 +138,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-white">
+  <div>
     <div
       v-if="$route.params.heroId !== '0' && catalog.items[curentProduct.item[curentProduct.version]]"
       class=" flex  flex-col justify-between gap-5 lg:flex-row"
@@ -153,7 +153,7 @@ export default defineComponent({
         <div class="grid grid-cols-3 gap-3 md:gap-5 ">
           <div
             class="relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none"
-            :class="[curentImage === 0 ? 'ring-2' : '']"
+            :class="[curentImage === 0 ? 'ring-2 ring-primary' : '']"
           >
             <img
               :src="`${imgUrl}0.jpg`"
@@ -163,7 +163,7 @@ export default defineComponent({
           </div>
           <div
             class="relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none"
-            :class="[curentImage === 1 ? 'ring-2' : '']"
+            :class="[curentImage === 1 ? 'ring-2 ring-primary' : '']"
           >
             <img
               :src="`${imgUrl}1.jpg`"
@@ -173,7 +173,7 @@ export default defineComponent({
           </div>
           <div
             class="relative -m-0.5 flex  cursor-pointer items-center justify-center rounded-lg p-0.5 focus:outline-none"
-            :class="[curentImage === 2 ? 'ring-2' : '']"
+            :class="[curentImage === 2 ? 'ring-2 ring-primary' : '']"
           >
             <img
               :src="`${imgUrl}2.jpg`"
@@ -186,17 +186,17 @@ export default defineComponent({
 
       <!-- Информация -->
       <div class="flex-1 ">
-        <h2 class="text-2xl md:text-3xl tracking-tight text-gray-900">
+        <h2 class="text-2xl md:text-3xl tracking-tight text-primary">
           {{ catalog.items[curentProduct.item[curentProduct.version]].name }}
         </h2>
-        <hr>
+        <hr class="border-primary">
 
         <div
           class=" flex gap-5 flex-col mt-5"
         >
           <!-- Варианты -->
           <div class="flex flex-col gap-5">
-            <p class="text-xl font-medium text-gray-900">
+            <p class="text-xl font-medium text-primary">
               Герои
             </p>
             <div class="flex flex-wrap gap-2 ">
@@ -210,17 +210,17 @@ export default defineComponent({
               >
                 <div
                   class="flex cursor-pointer rounded-lg p-0.5"
-                  :class="[Number($route.params.heroId) === hero[0].hero_id ? 'ring-2' : '']"
+                  :class="[Number($route.params.heroId) === hero[0].hero_id ? 'ring-2 ring-primary' : '']"
                 >
                   <span
-                    class=" rounded-lg text-md px-3 py-2 border border-black border-opacity-10"
+                    class=" rounded-lg text-md px-3 py-2 border text-primary-dark border-primary-light-1"
                   >{{ catalog.heroes[hero[0].hero_id].name }}</span>
                 </div>
               </router-link>
             </div>
           </div>
           <div v-if="curentProduct.item.length > 1" class="flex flex-col gap-5">
-            <p class="text-xl font-medium text-gray-900">
+            <p class="text-xl font-medium text-primary">
               Вариации
             </p>
 
@@ -229,10 +229,10 @@ export default defineComponent({
                 v-for="(itemId, index) in curentProduct.item"
                 :key="itemId"
                 class="rounded-lg text-sm p-0.5"
-                :class="[curentProduct.version === index ? 'ring-2' : '']"
+                :class="[curentProduct.version === index ? 'ring-2 ring-primary' : '']"
               >
                 <button
-                  class="rounded-lg text-sm px-4 py-2 border border-black border-opacity-10"
+                  class="rounded-lg text-sm px-4 py-2 border text-primary-dark border-primary-light-1"
                   type="button"
                   @click="updateCurentProduct(Number($route.params.heroId), index)"
                 >
@@ -245,7 +245,7 @@ export default defineComponent({
           <!-- Характеристики -->
           <div class="flex flex-col gap-5">
             <div class="">
-              <h3 class="font-medium text-xl text-gray-900">
+              <h3 class="font-medium text-xl text-primary">
                 Характеристики
               </h3>
             </div>
@@ -253,34 +253,36 @@ export default defineComponent({
             <!-- Размер -->
             <div class="flex flex-col gap-5">
               <div class="flex items-center justify-between">
-                <h3 class="font-medium text-xl text-gray-900">
+                <h3 class="font-medium text-xl text-primary">
                   Размер
                 </h3>
               </div>
 
               <div class="flex flex-col">
-                <p v-for="(size, index) in sizeConvertor(catalog.items[curentProduct.item[curentProduct.version]].size)" :key="index">
+                <p v-for="(size, index) in sizeConvertor(catalog.items[curentProduct.item[curentProduct.version]].size)" :key="index" class="text-primary-dark">
                   {{ size }}
                 </p>
               </div>
             </div>
             <!-- Описание -->
             <div class="flex flex-col gap-5">
-              <h3 class="font-medium text-xl text-gray-900">
+              <h3 class="font-medium text-xl text-primary">
                 Описание
               </h3>
               <div>
-                <p>{{ catalog.items[curentProduct.item[curentProduct.version]].description }}</p>
+                <p class="text-primary-dark">
+                  {{ catalog.items[curentProduct.item[curentProduct.version]].description }}
+                </p>
               </div>
             </div>
           </div>
-          <p class="text-xl font-medium text-gray-900">
-            Цена: {{ catalog.items[curentProduct.item[curentProduct.version]].price }} р
+          <p class="text-xl font-medium text-primary">
+            Цена: {{ catalog.items[curentProduct.item[curentProduct.version]].price }} руб.
           </p>
           <div v-if="!inBasket">
             <button
               type="submit"
-              class="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-green-500 px-8 py-3 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-primary-light-2 hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               @click="addProductBasket"
             >
               Добавить в корзину
@@ -289,7 +291,7 @@ export default defineComponent({
           <div v-if="inBasket">
             <button
               type="submit"
-              class="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-red-500 px-8 py-3 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="mt-5 flex w-full items-center justify-center rounded-md border border-transparent bg-primary-light-1 px-8 py-3 text-base font-medium text-primary-dark hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               @click="deleteProductBasket()"
             >
               Удалить из корзины

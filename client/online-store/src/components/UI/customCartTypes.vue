@@ -27,15 +27,15 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="border border-gray-200 rounded-xl p-4 hover:scale-105 transition">
+  <div class="border-2 border-primary rounded-xl p-5 hover:scale-105 transition">
     <img :src="imgUrl()" class="h-full w-full object-cover rounded-lg object-center ">
-    <div class="flex justify-between py-2 items-center">
-      <h3 class="text-gray-900 text-lg">
+    <div class="flex justify-between pt-2 items-center">
+      <h3 class="text-primary text-lg">
         {{ type.name }}
       </h3>
       <p
         v-if="type.items"
-        class="text-gray-900 text-lg"
+        class="text-primary text-md"
       >
         от {{ type.items[Number(Object.keys(type.items)[0])].price }} руб.
       </p>

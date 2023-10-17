@@ -79,19 +79,22 @@ export default defineComponent({
 </script>
 
 <template>
-  <CustomHeader v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading && !error.name" />
-  <main class=" max-w-7xl py-3 md:py-5 lg:py-8 px-5 lg:px-8 m-auto min-h-[calc(100vh-80px)]">
-    <CustomErrorPage v-if="error.name" :error="error" />
-    <CustomLoadingSpiner v-if="!loading" />
+  <div class="bg-primary-light-2">
+    <CustomHeader v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading && !error.name" />
+    <hr class=" border-primary border-t-2">
+    <main class="  max-w-7xl py-3 md:py-5 lg:py-8 px-5 lg:px-8 m-auto min-h-[calc(100vh-80px)]">
+      <CustomErrorPage v-if="error.name" :error="error" />
+      <CustomLoadingSpiner v-if="!loading" />
 
-    <router-view
-      v-if="loading && !error.name" :basket="basket" :catalog="catalog" :search-input="searchInput"
-      @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"
-      @update-count-product-basket="(newCount: number, id: number) => { updateCountProductBasket(newCount, id) }"
-      @add-product-basket="(curentProduct: curentProduct) => { addProductBasket(curentProduct) }"
-      @update-data="initCatalog"
-    />
-  </main>
+      <router-view
+        v-if="loading && !error.name" :basket="basket" :catalog="catalog" :search-input="searchInput"
+        @update-search-input="updateSearchInput" @delete-product-basket="deleteProductBasket"
+        @update-count-product-basket="(newCount: number, id: number) => { updateCountProductBasket(newCount, id) }"
+        @add-product-basket="(curentProduct: curentProduct) => { addProductBasket(curentProduct) }"
+        @update-data="initCatalog"
+      />
+    </main>
 
-  <CustomFooter v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading && !error.name" />
+    <CustomFooter v-if="$router.currentRoute.value.path.split('/')[1] !== '_adminPanel' && loading && !error.name" />
+  </div>
 </template>
