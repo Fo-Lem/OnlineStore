@@ -24,7 +24,7 @@ def send_message_to_mail(
     phone=Body(embed=True),
     order=Body(embed=True),
     delivery_address=Body(embed=True),
-    total_price=Body(embed=True)
+    order_price=Body(embed=True)
       ):
     global html, row_template
     table = ''
@@ -43,7 +43,7 @@ def send_message_to_mail(
             fio=fio, 
             mail=email, 
             number=phone, 
-            total_price=total_price,
+            total_price=order_price,
             delivery_address=delivery_address,
             date=datetime.now().date().strftime('%d.%m.%Y')
           )
