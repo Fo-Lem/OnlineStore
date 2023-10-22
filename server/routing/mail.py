@@ -23,12 +23,8 @@ def send_message_to_mail(
     email=Body(embed=True),
     phone=Body(embed=True),
     order=Body(embed=True),
-    receive_method=Body(embed=True),
-    order_price=Body(embed=True),
-    delivery_price=Body(embed=True),
-    total_price=Body(embed=True),
     delivery_address=Body(embed=True),
-    pays_method=Body(embed=True)
+    total_price=Body(embed=True)
       ):
     global html, row_template
     table = ''
@@ -47,12 +43,8 @@ def send_message_to_mail(
             fio=fio, 
             mail=email, 
             number=phone, 
-            order_price=order_price,
-            delivery_price=delivery_price,
             total_price=total_price,
-            delivery_service=receive_method,
             delivery_address=delivery_address,
-            pays_method=pays_method,
             date=datetime.now().date().strftime('%d.%m.%Y')
           )
         send_mail(html=html)
