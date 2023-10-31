@@ -30,12 +30,14 @@ def send_message_to_mail(
     table = ''
     try:
         for key in order:
+            thing = order.get(key, {})
             p = paste_value_to_html_template(
-                row_template, name=order[key]['name'],
-                article=order[key]['article'],
-                count=order[key]['count'],
-                price=order[key]['price'],
-                img_path=order[key]['img_path']
+                row_template, name=thing.get('name'),
+                article=thing.get('article'),
+                count=thing.get('count'),
+                price=thing.get('price'),
+                img_path=thing.get('img_path'),
+                href=thing.get('href')
             )
             table += p
         html=paste_value_to_html_template(
