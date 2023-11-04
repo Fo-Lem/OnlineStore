@@ -5,7 +5,7 @@ from datetime import datetime
 from main import app, HTTP_RESPONSE_MESSAGE, HTTP_RESPONSE_CODE
 from api.mail import send_mail
 
-html = ''
+html_template = ''
 row_template = ''
 with open('templates/mail/index.html', 'r') as f:
     html = f.read()
@@ -26,7 +26,6 @@ def send_message_to_mail(
     delivery_address=Body(embed=True),
     order_price=Body(embed=True)
       ):
-    global html, row_template
     table = ''
     try:
         for key in order:
@@ -41,7 +40,7 @@ def send_message_to_mail(
             )
             table += p
         html=paste_value_to_html_template(
-            html, table=table,
+            html_template, table=table,
             fio=fio, 
             mail=email, 
             number=phone, 
