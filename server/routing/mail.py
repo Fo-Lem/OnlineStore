@@ -8,7 +8,7 @@ from api.mail import send_mail
 html_template = ''
 row_template = ''
 with open('templates/mail/index.html', 'r') as f:
-    html = f.read()
+    html_template = f.read()
 with open('templates/mail/row.html', 'r') as f:
     row_template = f.read()
 
